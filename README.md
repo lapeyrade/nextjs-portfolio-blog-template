@@ -72,6 +72,13 @@ pnpm lint
 - Implement dark/light mode support when needed
 - Ensure responsive design with Tailwind breakpoints
 
+### Animation Guidelines
+- Use Framer Motion for all animations and interactions
+- Leverage built-in animation components from `@/components/animations`
+- Follow performance best practices (avoid animating layout properties)
+- Use scroll-triggered animations for sections that appear on scroll
+- Ensure animations are accessible and respect user preferences
+
 ### File Organization
 - Keep components modular and focused on single responsibility
 - Use barrel exports (index.ts files) for clean imports
@@ -143,7 +150,7 @@ Consider implementing these features:
 - [x] Add a honeypot mechanism to the contact form to prevent spam
 - [x] Dynamically display the year in the footer (not 2024 hardcoded)
 - [x] Blog section with MDX
-- [ ] Animation library integration (Framer Motion)
+- [x] Animation library integration (Framer Motion)
 - [ ] Dark/light mode toggle
 - [ ] Performance monitoring
 - [ ] SEO optimization
