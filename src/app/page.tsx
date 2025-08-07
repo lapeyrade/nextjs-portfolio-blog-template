@@ -124,7 +124,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="px-6 py-8 border-t border-gray-800">
         <div className="max-w-6xl mx-auto text-center text-gray-400">
-          <p>&copy; 2024 Your Portfolio. Built with Next.js 15 and TailwindCSS.</p>
+          <p>&copy; {new Date().getFullYear()} Your Portfolio. Built with Next.js 15 and TailwindCSS.</p>
         </div>
       </footer>
     </div>
