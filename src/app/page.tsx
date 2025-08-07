@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
@@ -8,7 +10,7 @@ export default function Home() {
           <div className="hidden md:flex space-x-8">
             <a href="#about" className="text-gray-300 hover:text-white transition-colors">About</a>
             <a href="#projects" className="text-gray-300 hover:text-white transition-colors">Projects</a>
-            <a href="#contact" className="text-gray-300 hover:text-white transition-colors">Contact</a>
+            <Link href="/contact" className="text-gray-300 hover:text-white transition-colors">Contact</Link>
           </div>
         </div>
       </nav>
@@ -17,7 +19,7 @@ export default function Home() {
       <section className="px-6 py-20">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-            Hello, I'm{' '}
+            Hello, I&apos;m{' '}
             <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
               Your Name
             </span>
@@ -26,12 +28,18 @@ export default function Home() {
             A passionate developer creating amazing digital experiences with modern technologies
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-transform">
+            <Link
+              href="#projects"
+              className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-transform"
+            >
               View My Work
-            </button>
-            <button className="border border-purple-400 text-purple-400 px-8 py-3 rounded-lg font-semibold hover:bg-purple-400 hover:text-white transition-colors">
+            </Link>
+            <Link
+              href="/contact"
+              className="border border-purple-400 text-purple-400 px-8 py-3 rounded-lg font-semibold hover:bg-purple-400 hover:text-white transition-colors"
+            >
               Contact Me
-            </button>
+            </Link>
           </div>
         </div>
       </section>
@@ -46,11 +54,11 @@ export default function Home() {
             </div>
             <div className="text-gray-300 space-y-4">
               <p className="text-lg">
-                I'm a full-stack developer with a passion for creating beautiful, functional, and user-friendly applications.
+                I&apos;m a full-stack developer with a passion for creating beautiful, functional, and user-friendly applications.
                 With expertise in modern web technologies, I bring ideas to life through clean code and thoughtful design.
               </p>
               <p className="text-lg">
-                When I'm not coding, you can find me exploring new technologies, contributing to open source projects,
+                When I&apos;m not coding, you can find me exploring new technologies, contributing to open source projects,
                 or sharing knowledge with the developer community.
               </p>
               <div className="flex flex-wrap gap-3 mt-6">
@@ -100,13 +108,16 @@ export default function Home() {
       {/* Contact Section */}
       <section id="contact" className="px-6 py-20">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold text-white mb-8">Let's Work Together</h2>
-          <p className="text-xl text-gray-300 mb-8">
-            Have a project in mind? I'd love to hear about it and discuss how we can bring your ideas to life.
+          <h2 className="text-4xl font-bold text-white mb-8">Let&apos;s Work Together</h2>
+          <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+            Have a project in mind? I&apos;d love to hear about it and discuss how we can bring your ideas to life.
           </p>
-          <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-transform">
+          <Link
+            href="/contact"
+            className="inline-block bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-3 rounded-lg font-semibold hover:scale-105 transition-transform"
+          >
             Get In Touch
-          </button>
+          </Link>
         </div>
       </section>
 
