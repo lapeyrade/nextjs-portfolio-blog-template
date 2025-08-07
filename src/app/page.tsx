@@ -10,6 +10,7 @@ export default function Home() {
           <div className="hidden md:flex space-x-8">
             <a href="#about" className="text-gray-300 hover:text-white transition-colors">About</a>
             <a href="#projects" className="text-gray-300 hover:text-white transition-colors">Projects</a>
+            <Link href="/blog" className="text-gray-300 hover:text-white transition-colors">Blog</Link>
             <Link href="/contact" className="text-gray-300 hover:text-white transition-colors">Contact</Link>
           </div>
         </div>

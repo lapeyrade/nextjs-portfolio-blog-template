@@ -84,7 +84,7 @@ pnpm lint
 - **Modern UI**: Gradient backgrounds, glassmorphism effects, smooth animations
 - **Navigation**: Smooth scrolling navigation with anchor links
 - **Sections**: Hero, About, Projects, Contact, Footer
-- **Contact Form**: Fully functional form with validation and error handling
+- **Contact Form**: Fully functional form with validation, spam protection, and email integration
 - **Interactive Elements**: Hover effects, button animations, card transforms
 - **Typography**: Inter font with proper hierarchy
 - **Color Scheme**: Purple/pink gradient theme with dark background
@@ -142,13 +142,14 @@ Consider implementing these features:
 - [x] Contact form with validation
 - [x] Add a honeypot mechanism to the contact form to prevent spam
 - [x] Dynamically display the year in the footer (not 2024 hardcoded)
-- [ ] Project filtering and search
-- [ ] Blog section with MDX
+- [x] Blog section with MDX
 - [ ] Animation library integration (Framer Motion)
 - [ ] Dark/light mode toggle
 - [ ] Performance monitoring
 - [ ] SEO optimization
 - [ ] Analytics integration
+- [ ] add a global search bar for the site
+- [ ] Security audit and hardening
 
 ## 📝 Notes for AI Development
 

@@ -18,6 +18,7 @@ export default function ContactPage() {
                     <div className="hidden md:flex space-x-8">
                         <Link href="/#about" className="text-gray-300 hover:text-white transition-colors">About</Link>
                         <Link href="/#projects" className="text-gray-300 hover:text-white transition-colors">Projects</Link>
+                        <Link href="/blog" className="text-gray-300 hover:text-white transition-colors">Blog</Link>
                         <Link href="/contact" className="text-purple-400 font-semibold">Contact</Link>
                     </div>
                 </div>

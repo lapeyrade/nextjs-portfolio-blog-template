@@ -1,0 +1,79 @@
+---
+title: "Getting Started with Next.js 15: A Developer's Guide"
+description: "Learn the fundamentals of Next.js 15 and how to build modern web applications with the latest features including the App Router, Server Components, and more."
+date: "2025-01-15"
+author: "Your Name"
+tags: ["Next.js", "React", "Web Development", "JavaScript"]
+---
+
+# Getting Started with Next.js 15
+
+Next.js 15 represents a significant leap forward in React development, introducing powerful new features that make building web applications more intuitive and performant than ever before.
+
+## What's New in Next.js 15?
+
+The latest version of Next.js brings several exciting improvements:
+
+### App Router (Stable)
+The App Router is now stable and provides a more intuitive way to organize your application. It's built on React Server Components and supports:
+
+- **Layouts**: Shared UI that maintains state across navigation
+- **Server Components**: Components that render on the server by default
+- **Streaming**: Progressive rendering for better performance
+
+### React Server Components
+Server Components allow you to render components on the server, reducing the JavaScript bundle size sent to the client:
+
+```jsx
+// This component runs on the server
+async function BlogPost({ slug }) {
+  const post = await getPost(slug)
+  
+  return (
+    <article>
+      <h1>{post.title}</h1>
+      <p>{post.content}</p>
+    </article>
+  )
+}
+```
+
+## Building Your First App
+
+Let's create a simple Next.js 15 application:
+
+1. **Create a new project**:
+   ```bash
+   npx create-next-app@latest my-app
+   cd my-app
+   ```
+
+2. **Start the development server**:
+   ```bash
+   npm run dev
+   ```
+
+3. **Create your first page** in `app/page.tsx`:
+   ```tsx
+   export default function Home() {
+     return (
+       <main>
+         <h1>Welcome to Next.js 15!</h1>
+         <p>This is your first page.</p>
+       </main>
+     )
+   }
+   ```
+
+## Key Benefits
+
+- **Performance**: Automatic optimizations and code splitting
+- **Developer Experience**: Hot reloading and excellent error messages
+- **SEO-Friendly**: Server-side rendering out of the box
+- **Full-Stack**: Built-in API routes and database integration
+
+## Conclusion
+
+Next.js 15 makes it easier than ever to build modern web applications. With its improved App Router, Server Components, and enhanced performance, it's an excellent choice for your next project.
+
+Whether you're building a simple blog or a complex e-commerce platform, Next.js 15 provides the tools and flexibility you need to succeed.
