@@ -140,6 +140,8 @@ pnpm lint
 
 Consider implementing these features:
 - [x] Contact form with validation
+- [x] Add a honeypot mechanism to the contact form to prevent spam
+- [ ] Dynamically display the year in the footer (not 2024 hardcoded)
 - [ ] Project filtering and search
 - [ ] Blog section with MDX
 - [ ] Animation library integration (Framer Motion)

@@ -6,7 +6,20 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json()
-        const { name, email, subject, message } = body
+        const { name, email, subject, message, website } = body
+
+        // Honeypot check - if website field is filled, it's likely spam
+        if (website && website.trim() !== '') {
+            console.log('Honeypot triggered - potential spam detected:', {
+                website,
+                userAgent: request.headers.get('user-agent'),
+                timestamp: new Date().toISOString()
+            })
+            return NextResponse.json(
+                { error: 'Spam detected' },
+                { status: 400 }
+            )
+        }
 
         // Validate required fields
         if (!name || !email || !subject || !message) {

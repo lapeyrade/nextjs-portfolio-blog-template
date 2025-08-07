@@ -7,6 +7,7 @@ interface FormData {
     email: string
     subject: string
     message: string
+    website: string // Honeypot field
 }
 
 interface FormErrors {
@@ -14,6 +15,7 @@ interface FormErrors {
     email?: string
     subject?: string
     message?: string
+    website?: string
 }
 
 export default function ContactForm() {
@@ -21,7 +23,8 @@ export default function ContactForm() {
         name: '',
         email: '',
         subject: '',
-        message: ''
+        message: '',
+        website: '' // Honeypot field - should remain empty
     })
 
     const [errors, setErrors] = useState<FormErrors>({})
@@ -87,7 +90,7 @@ export default function ContactForm() {
 
             if (response.ok) {
                 setSubmitStatus('success')
-                setFormData({ name: '', email: '', subject: '', message: '' })
+                setFormData({ name: '', email: '', subject: '', message: '', website: '' })
                 setErrors({})
                 console.log('Form submitted successfully:', result)
             } else {
@@ -196,6 +199,21 @@ export default function ContactForm() {
                     {errors.message && (
                         <p className="mt-2 text-sm text-red-400">{errors.message}</p>
                     )}
+                </div>
+
+                {/* Honeypot Field - Hidden from users, visible to bots */}
+                <div style={{ display: 'none' }}>
+                    <label htmlFor="website">Website (leave blank):</label>
+                    <input
+                        type="text"
+                        id="website"
+                        name="website"
+                        value={formData.website}
+                        onChange={(e) => handleChange('website', e.target.value)}
+                        tabIndex={-1}
+                        autoComplete="off"
+                        aria-hidden="true"
+                    />
                 </div>
 
                 {/* Submit Button */}
