@@ -52,7 +52,7 @@ pnpm lint
 ### Code Standards
 - Use TypeScript for all components and utilities
 - Follow Next.js 15 App Router conventions
-- Use TailwindCSS for all styling (no CSS modules or styled-components)
+- Use TailwindCSS v4 for all styling (CSS-first configuration)
 - Implement responsive design mobile-first
 - Use semantic HTML elements
 - Follow accessibility best practices
@@ -65,9 +65,10 @@ pnpm lint
 - Include JSDoc comments for complex functions
 
 ### Styling Guidelines
-- Use TailwindCSS utility classes
+- Use TailwindCSS v4 utility classes
 - Leverage Tailwind's design system (spacing, colors, typography)
-- Use CSS variables for theme colors (defined in globals.css)
+- Configure themes using @theme directive in globals.css
+- Use CSS variables for custom colors and values
 - Implement dark/light mode support when needed
 - Ensure responsive design with Tailwind breakpoints
 
@@ -121,10 +122,10 @@ pnpm lint
 
 - **package.json**: Dependencies and scripts configuration
 - **tsconfig.json**: TypeScript compiler options with Next.js optimizations
-- **tailwind.config.ts**: Tailwind customization and content paths
+- **src/app/globals.css**: TailwindCSS v4 configuration with @theme directive
 - **next.config.ts**: Next.js configuration with experimental features
 - **eslint.config.mjs**: Linting rules for code quality
-- **postcss.config.mjs**: PostCSS plugins for Tailwind processing
+- **postcss.config.mjs**: PostCSS configuration for TailwindCSS v4
 
 ## 📱 Responsive Breakpoints
 
@@ -162,7 +163,7 @@ Consider implementing these features:
 **Last Updated**: August 2025
 **Next.js Version**: 15.4.6  
 **React Version**: 19.1.1  
-**TailwindCSS Version**: 3.4.17 (stable)  
+**TailwindCSS Version**: 4.1.11 (latest)  
 **TypeScript Version**: 5.9.2  
 **ESLint Version**: 9.32.0  
 **Node.js**: Requires Node.js 18.17 or later  
