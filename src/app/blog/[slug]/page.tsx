@@ -3,9 +3,9 @@ import { notFound } from 'next/navigation'
 import { ReactNode } from 'react'
 import { getBlogPost, getBlogPostSlugs } from '@/lib/blog'
 import { MDXRemote } from 'next-mdx-remote/rsc'
-import { PageTransition, FadeInUp, ScrollReveal, AnimatedButton } from '@/components/animations'
 import type { Metadata } from 'next'
 import { absoluteUrl } from '@/lib/seo'
+import { PageTransition, FadeInUp, ScrollReveal, AnimatedButton } from '@/components/animations'
 
 interface BlogPostPageProps {
     params: Promise<{

@@ -2,12 +2,10 @@ import type { NextConfig } from 'next'
 import createMDX from '@next/mdx'
 
 const nextConfig: NextConfig = {
-  /* config options here */
   experimental: {
-    optimizePackageImports: ['@heroicons/react']
+    optimizePackageImports: ['@heroicons/react'],
   },
-  // Configure the `mdx` extension
-  pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx']
+  pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
 }
 
 const withMDX = createMDX({
