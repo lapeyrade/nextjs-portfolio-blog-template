@@ -173,6 +173,7 @@ Consider implementing these features:
 - [x] SEO optimization (metadata, sitemap, robots, JSON-LD, OG images, icons)
 - [x] Add Vercel Speed Insights
 - [x] Analytics integration (Vercel Analytics)
+- [x] Custom pages: improved `not-found` and error pages with helpful navigation
 - [ ] Global search (site-wide) with FlexSearch/Lunr and a `/search` page
 - [ ] RSS and JSON feeds for blog (`/rss.xml`, `/feed.json`)
 - [ ] Blog tags, filters, and pagination (e.g., `/blog/tag/[tag]` and paginated lists)
@@ -186,7 +187,6 @@ Consider implementing these features:
 - [ ] Structured data: add `WebSite` and `BreadcrumbList` JSON-LD
 - [ ] Sitemap: real `lastModified` from frontmatter or file mtime
 - [ ] Dev DX: configure `experimental.allowedDevOrigins` in `next.config.ts`
-- [ ] Custom pages: improved `not-found` and error pages with helpful navigation
 
 ## 🔧 Environment Variables
 
