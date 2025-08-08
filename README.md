@@ -171,10 +171,22 @@ Consider implementing these features:
 - [x] Animation library integration (Framer Motion)
 - [x] Performance monitoring with Web Vitals
 - [x] SEO optimization (metadata, sitemap, robots, JSON-LD, OG images, icons)
-- [ ] Analytics integration
-- [ ] Add a global search bar for the site
-- [ ] Security audit and hardening
-- [ ] Dark/light mode toggle
+- [x] Add Vercel Speed Insights
+- [x] Analytics integration (Vercel Analytics)
+- [ ] Global search (site-wide) with FlexSearch/Lunr and a `/search` page
+- [ ] RSS and JSON feeds for blog (`/rss.xml`, `/feed.json`)
+- [ ] Blog tags, filters, and pagination (e.g., `/blog/tag/[tag]` and paginated lists)
+- [ ] MDX polish: code highlighting (Shiki/rehype-prism), callouts/admonitions, map Markdown `img` → `next/image`
+- [ ] PWA: `manifest.webmanifest`, theme-color, offline fallback, Add to Home Screen
+- [ ] Accessibility: axe/Lighthouse pass, `prefers-reduced-motion`, focus-visible states
+- [ ] Security: rate-limit `/api/contact` (e.g., Upstash), optional hCaptcha, verify Resend DKIM
+- [ ] Error monitoring: Sentry (frontend + API traces, optional session replay)
+- [ ] CI/CD: GitHub Actions for lint/build/test on PRs
+- [ ] Internationalization (i18n) with `next-intl`
+- [ ] Structured data: add `WebSite` and `BreadcrumbList` JSON-LD
+- [ ] Sitemap: real `lastModified` from frontmatter or file mtime
+- [ ] Dev DX: configure `experimental.allowedDevOrigins` in `next.config.ts`
+- [ ] Custom pages: improved `not-found` and error pages with helpful navigation
 
 ## 🔧 Environment Variables
 
