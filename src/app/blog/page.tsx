@@ -44,6 +44,37 @@ export default function BlogPage() {
                                 Thoughts, tutorials, and insights about web development, technology, and creative coding.
                             </p>
                         </FadeInUp>
+                        <FadeInUp delay={0.5}>
+                            <div className="flex items-center justify-center gap-3">
+                                <a
+                                    href="/rss.xml"
+                                    rel="alternate"
+                                    type="application/rss+xml"
+                                    className="inline-flex items-center gap-2 rounded-md border border-purple-500/40 px-3 py-2 text-sm text-purple-300 hover:bg-purple-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
+                                    aria-label="Subscribe via RSS"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
+                                        <path d="M6.18 17.82a1.82 1.82 0 1 1-3.64 0 1.82 1.82 0 0 1 3.64 0Z" />
+                                        <path d="M2.5 9.75a11.75 11.75 0 0 1 11.75 11.75h-2.5A9.25 9.25 0 0 0 2.5 12.25v-2.5Z" />
+                                        <path d="M2.5 4a17.5 17.5 0 0 1 17.5 17.5h-2.5A15 15 0 0 0 2.5 6.5V4Z" />
+                                    </svg>
+                                    RSS
+                                </a>
+                                <a
+                                    href="/feed.json"
+                                    rel="alternate"
+                                    type="application/feed+json"
+                                    className="inline-flex items-center gap-2 rounded-md border border-purple-500/40 px-3 py-2 text-sm text-purple-300 hover:bg-purple-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
+                                    aria-label="Subscribe via JSON Feed"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
+                                        <path d="M4 4h16v16H4z" opacity=".2" />
+                                        <path d="M7 7h10v2H7zM7 11h10v2H7zM7 15h10v2H7z" />
+                                    </svg>
+                                    JSON
+                                </a>
+                            </div>
+                        </FadeInUp>
                     </div>
                 </section>
 

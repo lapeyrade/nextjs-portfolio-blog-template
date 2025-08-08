@@ -106,13 +106,19 @@ pnpm lint
 - **Responsive Design**: Mobile-first approach with Tailwind breakpoints
 - **Modern UI**: Gradient backgrounds, glassmorphism effects, smooth animations
 - **Performance Monitoring**: Client-side Web Vitals reported to `/api/web-vitals` and logged on the server
-- **SEO Optimization**: Global and per-post metadata, canonical URLs, Open Graph & Twitter cards, sitemap (`/sitemap.xml`), robots (`/robots.txt`), JSON-LD for blog posts, default and per-post OG images, favicon and Apple touch icon
+- **SEO + Feeds**: Global and per-post metadata, canonical URLs, Open Graph & Twitter cards, sitemap (`/sitemap.xml`), robots (`/robots.txt`), JSON-LD for blog posts, default and per-post OG images, favicon and Apple touch icon, plus RSS (`/rss.xml`) and JSON Feed (`/feed.json`).
 - **Navigation**: Smooth scrolling navigation with anchor links
 - **Sections**: Hero, About, Projects, Contact, Footer
 - **Contact Form**: Fully functional form with validation, spam protection, and email integration
 - **Interactive Elements**: Hover effects, button animations, card transforms
 - **Typography**: Inter font with proper hierarchy
 - **Color Scheme**: Purple/pink gradient theme with dark background
+
+## ♿ Accessibility
+
+- Respects `prefers-reduced-motion` across all Framer Motion components
+- Global `:focus-visible` outlines for clear keyboard focus, skip-to-content link, and `main` landmark
+- Dev-only axe integration to surface runtime accessibility issues during development
 
 ## 📋 Development Workflow for Cursor AI
 
@@ -175,7 +181,8 @@ Consider implementing these features:
 - [x] Analytics integration (Vercel Analytics)
 - [x] Custom pages: improved `not-found` and error pages with helpful navigation
 - [x] Accessibility: axe/Lighthouse pass, `prefers-reduced-motion`, focus-visible states
-- [ ] RSS and JSON feeds for blog (`/rss.xml`, `/feed.json`)
+- [x] RSS and JSON feeds for blog (`/rss.xml`, `/feed.json`)
+- [ ] Convert the remaining js code to ts
 - [ ] Blog tags, filters, and pagination (e.g., `/blog/tag/[tag]` and paginated lists)
 - [ ] MDX polish: code highlighting (Shiki/rehype-prism), callouts/admonitions, map Markdown `img` → `next/image`
 - [ ] PWA: `manifest.webmanifest`, theme-color, offline fallback, Add to Home Screen
