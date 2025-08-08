@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import WebVitals from '@/components/monitoring/WebVitals'
+import ClientProviders from '@/components/ClientProviders'
 import { siteUrl } from '@/lib/seo'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -46,10 +47,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <a href="#main-content" className="skip-link">Skip to content</a>
         <WebVitals />
+        <ClientProviders />
         <Analytics />
         <SpeedInsights />
-        {children}
+        <main id="main-content" tabIndex={-1}>
+          {children}
+        </main>
       </body>
     </html>
   )

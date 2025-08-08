@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { ReactNode } from 'react'
 
 interface StaggerContainerProps {
@@ -14,12 +14,13 @@ export default function StaggerContainer({
     staggerDelay = 0.1,
     className = ''
 }: StaggerContainerProps) {
+    const prefersReducedMotion = useReducedMotion()
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
             transition: {
-                staggerChildren: staggerDelay,
+                staggerChildren: prefersReducedMotion ? 0 : staggerDelay,
             },
         },
     }

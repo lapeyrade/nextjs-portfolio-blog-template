@@ -24,3 +24,52 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Focus visibility for keyboard users */
+*:focus-visible {
+  outline: 3px solid #a855f7;
+  /* purple-500 */
+  outline-offset: 3px;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Skip link styling */
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(-100%);
+  padding: 0.75rem 1rem;
+  background: #111827;
+  /* gray-900 */
+  color: white;
+  z-index: 50;
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+/* Respect reduced motion preference globally */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Stop spinners if any */
+  .animate-spin {
+    animation: none !important;
+  }
+}

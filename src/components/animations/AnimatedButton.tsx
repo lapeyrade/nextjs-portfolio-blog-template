@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { ReactNode } from 'react'
 
 interface AnimatedButtonProps {
@@ -21,6 +21,7 @@ export default function AnimatedButton({
     disabled = false
 }: AnimatedButtonProps) {
     const Component = href ? motion.a : motion.button
+    const prefersReducedMotion = useReducedMotion()
 
     const props = href
         ? { href }
@@ -29,9 +30,9 @@ export default function AnimatedButton({
     return (
         <Component
             className={className}
-            whileHover={disabled ? {} : { scale: 1.05 }}
-            whileTap={disabled ? {} : { scale: 0.95 }}
-            transition={{ duration: 0.2 }}
+            whileHover={disabled || prefersReducedMotion ? {} : { scale: 1.05 }}
+            whileTap={disabled || prefersReducedMotion ? {} : { scale: 0.95 }}
+            transition={{ duration: prefersReducedMotion ? 0.01 : 0.2 }}
             {...props}
         >
             {children}

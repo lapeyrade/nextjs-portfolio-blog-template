@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { ReactNode } from 'react'
 
 interface StaggerItemProps {
@@ -9,8 +9,9 @@ interface StaggerItemProps {
 }
 
 export default function StaggerItem({ children, className = '' }: StaggerItemProps) {
+    const prefersReducedMotion = useReducedMotion()
     const itemVariants = {
-        hidden: { opacity: 0, y: 20 },
+        hidden: prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 20 },
         visible: {
             opacity: 1,
             y: 0,
@@ -21,7 +22,7 @@ export default function StaggerItem({ children, className = '' }: StaggerItemPro
         <motion.div
             className={className}
             variants={itemVariants}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: prefersReducedMotion ? 0.01 : 0.6 }}
         >
             {children}
         </motion.div>
