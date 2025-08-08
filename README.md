@@ -89,6 +89,7 @@ pnpm lint
 
 - **Responsive Design**: Mobile-first approach with Tailwind breakpoints
 - **Modern UI**: Gradient backgrounds, glassmorphism effects, smooth animations
+- **Performance Monitoring**: Client-side Web Vitals reported to `/api/web-vitals` and logged on the server
 - **Navigation**: Smooth scrolling navigation with anchor links
 - **Sections**: Hero, About, Projects, Contact, Footer
 - **Contact Form**: Fully functional form with validation, spam protection, and email integration
@@ -151,8 +152,8 @@ Consider implementing these features:
 - [x] Dynamically display the year in the footer (not 2024 hardcoded)
 - [x] Blog section with MDX
 - [x] Animation library integration (Framer Motion)
+- [x] Performance monitoring with Web Vitals
 - [ ] Dark/light mode toggle
-- [ ] Performance monitoring
 - [ ] SEO optimization
 - [ ] Analytics integration
 - [ ] add a global search bar for the site
