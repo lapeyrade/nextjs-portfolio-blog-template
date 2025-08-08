@@ -4,6 +4,8 @@ import { ReactNode } from 'react'
 import { getBlogPost, getBlogPostSlugs } from '@/lib/blog'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { PageTransition, FadeInUp, ScrollReveal, AnimatedButton } from '@/components/animations'
+import type { Metadata } from 'next'
+import { absoluteUrl } from '@/lib/seo'
 
 interface BlogPostPageProps {
     params: Promise<{
@@ -47,19 +49,35 @@ export async function generateStaticParams() {
     }))
 }
 
-export async function generateMetadata({ params }: BlogPostPageProps) {
+export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
     const { slug } = await params
     const post = getBlogPost(slug)
 
     if (!post) {
-        return {
-            title: 'Post Not Found',
-        }
+        return { title: 'Post Not Found' }
     }
 
+    const url = absoluteUrl(`/blog/${slug}`)
+    const title = post.title
+    const description = post.description || `Read ${post.title} on the blog.`
+
     return {
-        title: post.title,
-        description: post.description,
+        title,
+        description,
+        alternates: { canonical: url },
+        openGraph: {
+            type: 'article',
+            url,
+            title,
+            description,
+            authors: post.author ? [post.author] : undefined,
+            tags: post.tags && post.tags.length > 0 ? post.tags : undefined,
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title,
+            description,
+        },
     }
 }
 
@@ -71,9 +89,21 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         notFound()
     }
 
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: post.title,
+        datePublished: post.date,
+        author: post.author ? { '@type': 'Person', name: post.author } : undefined,
+        url: absoluteUrl(`/blog/${slug}`),
+        description: post.description,
+        keywords: post.tags?.join(', '),
+    }
+
     return (
         <PageTransition>
             <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+                <script type="application/ld+json" suppressHydrationWarning>{JSON.stringify(jsonLd)}</script>
                 {/* Navigation */}
                 <nav className="p-6">
                     <div className="max-w-6xl mx-auto flex justify-between items-center">

@@ -153,11 +153,11 @@ Consider implementing these features:
 - [x] Blog section with MDX
 - [x] Animation library integration (Framer Motion)
 - [x] Performance monitoring with Web Vitals
-- [ ] Dark/light mode toggle
 - [ ] SEO optimization
 - [ ] Analytics integration
-- [ ] add a global search bar for the site
+- [ ] Add a global search bar for the site
 - [ ] Security audit and hardening
+- [ ] Dark/light mode toggle
 
 ## 📝 Notes for AI Development
 
