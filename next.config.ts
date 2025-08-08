@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ['@heroicons/react'],
   },
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production' ? { exclude: ['error', 'warn'] } : false,
+  },
 }
 
 const withMDX = createMDX({
