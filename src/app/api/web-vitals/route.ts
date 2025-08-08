@@ -22,7 +22,6 @@ export async function POST(request: Request) {
         }
 
         // Log to server (view in terminal/server logs). In production, forward to your APM of choice.
-        // eslint-disable-next-line no-console
         console.log('[WebVitals API]', {
             name: data.name,
             value: data.value,
@@ -34,7 +33,7 @@ export async function POST(request: Request) {
         })
 
         return NextResponse.json({ ok: true })
-    } catch (error) {
+    } catch {
         return NextResponse.json({ ok: false, error: 'Malformed JSON' }, { status: 400 })
     }
 }
