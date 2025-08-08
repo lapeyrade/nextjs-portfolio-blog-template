@@ -15,18 +15,34 @@ A modern, responsive portfolio website built with Next.js 15, TypeScript, and Ta
 ```
 porfolio/
 ├── src/
-│   └── app/
-│       ├── globals.css          # Global styles with Tailwind imports
-│       ├── layout.tsx           # Root layout component
-│       └── page.tsx             # Homepage component
-├── public/                      # Static assets
-├── .gitignore                   # Git ignore rules
-├── eslint.config.mjs           # ESLint configuration
-├── next.config.ts              # Next.js configuration
-├── package.json                # Dependencies and scripts
-├── postcss.config.mjs          # PostCSS configuration for Tailwind
-├── tailwind.config.ts          # Tailwind CSS configuration
-└── tsconfig.json               # TypeScript configuration
+│   ├── app/
+│   │   ├── globals.css                        # Global styles (Tailwind v4 CSS-first)
+│   │   ├── layout.tsx                         # Root layout + Web Vitals injector
+│   │   ├── page.tsx                           # Homepage
+│   │   ├── sitemap.ts                         # Sitemap generator
+│   │   ├── robots.ts                          # Robots.txt generator
+│   │   ├── opengraph-image.tsx                # Default OG image (1200x630)
+│   │   ├── icon.tsx                           # Favicon generator (served as /favicon.ico)
+│   │   ├── apple-icon.tsx                     # Apple touch icon (180x180)
+│   │   └── blog/
+│   │       └── [slug]/
+│   │           ├── page.tsx                   # Blog post page (metadata + JSON-LD)
+│   │           └── opengraph-image.tsx        # Per-post OG image
+│   ├── components/
+│   │   └── monitoring/
+│   │       └── WebVitals.tsx                  # Sends Web Vitals to /api/web-vitals
+│   ├── lib/
+│   │   ├── blog.ts                            # Blog utilities (MDX, frontmatter)
+│   │   └── seo.ts                             # SEO helpers (siteUrl, absoluteUrl)
+│   └── app/api/
+│       └── web-vitals/route.ts                # Receives Web Vitals metrics
+├── .gitignore                                 # Git ignore rules
+├── eslint.config.mjs                          # ESLint configuration
+├── next.config.ts                             # Next.js configuration
+├── package.json                               # Dependencies and scripts
+├── pnpm-lock.yaml                             # PNPM lockfile
+├── postcss.config.mjs                         # PostCSS configuration for Tailwind v4
+└── tsconfig.json                              # TypeScript configuration
 ```
 
 ## 🛠️ Development Guidelines
@@ -90,6 +106,7 @@ pnpm lint
 - **Responsive Design**: Mobile-first approach with Tailwind breakpoints
 - **Modern UI**: Gradient backgrounds, glassmorphism effects, smooth animations
 - **Performance Monitoring**: Client-side Web Vitals reported to `/api/web-vitals` and logged on the server
+- **SEO Optimization**: Global and per-post metadata, canonical URLs, Open Graph & Twitter cards, sitemap (`/sitemap.xml`), robots (`/robots.txt`), JSON-LD for blog posts, default and per-post OG images, favicon and Apple touch icon
 - **Navigation**: Smooth scrolling navigation with anchor links
 - **Sections**: Hero, About, Projects, Contact, Footer
 - **Contact Form**: Fully functional form with validation, spam protection, and email integration
@@ -153,11 +170,20 @@ Consider implementing these features:
 - [x] Blog section with MDX
 - [x] Animation library integration (Framer Motion)
 - [x] Performance monitoring with Web Vitals
-- [ ] SEO optimization
+- [x] SEO optimization (metadata, sitemap, robots, JSON-LD, OG images, icons)
 - [ ] Analytics integration
 - [ ] Add a global search bar for the site
 - [ ] Security audit and hardening
 - [ ] Dark/light mode toggle
+
+## 🔧 Environment Variables
+
+Set these in your Vercel project (Production & Preview):
+
+- `RESEND_API_KEY` – Resend API key for contact form emails
+- `CONTACT_EMAIL` – Recipient email for contact form
+- `FROM_EMAIL` – Verified sender for Resend
+- `NEXT_PUBLIC_SITE_URL` – Public site URL (e.g., https://yourdomain.com) used for canonical/OG URLs
 
 ## 📝 Notes for AI Development
 
