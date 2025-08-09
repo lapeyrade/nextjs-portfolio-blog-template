@@ -105,10 +105,36 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         keywords: post.tags?.join(', '),
     }
 
+    const breadcrumbLd = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+            {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: absoluteUrl('/'),
+            },
+            {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Blog',
+                item: absoluteUrl('/blog'),
+            },
+            {
+                '@type': 'ListItem',
+                position: 3,
+                name: post.title,
+                item: absoluteUrl(`/blog/${slug}`),
+            },
+        ],
+    }
+
     return (
         <PageTransition>
             <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
                 <script type="application/ld+json" suppressHydrationWarning>{JSON.stringify(jsonLd)}</script>
+                <script type="application/ld+json" suppressHydrationWarning>{JSON.stringify(breadcrumbLd)}</script>
                 {/* Navigation */}
                 <nav className="p-6">
                     <div className="max-w-6xl mx-auto flex justify-between items-center">

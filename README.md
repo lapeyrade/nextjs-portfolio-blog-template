@@ -107,7 +107,7 @@ pnpm lint
 - **Modern UI**: Gradient backgrounds, glassmorphism effects, smooth animations
 - **Performance Monitoring**: Client-side Web Vitals reported to `/api/web-vitals` and logged on the server
 - **Blog MDX polish**: GFM support (tables, task lists), Shiki-based code highlighting via rehype-pretty-code, callouts/admonitions (NOTE/TIP/WARNING/etc.), and automatic mapping of Markdown `img` → `next/image`.
-- **SEO + Feeds**: Global and per-post metadata, canonical URLs, Open Graph & Twitter cards, sitemap (`/sitemap.xml`), robots (`/robots.txt`), JSON-LD for blog posts, default and per-post OG images, favicon and Apple touch icon, plus RSS (`/rss.xml`) and JSON Feed (`/feed.json`).
+- **SEO + Feeds**: Global and per-post metadata, canonical URLs, Open Graph & Twitter cards, sitemap (`/sitemap.xml`), robots (`/robots.txt`), JSON-LD for blog posts, WebSite + BreadcrumbList JSON-LD, default and per-post OG images, favicon and Apple touch icon, plus RSS (`/rss.xml`) and JSON Feed (`/feed.json`).
 - **Navigation**: Smooth scrolling navigation with anchor links
 - **Sections**: Hero, About, Projects, Contact, Footer
 - **Contact Form**: Fully functional form with validation, spam protection, and email integration
@@ -187,13 +187,13 @@ Consider implementing these features:
 - [x] Blog tags, filters, and pagination (e.g., `/blog/tag/[tag]` and paginated lists)
 - [x] MDX polish: code highlighting (Shiki/rehype-pretty-code), callouts/admonitions, map Markdown `img` → `next/image`
 - [x] PWA: `manifest.webmanifest`, theme-color, offline fallback, Add to Home Screen
-- [ ] Security: rate-limit `/api/contact` (e.g., Upstash), optional hCaptcha, verify Resend DKIM
-- [ ] Error monitoring: Sentry (frontend + API traces, optional session replay)
+- [x] Structured data: add `WebSite` and `BreadcrumbList` JSON-LD
+- [ ] Sitemap: real `lastModified` from frontmatter or file mtime
 - [ ] CI/CD: GitHub Actions for lint/build/test on PRs
 - [ ] Internationalization (i18n) with `next-intl`
-- [ ] Structured data: add `WebSite` and `BreadcrumbList` JSON-LD
-- [ ] Sitemap: real `lastModified` from frontmatter or file mtime
 - [ ] Dev DX: configure `experimental.allowedDevOrigins` in `next.config.ts`
+- [ ] Security: rate-limit `/api/contact` (e.g., Upstash), optional hCaptcha, verify Resend DKIM
+- [ ] Error monitoring: Sentry (frontend + API traces, optional session replay)
 - [ ] Global search (site-wide) with FlexSearch/Lunr and a `/search` page
 
 ## 🔧 Environment Variables

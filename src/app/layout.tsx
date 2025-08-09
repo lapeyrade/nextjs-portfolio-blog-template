@@ -52,6 +52,22 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              url: siteUrl,
+              name: 'Portfolio',
+              potentialAction: {
+                '@type': 'SearchAction',
+                target: `${siteUrl}/search?q={search_term_string}`,
+                'query-input': 'required name=search_term_string',
+              },
+            }),
+          }}
+        />
         <a href="#main-content" className="skip-link">Skip to content</a>
         <WebVitals />
         <ClientProviders />
