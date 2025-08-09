@@ -11,6 +11,8 @@ export interface BlogPost {
     author: string
     tags: string[]
     readingTime: string
+    readingTimeMinutes: number
+    wordCount: number
     content: string
     lastModified: string
 }
@@ -31,6 +33,17 @@ function normalizeToIsoString(input: string | number | Date | undefined): string
     if (input === undefined) return null
     const date = input instanceof Date ? input : new Date(input)
     return Number.isNaN(date.getTime()) ? null : date.toISOString()
+}
+
+function computeReadingMetrics(content: string): { readingTimeText: string; readingTimeMinutes: number; wordCount: number } {
+    const base = readingTime(content)
+    // Heuristic: count markdown images and add ~12s each
+    const imageMatches = content.match(/!\[[^\]]*\]\([^\)]+\)/g) || []
+    const extraSeconds = imageMatches.length * 12
+    const adjustedMinutes = base.minutes + extraSeconds / 60
+    const readingTimeMinutes = Math.max(1, Math.round(adjustedMinutes))
+    const readingTimeText = `${readingTimeMinutes} min read`
+    return { readingTimeText, readingTimeMinutes, wordCount: base.words }
 }
 
 const blogDirectory = path.join(process.cwd(), 'src/content/blog')
@@ -63,8 +76,8 @@ export function getAllBlogPosts(): BlogPost[] {
                 normalizeToIsoString(fm.updateDate)
             const lastModified: string = updatedFromFm ?? stats.mtime.toISOString()
 
-            // Calculate reading time
-            const readingTimeResult = readingTime(matterResult.content)
+            // Calculate reading metrics
+            const { readingTimeText, readingTimeMinutes, wordCount } = computeReadingMetrics(matterResult.content)
 
             return {
                 slug,
@@ -73,7 +86,9 @@ export function getAllBlogPosts(): BlogPost[] {
                 date: fm.date || new Date().toISOString(),
                 author: fm.author || 'Anonymous',
                 tags: fm.tags || [],
-                readingTime: readingTimeResult.text,
+                readingTime: readingTimeText,
+                readingTimeMinutes,
+                wordCount,
                 content: matterResult.content,
                 lastModified,
             } as BlogPost
@@ -107,7 +122,7 @@ export function getBlogPost(slug: string): BlogPost | null {
             normalizeToIsoString(fm.modified) ||
             normalizeToIsoString(fm.updateDate)
         const lastModified: string = updatedFromFm ?? stats.mtime.toISOString()
-        const readingTimeResult = readingTime(matterResult.content)
+        const { readingTimeText, readingTimeMinutes, wordCount } = computeReadingMetrics(matterResult.content)
 
         return {
             slug,
@@ -116,7 +131,9 @@ export function getBlogPost(slug: string): BlogPost | null {
             date: fm.date || new Date().toISOString(),
             author: fm.author || 'Anonymous',
             tags: fm.tags || [],
-            readingTime: readingTimeResult.text,
+            readingTime: readingTimeText,
+            readingTimeMinutes,
+            wordCount,
             content: matterResult.content,
             lastModified,
         }

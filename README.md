@@ -188,8 +188,8 @@ Consider implementing these features:
 - [x] MDX polish: code highlighting (Shiki/rehype-pretty-code), callouts/admonitions, map Markdown `img` → `next/image`
 - [x] PWA: `manifest.webmanifest`, theme-color, offline fallback, Add to Home Screen
 - [x] Structured data: add `WebSite` and `BreadcrumbList` JSON-LD
-- [ ] Sitemap: real `lastModified` from frontmatter or file mtime
-- [ ] Words count and improve reading time calculation to blog posts
+- [x] Sitemap: real `lastModified` from frontmatter or file mtime
+- [x] Words count and improve reading time calculation to blog posts
 - [ ] CI/CD: GitHub Actions for lint/build/test on PRs
 - [ ] Internationalization (i18n) with `next-intl`
 - [ ] Dev DX: configure `experimental.allowedDevOrigins` in `next.config.ts`

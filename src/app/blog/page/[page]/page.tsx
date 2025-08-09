@@ -78,7 +78,7 @@ export default async function BlogPaginatedPage({ params }: { params: Promise<Pa
                                                         day: 'numeric'
                                                     })}
                                                 </time>
-                                                <span>{post.readingTime}</span>
+                                                <span>{post.readingTime} • {post.wordCount.toLocaleString()} words</span>
                                             </div>
                                             <h2 className="text-xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors">
                                                 <Link href={`/blog/${post.slug}`}>{post.title}</Link>

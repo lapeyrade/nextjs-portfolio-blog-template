@@ -185,7 +185,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                                         })}
                                     </time>
                                     <span>•</span>
-                                    <span>{post.readingTime}</span>
+                                    <span>{post.readingTime} • {post.wordCount.toLocaleString()} words</span>
                                     <span>•</span>
                                     <span>By {post.author}</span>
                                 </div>
