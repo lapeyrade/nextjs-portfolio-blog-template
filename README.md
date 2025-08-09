@@ -114,6 +114,7 @@ pnpm lint
 - **Interactive Elements**: Hover effects, button animations, card transforms
 - **Typography**: Inter font with proper hierarchy
 - **Color Scheme**: Purple/pink gradient theme with dark background
+ - **PWA**: Installable app with `/manifest.webmanifest`, theme color, offline fallback (`/offline`), dynamic icons (`/icon-192`, `/icon-512`, `/apple-icon`), and service worker caching
 
 ## ♿ Accessibility
 
@@ -185,7 +186,7 @@ Consider implementing these features:
 - [x] RSS and JSON feeds for blog (`/rss.xml`, `/feed.json`)
 - [x] Blog tags, filters, and pagination (e.g., `/blog/tag/[tag]` and paginated lists)
 - [x] MDX polish: code highlighting (Shiki/rehype-pretty-code), callouts/admonitions, map Markdown `img` → `next/image`
-- [ ] PWA: `manifest.webmanifest`, theme-color, offline fallback, Add to Home Screen
+- [x] PWA: `manifest.webmanifest`, theme-color, offline fallback, Add to Home Screen
 - [ ] Security: rate-limit `/api/contact` (e.g., Upstash), optional hCaptcha, verify Resend DKIM
 - [ ] Error monitoring: Sentry (frontend + API traces, optional session replay)
 - [ ] CI/CD: GitHub Actions for lint/build/test on PRs

@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import WebVitals from '@/components/monitoring/WebVitals'
@@ -37,6 +37,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
+  manifest: '/manifest.webmanifest',
+}
+
+export const viewport: Viewport = {
+  themeColor: '#8b5cf6',
 }
 
 export default function RootLayout({
@@ -55,6 +60,14 @@ export default function RootLayout({
         <main id="main-content" tabIndex={-1}>
           {children}
         </main>
+        <script dangerouslySetInnerHTML={{
+          __html: `
+          if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+              navigator.serviceWorker.register('/service-worker.js').catch(function () {})
+            })
+          }
+        ` }} />
       </body>
     </html>
   )

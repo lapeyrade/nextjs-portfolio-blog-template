@@ -9,6 +9,26 @@ const nextConfig: NextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production' ? { exclude: ['error', 'warn'] } : false,
   },
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [{ key: 'Service-Worker-Allowed', value: '/' }],
+      },
+    ]
+  },
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: '/service-worker.js',
+          destination: '/src/app/service-worker.js',
+        },
+      ],
+      afterFiles: [],
+      fallback: [],
+    }
+  },
 }
 
 const withMDX = createMDX({
