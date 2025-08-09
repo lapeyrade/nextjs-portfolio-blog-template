@@ -4,7 +4,7 @@ import { getAllBlogPosts } from '@/lib/blog'
 
 export default function sitemap(): MetadataRoute.Sitemap {
     const posts = getAllBlogPosts()
-    const lastModified = new Date().toISOString()
+    const nowIso = new Date().toISOString()
 
     const staticRoutes: MetadataRoute.Sitemap = [
         '',
@@ -12,14 +12,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
         '/contact',
     ].map((path) => ({
         url: `${siteUrl}${path}`,
-        lastModified,
+        lastModified: nowIso,
         changeFrequency: 'weekly',
         priority: path === '' ? 1 : 0.7,
     }))
 
     const blogRoutes: MetadataRoute.Sitemap = posts.map((post) => ({
         url: `${siteUrl}/blog/${post.slug}`,
-        lastModified,
+        lastModified: post.lastModified || post.date || nowIso,
         changeFrequency: 'monthly',
         priority: 0.6,
     }))

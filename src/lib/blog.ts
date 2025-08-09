@@ -12,6 +12,25 @@ export interface BlogPost {
     tags: string[]
     readingTime: string
     content: string
+    lastModified: string
+}
+
+interface BlogFrontmatter {
+    title?: string
+    description?: string
+    date?: string
+    author?: string
+    tags?: string[]
+    updated?: string | number | Date
+    lastModified?: string | number | Date
+    modified?: string | number | Date
+    updateDate?: string | number | Date
+}
+
+function normalizeToIsoString(input: string | number | Date | undefined): string | null {
+    if (input === undefined) return null
+    const date = input instanceof Date ? input : new Date(input)
+    return Number.isNaN(date.getTime()) ? null : date.toISOString()
 }
 
 const blogDirectory = path.join(process.cwd(), 'src/content/blog')
@@ -35,19 +54,28 @@ export function getAllBlogPosts(): BlogPost[] {
 
             // Use gray-matter to parse the post metadata section
             const matterResult = matter(fileContents)
+            const stats = fs.statSync(fullPath)
+            const fm = matterResult.data as BlogFrontmatter
+            const updatedFromFm =
+                normalizeToIsoString(fm.updated) ||
+                normalizeToIsoString(fm.lastModified) ||
+                normalizeToIsoString(fm.modified) ||
+                normalizeToIsoString(fm.updateDate)
+            const lastModified: string = updatedFromFm ?? stats.mtime.toISOString()
 
             // Calculate reading time
             const readingTimeResult = readingTime(matterResult.content)
 
             return {
                 slug,
-                title: matterResult.data.title || 'Untitled',
-                description: matterResult.data.description || '',
-                date: matterResult.data.date || new Date().toISOString(),
-                author: matterResult.data.author || 'Anonymous',
-                tags: matterResult.data.tags || [],
+                title: fm.title || 'Untitled',
+                description: fm.description || '',
+                date: fm.date || new Date().toISOString(),
+                author: fm.author || 'Anonymous',
+                tags: fm.tags || [],
                 readingTime: readingTimeResult.text,
                 content: matterResult.content,
+                lastModified,
             } as BlogPost
         })
 
@@ -71,17 +99,26 @@ export function getBlogPost(slug: string): BlogPost | null {
 
         const fileContents = fs.readFileSync(fullPath, 'utf8')
         const matterResult = matter(fileContents)
+        const stats = fs.statSync(fullPath)
+        const fm = matterResult.data as BlogFrontmatter
+        const updatedFromFm =
+            normalizeToIsoString(fm.updated) ||
+            normalizeToIsoString(fm.lastModified) ||
+            normalizeToIsoString(fm.modified) ||
+            normalizeToIsoString(fm.updateDate)
+        const lastModified: string = updatedFromFm ?? stats.mtime.toISOString()
         const readingTimeResult = readingTime(matterResult.content)
 
         return {
             slug,
-            title: matterResult.data.title || 'Untitled',
-            description: matterResult.data.description || '',
-            date: matterResult.data.date || new Date().toISOString(),
-            author: matterResult.data.author || 'Anonymous',
-            tags: matterResult.data.tags || [],
+            title: fm.title || 'Untitled',
+            description: fm.description || '',
+            date: fm.date || new Date().toISOString(),
+            author: fm.author || 'Anonymous',
+            tags: fm.tags || [],
             readingTime: readingTimeResult.text,
             content: matterResult.content,
+            lastModified,
         }
     } catch (error) {
         console.error('Error reading blog post:', error)
