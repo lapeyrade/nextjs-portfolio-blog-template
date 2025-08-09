@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { getAllBlogPosts } from '@/lib/blog'
+import { getAllBlogPosts, getAllTags, paginatePosts } from '@/lib/blog'
 import { PageTransition, FadeInUp, ScrollReveal, StaggerContainer, StaggerItem, AnimatedButton } from '@/components/animations'
 
 export const metadata = {
@@ -7,8 +7,12 @@ export const metadata = {
     description: 'Thoughts, tutorials, and insights about web development',
 }
 
+const PAGE_SIZE = 6
+
 export default function BlogPage() {
-    const posts = getAllBlogPosts()
+    const allPosts = getAllBlogPosts()
+    const { posts, totalPages } = paginatePosts(allPosts, 1, PAGE_SIZE)
+    const tags = getAllTags()
 
     return (
         <PageTransition>
@@ -78,9 +82,22 @@ export default function BlogPage() {
                     </div>
                 </section>
 
-                {/* Blog Posts */}
+                {/* Tag Filter + Blog Posts */}
                 <section className="px-6 py-16">
                     <div className="max-w-6xl mx-auto">
+                        {tags.length > 0 && (
+                            <div className="mb-8 flex flex-wrap gap-2">
+                                {tags.map(({ tag, count }) => (
+                                    <Link
+                                        key={tag}
+                                        href={`/blog/tag/${encodeURIComponent(tag)}`}
+                                        className="px-3 py-1 text-sm bg-purple-500/20 text-purple-300 rounded-full hover:bg-purple-500/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
+                                    >
+                                        #{tag} <span className="opacity-70">({count})</span>
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
                         {posts.length === 0 ? (
                             <ScrollReveal>
                                 <div className="text-center py-16">
@@ -125,12 +142,13 @@ export default function BlogPage() {
                                             {post.tags.length > 0 && (
                                                 <div className="flex flex-wrap gap-2 mb-4">
                                                     {post.tags.map((tag) => (
-                                                        <span
+                                                        <Link
                                                             key={tag}
-                                                            className="px-2 py-1 text-xs bg-purple-500/20 text-purple-300 rounded-full"
+                                                            href={`/blog/tag/${encodeURIComponent(tag)}`}
+                                                            className="px-2 py-1 text-xs bg-purple-500/20 text-purple-300 rounded-full hover:bg-purple-500/30"
                                                         >
                                                             {tag}
-                                                        </span>
+                                                        </Link>
                                                     ))}
                                                 </div>
                                             )}
@@ -148,6 +166,18 @@ export default function BlogPage() {
                                     </StaggerItem>
                                 ))}
                             </StaggerContainer>
+                        )}
+
+                        {totalPages > 1 && (
+                            <div className="mt-12 flex items-center justify-center gap-4">
+                                <span className="text-gray-400 text-sm">Page 1 of {totalPages}</span>
+                                <Link
+                                    href="/blog/page/2"
+                                    className="inline-flex items-center rounded-md border border-purple-500/40 px-3 py-2 text-sm text-purple-300 hover:bg-purple-500/10"
+                                >
+                                    Next →
+                                </Link>
+                            </div>
                         )}
                     </div>
                 </section>

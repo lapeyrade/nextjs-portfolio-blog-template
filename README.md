@@ -106,6 +106,7 @@ pnpm lint
 - **Responsive Design**: Mobile-first approach with Tailwind breakpoints
 - **Modern UI**: Gradient backgrounds, glassmorphism effects, smooth animations
 - **Performance Monitoring**: Client-side Web Vitals reported to `/api/web-vitals` and logged on the server
+- **Blog MDX polish**: GFM support (tables, task lists), Shiki-based code highlighting via rehype-pretty-code, callouts/admonitions (NOTE/TIP/WARNING/etc.), and automatic mapping of Markdown `img` → `next/image`.
 - **SEO + Feeds**: Global and per-post metadata, canonical URLs, Open Graph & Twitter cards, sitemap (`/sitemap.xml`), robots (`/robots.txt`), JSON-LD for blog posts, default and per-post OG images, favicon and Apple touch icon, plus RSS (`/rss.xml`) and JSON Feed (`/feed.json`).
 - **Navigation**: Smooth scrolling navigation with anchor links
 - **Sections**: Hero, About, Projects, Contact, Footer
@@ -182,9 +183,8 @@ Consider implementing these features:
 - [x] Custom pages: improved `not-found` and error pages with helpful navigation
 - [x] Accessibility: axe/Lighthouse pass, `prefers-reduced-motion`, focus-visible states
 - [x] RSS and JSON feeds for blog (`/rss.xml`, `/feed.json`)
-- [ ] Convert the remaining js code to ts
-- [ ] Blog tags, filters, and pagination (e.g., `/blog/tag/[tag]` and paginated lists)
-- [ ] MDX polish: code highlighting (Shiki/rehype-prism), callouts/admonitions, map Markdown `img` → `next/image`
+- [x] Blog tags, filters, and pagination (e.g., `/blog/tag/[tag]` and paginated lists)
+- [x] MDX polish: code highlighting (Shiki/rehype-pretty-code), callouts/admonitions, map Markdown `img` → `next/image`
 - [ ] PWA: `manifest.webmanifest`, theme-color, offline fallback, Add to Home Screen
 - [ ] Security: rate-limit `/api/contact` (e.g., Upstash), optional hCaptcha, verify Resend DKIM
 - [ ] Error monitoring: Sentry (frontend + API traces, optional session replay)

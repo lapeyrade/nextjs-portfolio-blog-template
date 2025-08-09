@@ -3,9 +3,13 @@ import { notFound } from 'next/navigation'
 import { ReactNode } from 'react'
 import { getBlogPost, getBlogPostSlugs } from '@/lib/blog'
 import { MDXRemote } from 'next-mdx-remote/rsc'
+import remarkGfm from 'remark-gfm'
+import rehypePrettyCode from 'rehype-pretty-code'
+import rehypeCallouts from '@/lib/rehypeCallouts'
 import type { Metadata } from 'next'
 import { absoluteUrl } from '@/lib/seo'
 import { PageTransition, FadeInUp, ScrollReveal, AnimatedButton } from '@/components/animations'
+import MdxImage from '@/components/mdx/MdxImage'
 
 interface BlogPostPageProps {
     params: Promise<{
@@ -40,6 +44,7 @@ const components = {
     a: (props: MDXComponentProps) => (
         <a className="text-purple-400 hover:text-purple-300 underline transition-colors" {...props} />
     ),
+    img: (props: MDXComponentProps) => <MdxImage {...(props as unknown as { src?: string; alt?: string; width?: number; height?: number; className?: string })} />,
 }
 
 export async function generateStaticParams() {
@@ -172,12 +177,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                                 <FadeInUp delay={0.8}>
                                     <div className="flex flex-wrap gap-2">
                                         {post.tags.map((tag) => (
-                                            <span
+                                            <Link
                                                 key={tag}
-                                                className="px-3 py-1 text-sm bg-purple-500/20 text-purple-300 rounded-full"
+                                                href={`/blog/tag/${encodeURIComponent(tag)}`}
+                                                className="px-3 py-1 text-sm bg-purple-500/20 text-purple-300 rounded-full hover:bg-purple-500/30"
                                             >
                                                 {tag}
-                                            </span>
+                                            </Link>
                                         ))}
                                     </div>
                                 </FadeInUp>
@@ -187,7 +193,16 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         {/* Article Content */}
                         <ScrollReveal delay={0.2}>
                             <div className="prose prose-lg max-w-none">
-                                <MDXRemote source={post.content} components={components} />
+                                <MDXRemote
+                                    source={post.content}
+                                    components={components}
+                                    options={{
+                                        mdxOptions: {
+                                            remarkPlugins: [remarkGfm],
+                                            rehypePlugins: [[rehypePrettyCode, { theme: 'github-dark' }], rehypeCallouts],
+                                        },
+                                    }}
+                                />
                             </div>
                         </ScrollReveal>
                     </div>

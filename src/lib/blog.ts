@@ -99,3 +99,42 @@ export function getBlogPostSlugs(): string[] {
         .filter((fileName) => fileName.endsWith('.mdx'))
         .map((fileName) => fileName.replace(/\.mdx$/, ''))
 }
+
+export function getPostsByTag(tag: string): BlogPost[] {
+    const normalized = tag.trim().toLowerCase()
+    return getAllBlogPosts().filter((post) =>
+        (post.tags || []).some((t) => String(t).trim().toLowerCase() === normalized)
+    )
+}
+
+export function getAllTags(): Array<{ tag: string; count: number }> {
+    const counts = new Map<string, number>()
+    for (const post of getAllBlogPosts()) {
+        for (const tag of post.tags || []) {
+            const key = String(tag).trim()
+            if (!key) continue
+            counts.set(key, (counts.get(key) || 0) + 1)
+        }
+    }
+    return Array.from(counts.entries())
+        .map(([tag, count]) => ({ tag, count }))
+        .sort((a, b) => (b.count - a.count) || a.tag.localeCompare(b.tag))
+}
+
+export interface PaginatedPosts {
+    posts: BlogPost[]
+    currentPage: number
+    totalPages: number
+    totalItems: number
+    pageSize: number
+}
+
+export function paginatePosts(allPosts: BlogPost[], page: number, pageSize: number): PaginatedPosts {
+    const totalItems = allPosts.length
+    const totalPages = Math.max(1, Math.ceil(totalItems / pageSize))
+    const currentPage = Math.min(Math.max(1, page), totalPages)
+    const startIndex = (currentPage - 1) * pageSize
+    const endIndex = startIndex + pageSize
+    const posts = allPosts.slice(startIndex, endIndex)
+    return { posts, currentPage, totalPages, totalItems, pageSize }
+}
