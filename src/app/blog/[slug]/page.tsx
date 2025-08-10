@@ -9,6 +9,7 @@ import rehypeCallouts from '@/lib/rehypeCallouts'
 import type { Metadata } from 'next'
 import { absoluteUrl } from '@/lib/seo'
 import { PageTransition, FadeInUp, ScrollReveal, AnimatedButton } from '@/components/animations'
+import ThemeSwitcher from '@/components/ThemeSwitcher'
 import MdxImage from '@/components/mdx/MdxImage'
 
 interface BlogPostPageProps {
@@ -33,16 +34,16 @@ const components = {
     ol: (props: MDXComponentProps) => <ol className="list-decimal list-inside text-gray-300 mb-4 space-y-2" {...props} />,
     li: (props: MDXComponentProps) => <li className="text-gray-300" {...props} />,
     blockquote: (props: MDXComponentProps) => (
-        <blockquote className="border-l-4 border-purple-500 pl-4 italic text-gray-300 bg-gray-800/50 p-4 rounded-r-lg mb-4" {...props} />
+        <blockquote className="border-l-4 border-[var(--accent)] pl-4 italic text-gray-300 bg-gray-800/50 p-4 rounded-r-lg mb-4" {...props} />
     ),
     code: (props: MDXComponentProps) => (
-        <code className="bg-gray-800 text-purple-300 px-2 py-1 rounded text-sm" {...props} />
+        <code className="bg-gray-800 text-accent px-2 py-1 rounded text-sm" {...props} />
     ),
     pre: (props: MDXComponentProps) => (
         <pre className="bg-gray-800 p-4 rounded-lg overflow-x-auto mb-4 text-gray-300" {...props} />
     ),
     a: (props: MDXComponentProps) => (
-        <a className="text-purple-400 hover:text-purple-300 underline transition-colors" {...props} />
+        <a className="text-accent underline transition-opacity hover:opacity-90" {...props} />
     ),
     img: (props: MDXComponentProps) => <MdxImage {...(props as unknown as { src?: string; alt?: string; width?: number; height?: number; className?: string })} />,
 }
@@ -132,20 +133,21 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
     return (
         <PageTransition>
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+            <div className="min-h-screen theme-surface">
                 <script type="application/ld+json" suppressHydrationWarning>{JSON.stringify(jsonLd)}</script>
                 <script type="application/ld+json" suppressHydrationWarning>{JSON.stringify(breadcrumbLd)}</script>
                 {/* Navigation */}
                 <nav className="p-6">
                     <div className="max-w-6xl mx-auto flex justify-between items-center">
-                        <Link href="/" className="text-2xl font-bold text-white hover:text-purple-400 transition-colors">
+                        <Link href="/" className="text-2xl font-bold text-white hover:text-accent transition-colors">
                             Portfolio
                         </Link>
-                        <div className="hidden md:flex space-x-8">
+                        <div className="hidden md:flex items-center space-x-8">
                             <Link href="/#about" className="text-gray-300 hover:text-white transition-colors">About</Link>
                             <Link href="/#projects" className="text-gray-300 hover:text-white transition-colors">Projects</Link>
-                            <Link href="/blog" className="text-purple-400 font-semibold">Blog</Link>
+                            <Link href="/blog" className="text-accent font-semibold">Blog</Link>
                             <Link href="/contact" className="text-gray-300 hover:text-white transition-colors">Contact</Link>
+                            <ThemeSwitcher />
                         </div>
                     </div>
                 </nav>
@@ -155,7 +157,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     <div className="max-w-4xl mx-auto">
                         <Link
                             href="/blog"
-                            className="inline-flex items-center text-purple-400 hover:text-purple-300 transition-colors mb-8"
+                            className="inline-flex items-center text-accent transition-opacity hover:opacity-90 mb-8"
                         >
                             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -206,7 +208,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                                             <Link
                                                 key={tag}
                                                 href={`/blog/tag/${encodeURIComponent(tag)}`}
-                                                className="px-3 py-1 text-sm bg-purple-500/20 text-purple-300 rounded-full hover:bg-purple-500/30"
+                                                className="px-3 py-1 text-sm bg-gray-800 text-accent rounded-full hover:bg-gray-700"
                                             >
                                                 {tag}
                                             </Link>
@@ -255,7 +257,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                                 </AnimatedButton>
                                 <AnimatedButton
                                     href="/contact"
-                                    className="inline-block bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-lg font-semibold"
+                                    className="inline-block btn-accent text-white px-6 py-3 rounded-lg font-semibold"
                                 >
                                     Get In Touch
                                 </AnimatedButton>

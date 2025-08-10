@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { getAllBlogPosts, getAllTags, paginatePosts } from '@/lib/blog'
 import { PageTransition, FadeInUp, ScrollReveal, StaggerContainer, StaggerItem, AnimatedButton } from '@/components/animations'
+import ThemeSwitcher from '@/components/ThemeSwitcher'
 
 export const metadata = {
     title: 'Blog',
@@ -16,18 +17,19 @@ export default function BlogPage() {
 
     return (
         <PageTransition>
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+            <div className="min-h-screen theme-surface">
                 {/* Navigation */}
                 <nav className="p-6">
                     <div className="max-w-6xl mx-auto flex justify-between items-center">
-                        <Link href="/" className="text-2xl font-bold text-white hover:text-purple-400 transition-colors">
+                        <Link href="/" className="text-2xl font-bold text-white hover:text-accent transition-colors">
                             Portfolio
                         </Link>
-                        <div className="hidden md:flex space-x-8">
+                        <div className="hidden md:flex items-center space-x-8">
                             <Link href="/#about" className="text-gray-300 hover:text-white transition-colors">About</Link>
                             <Link href="/#projects" className="text-gray-300 hover:text-white transition-colors">Projects</Link>
-                            <Link href="/blog" className="text-purple-400 font-semibold">Blog</Link>
+                            <Link href="/blog" className="text-accent font-semibold">Blog</Link>
                             <Link href="/contact" className="text-gray-300 hover:text-white transition-colors">Contact</Link>
+                            <ThemeSwitcher />
                         </div>
                     </div>
                 </nav>
@@ -38,7 +40,7 @@ export default function BlogPage() {
                         <FadeInUp delay={0.2}>
                             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
                                 My{' '}
-                                <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                                <span className="text-accent-gradient">
                                     Blog
                                 </span>
                             </h1>
@@ -54,7 +56,7 @@ export default function BlogPage() {
                                     href="/rss.xml"
                                     rel="alternate"
                                     type="application/rss+xml"
-                                    className="inline-flex items-center gap-2 rounded-md border border-purple-500/40 px-3 py-2 text-sm text-purple-300 hover:bg-purple-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
+                                    className="inline-flex items-center gap-2 rounded-md border border-accent px-3 py-2 text-sm text-accent hover:bg-gray-800 focus-visible:outline-none"
                                     aria-label="Subscribe via RSS"
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
@@ -68,7 +70,7 @@ export default function BlogPage() {
                                     href="/feed.json"
                                     rel="alternate"
                                     type="application/feed+json"
-                                    className="inline-flex items-center gap-2 rounded-md border border-purple-500/40 px-3 py-2 text-sm text-purple-300 hover:bg-purple-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
+                                    className="inline-flex items-center gap-2 rounded-md border border-accent px-3 py-2 text-sm text-accent hover:bg-gray-800 focus-visible:outline-none"
                                     aria-label="Subscribe via JSON Feed"
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
@@ -91,7 +93,7 @@ export default function BlogPage() {
                                     <Link
                                         key={tag}
                                         href={`/blog/tag/${encodeURIComponent(tag)}`}
-                                        className="px-3 py-1 text-sm bg-purple-500/20 text-purple-300 rounded-full hover:bg-purple-500/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
+                                        className="px-3 py-1 text-sm bg-gray-800 text-accent-strong rounded-full hover:bg-gray-700 focus-visible:outline-none"
                                     >
                                         #{tag} <span className="opacity-70">({count})</span>
                                     </Link>
@@ -107,7 +109,7 @@ export default function BlogPage() {
                                     </p>
                                     <AnimatedButton
                                         href="/"
-                                        className="inline-block bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-lg font-semibold"
+                                        className="inline-block btn-accent text-white px-6 py-3 rounded-lg font-semibold"
                                     >
                                         Back to Home
                                     </AnimatedButton>
@@ -129,7 +131,7 @@ export default function BlogPage() {
                                                 <span>{post.readingTime} • {post.wordCount.toLocaleString()} words</span>
                                             </div>
 
-                                            <h2 className="text-xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors">
+                                            <h2 className="text-xl font-bold text-white mb-3 group-hover:text-accent transition-colors">
                                                 <Link href={`/blog/${post.slug}`}>
                                                     {post.title}
                                                 </Link>
@@ -145,7 +147,7 @@ export default function BlogPage() {
                                                         <Link
                                                             key={tag}
                                                             href={`/blog/tag/${encodeURIComponent(tag)}`}
-                                                            className="px-2 py-1 text-xs bg-purple-500/20 text-purple-300 rounded-full hover:bg-purple-500/30"
+                                                            className="px-2 py-1 text-xs bg-gray-800 text-accent rounded-full hover:bg-gray-700"
                                                         >
                                                             {tag}
                                                         </Link>
@@ -155,7 +157,7 @@ export default function BlogPage() {
 
                                             <AnimatedButton
                                                 href={`/blog/${post.slug}`}
-                                                className="inline-flex items-center text-purple-400 hover:text-purple-300 transition-colors"
+                                                className="inline-flex items-center text-accent hover:opacity-90 transition-colors"
                                             >
                                                 Read more
                                                 <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -173,7 +175,7 @@ export default function BlogPage() {
                                 <span className="text-gray-400 text-sm">Page 1 of {totalPages}</span>
                                 <Link
                                     href="/blog/page/2"
-                                    className="inline-flex items-center rounded-md border border-purple-500/40 px-3 py-2 text-sm text-purple-300 hover:bg-purple-500/10"
+                                    className="inline-flex items-center rounded-md border border-accent px-3 py-2 text-sm text-accent hover:bg-gray-800"
                                 >
                                     Next →
                                 </Link>

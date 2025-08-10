@@ -50,7 +50,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="ocean">
       <body className={inter.className}>
         <script
           type="application/ld+json"
@@ -80,7 +80,9 @@ export default function RootLayout({
           __html: `
           if ('serviceWorker' in navigator) {
             window.addEventListener('load', function () {
-              navigator.serviceWorker.register('/service-worker.js').catch(function () {})
+              fetch('/service-worker.js', { method: 'HEAD' })
+                .then(function (res) { if (res.ok) { return navigator.serviceWorker.register('/service-worker.js') } })
+                .catch(function () {})
             })
           }
         ` }} />

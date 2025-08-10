@@ -132,7 +132,7 @@ export default function ContactForm() {
                                 onChange={(e) => handleChange('name', e.target.value)}
                                 className={`w-full px-4 py-3 bg-gray-800/50 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-colors ${errors.name
                                     ? 'border-red-500 focus:ring-red-500'
-                                    : 'border-gray-600 focus:ring-purple-500 focus:border-purple-500'
+                                    : 'border-gray-600 focus:ring-[var(--accent)] focus:border-[var(--accent)]'
                                     }`}
                                 placeholder="Enter your full name"
                             />
@@ -155,7 +155,7 @@ export default function ContactForm() {
                                 onChange={(e) => handleChange('email', e.target.value)}
                                 className={`w-full px-4 py-3 bg-gray-800/50 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-colors ${errors.email
                                     ? 'border-red-500 focus:ring-red-500'
-                                    : 'border-gray-600 focus:ring-purple-500 focus:border-purple-500'
+                                    : 'border-gray-600 focus:ring-[var(--accent)] focus:border-[var(--accent)]'
                                     }`}
                                 placeholder="Enter your email address"
                             />
@@ -177,7 +177,7 @@ export default function ContactForm() {
                             onChange={(e) => handleChange('subject', e.target.value)}
                             className={`w-full px-4 py-3 bg-gray-800/50 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-colors ${errors.subject
                                 ? 'border-red-500 focus:ring-red-500'
-                                : 'border-gray-600 focus:ring-purple-500 focus:border-purple-500'
+                                : 'border-gray-600 focus:ring-[var(--accent)] focus:border-[var(--accent)]'
                                 }`}
                             placeholder="What's this about?"
                         />
@@ -198,7 +198,7 @@ export default function ContactForm() {
                             onChange={(e) => handleChange('message', e.target.value)}
                             className={`w-full px-4 py-3 bg-gray-800/50 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-colors resize-none ${errors.message
                                 ? 'border-red-500 focus:ring-red-500'
-                                : 'border-gray-600 focus:ring-purple-500 focus:border-purple-500'
+                                : 'border-gray-600 focus:ring-[var(--accent)] focus:border-[var(--accent)]'
                                 }`}
                             placeholder="Tell me about your project or idea..."
                         />
@@ -227,7 +227,7 @@ export default function ContactForm() {
                         <AnimatedButton
                             type="submit"
                             disabled={isSubmitting}
-                            className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-3 px-6 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-full btn-accent text-white py-3 px-6 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {isSubmitting ? (
                                 <span className="flex items-center justify-center">

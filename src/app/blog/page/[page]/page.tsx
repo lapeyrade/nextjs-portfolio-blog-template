@@ -28,16 +28,16 @@ export default async function BlogPaginatedPage({ params }: { params: Promise<Pa
 
     return (
         <PageTransition>
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+            <div className="min-h-screen theme-surface">
                 <nav className="p-6">
                     <div className="max-w-6xl mx-auto flex justify-between items-center">
-                        <Link href="/" className="text-2xl font-bold text-white hover:text-purple-400 transition-colors">
+                        <Link href="/" className="text-2xl font-bold text-white hover:text-accent transition-colors">
                             Portfolio
                         </Link>
                         <div className="hidden md:flex space-x-8">
                             <Link href="/#about" className="text-gray-300 hover:text-white transition-colors">About</Link>
                             <Link href="/#projects" className="text-gray-300 hover:text-white transition-colors">Projects</Link>
-                            <Link href="/blog" className="text-purple-400 font-semibold">Blog</Link>
+                            <Link href="/blog" className="text-accent font-semibold">Blog</Link>
                             <Link href="/contact" className="text-gray-300 hover:text-white transition-colors">Contact</Link>
                         </div>
                     </div>
@@ -51,7 +51,7 @@ export default async function BlogPaginatedPage({ params }: { params: Promise<Pa
                                     <Link
                                         key={tag}
                                         href={`/blog/tag/${encodeURIComponent(tag)}`}
-                                        className="px-3 py-1 text-sm bg-purple-500/20 text-purple-300 rounded-full hover:bg-purple-500/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
+                                        className="px-3 py-1 text-sm bg-gray-800 text-accent-strong rounded-full hover:bg-gray-700 focus-visible:outline-none"
                                     >
                                         #{tag} <span className="opacity-70">({count})</span>
                                     </Link>
@@ -80,7 +80,7 @@ export default async function BlogPaginatedPage({ params }: { params: Promise<Pa
                                                 </time>
                                                 <span>{post.readingTime} • {post.wordCount.toLocaleString()} words</span>
                                             </div>
-                                            <h2 className="text-xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors">
+                                            <h2 className="text-xl font-bold text-white mb-3 group-hover:text-accent transition-colors">
                                                 <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                                             </h2>
                                             <p className="text-gray-300 mb-4 line-clamp-3">{post.description}</p>
@@ -90,7 +90,7 @@ export default async function BlogPaginatedPage({ params }: { params: Promise<Pa
                                                         <Link
                                                             key={tag}
                                                             href={`/blog/tag/${encodeURIComponent(tag)}`}
-                                                            className="px-2 py-1 text-xs bg-purple-500/20 text-purple-300 rounded-full hover:bg-purple-500/30"
+                                                            className="px-2 py-1 text-xs bg-gray-800 text-accent rounded-full hover:bg-gray-700"
                                                         >
                                                             {tag}
                                                         </Link>

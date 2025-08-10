@@ -1,6 +1,7 @@
 import ContactForm from '@/components/ContactForm'
 import Link from 'next/link'
 import { PageTransition, FadeInUp, ScrollReveal, AnimatedButton } from '@/components/animations'
+import ThemeSwitcher from '@/components/ThemeSwitcher'
 
 export const metadata = {
     title: 'Contact - Portfolio',
@@ -10,18 +11,19 @@ export const metadata = {
 export default function ContactPage() {
     return (
         <PageTransition>
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+            <div className="min-h-screen theme-surface">
                 {/* Navigation */}
                 <nav className="p-6">
                     <div className="max-w-6xl mx-auto flex justify-between items-center">
-                        <Link href="/" className="text-2xl font-bold text-white hover:text-purple-400 transition-colors">
+                        <Link href="/" className="text-2xl font-bold text-white hover:text-accent transition-colors">
                             Portfolio
                         </Link>
-                        <div className="hidden md:flex space-x-8">
+                        <div className="hidden md:flex items-center space-x-8">
                             <Link href="/#about" className="text-gray-300 hover:text-white transition-colors">About</Link>
                             <Link href="/#projects" className="text-gray-300 hover:text-white transition-colors">Projects</Link>
                             <Link href="/blog" className="text-gray-300 hover:text-white transition-colors">Blog</Link>
-                            <Link href="/contact" className="text-purple-400 font-semibold">Contact</Link>
+                            <Link href="/contact" className="text-accent font-semibold">Contact</Link>
+                            <ThemeSwitcher />
                         </div>
                     </div>
                 </nav>
@@ -32,7 +34,7 @@ export default function ContactPage() {
                         <FadeInUp delay={0.2}>
                             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
                                 Let&apos;s Work{' '}
-                                <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                                <span className="text-accent-gradient">
                                     Together
                                 </span>
                             </h1>
@@ -70,7 +72,7 @@ export default function ContactPage() {
                         <ScrollReveal delay={0.4}>
                             <AnimatedButton
                                 href="/#projects"
-                                className="inline-block bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-3 rounded-lg font-semibold"
+                                className="inline-block btn-accent text-white px-8 py-3 rounded-lg font-semibold"
                             >
                                 View My Work
                             </AnimatedButton>

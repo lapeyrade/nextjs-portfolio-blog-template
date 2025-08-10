@@ -190,6 +190,8 @@ Consider implementing these features:
 - [x] Structured data: add `WebSite` and `BreadcrumbList` JSON-LD
 - [x] Sitemap: real `lastModified` from frontmatter or file mtime
 - [x] Words count and improve reading time calculation to blog posts
+- [x] Add more dark themes gradient (purple, pink, blue, green, orange, red, etc.) with a toogle button
+- [ ] Add light theme gradients and use the browser default to choose between dark and light mode
 - [ ] CI/CD: GitHub Actions for lint/build/test on PRs
 - [ ] Internationalization (i18n) with `next-intl`
 - [ ] Dev DX: configure `experimental.allowedDevOrigins` in `next.config.ts`
