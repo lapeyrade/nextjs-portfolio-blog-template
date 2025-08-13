@@ -1,9 +1,7 @@
 import Link from 'next/link'
 import { getAllBlogPosts, getAllTags, paginatePosts } from '@/lib/blog'
 import { PageTransition, FadeInUp, ScrollReveal, StaggerContainer, StaggerItem, AnimatedButton } from '@/components/animations'
-import ThemeSwitcher from '@/components/ThemeSwitcher'
-import MobileMenu from '@/components/MobileMenu'
-import SiteNavLinks from '@/components/SiteNavLinks'
+import SiteHeader from '@/components/SiteHeader'
 import Footer from '@/components/Footer'
 
 export const metadata = {
@@ -22,15 +20,7 @@ export default function BlogPage() {
         <PageTransition>
             <div className="min-h-screen theme-surface">
                 {/* Navigation */}
-                <nav className="p-6">
-                    <div className="max-w-6xl mx-auto flex justify-between items-center">
-                        <Link href="/" className="text-2xl font-bold text-white hover:text-accent transition-colors">
-                            Portfolio
-                        </Link>
-                        <SiteNavLinks variant="dark" activeBlog showThemeSwitcher />
-                        <MobileMenu hideBlog />
-                    </div>
-                </nav>
+                <SiteHeader variant="dark" activeBlog />
 
                 {/* Hero Section */}
                 <section className="px-6 py-16">

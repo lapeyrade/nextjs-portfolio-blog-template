@@ -1,6 +1,8 @@
 import Footer from '@/components/Footer'
+import SiteHeader from '@/components/SiteHeader'
 import Link from 'next/link'
 import SiteNavLinks from '@/components/SiteNavLinks'
+import Search from '@/components/Search'
 import { notFound } from 'next/navigation'
 import { getAllBlogPosts, paginatePosts, getAllTags } from '@/lib/blog'
 import { PageTransition, ScrollReveal, StaggerContainer, StaggerItem, AnimatedButton } from '@/components/animations'
@@ -32,15 +34,7 @@ export default async function BlogPaginatedPage({ params }: { params: Promise<Pa
     return (
         <PageTransition>
             <div className="min-h-screen theme-surface">
-                <nav className="p-6">
-                    <div className="max-w-6xl mx-auto flex justify-between items-center">
-                        <Link href="/" className="text-2xl font-bold text-white hover:text-accent transition-colors">
-                            Portfolio
-                        </Link>
-                        <SiteNavLinks variant="dark" activeBlog />
-                        <MobileMenu hideBlog />
-                    </div>
-                </nav>
+                <SiteHeader variant="dark" activeBlog />
 
                 <section className="px-6 py-16">
                     <div className="max-w-6xl mx-auto">

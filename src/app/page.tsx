@@ -1,27 +1,13 @@
 import Link from 'next/link'
 import { PageTransition, FadeInUp, ScrollReveal, StaggerContainer, StaggerItem, AnimatedButton } from '@/components/animations'
-import ThemeSwitcher from '@/components/ThemeSwitcher'
-import MobileMenu from '@/components/MobileMenu'
+import SiteHeader from '@/components/SiteHeader'
 import Footer from '@/components/Footer'
 
 export default function Home() {
   return (
     <PageTransition>
       <div className="min-h-screen theme-surface">
-        {/* Navigation */}
-        <nav className="p-6">
-          <div className="max-w-6xl mx-auto flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-white">Portfolio</h1>
-            <div className="hidden md:flex items-center space-x-8">
-              <a href="#about" className="text-gray-300 hover:text-white transition-colors">About</a>
-              <a href="#projects" className="text-gray-300 hover:text-white transition-colors">Projects</a>
-              <Link href="/blog" className="text-gray-300 hover:text-white transition-colors">Blog</Link>
-              <Link href="/contact" className="text-gray-300 hover:text-white transition-colors">Contact</Link>
-              <ThemeSwitcher />
-            </div>
-            <MobileMenu isHome hideAbout />
-          </div>
-        </nav>
+        <SiteHeader isHome />
 
         {/* Hero Section */}
         <section className="px-6 py-20">

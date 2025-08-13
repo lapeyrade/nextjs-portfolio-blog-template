@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import { PageTransition, FadeInUp } from '@/components/animations'
-import MobileMenu from '@/components/MobileMenu'
 import Footer from '@/components/Footer'
-import SiteNavLinks from '@/components/SiteNavLinks'
+import SiteHeader from '@/components/SiteHeader'
 
 export const metadata = {
     title: 'Terms & Conditions',
@@ -13,13 +12,7 @@ export default function CGUPage() {
     return (
         <PageTransition>
             <div className="min-h-screen theme-surface">
-                <nav className="p-6">
-                    <div className="max-w-6xl mx-auto flex justify-between items-center">
-                        <Link href="/" className="text-2xl font-bold text-foreground hover:text-accent transition-colors">Portfolio</Link>
-                        <SiteNavLinks />
-                        <MobileMenu />
-                    </div>
-                </nav>
+                <SiteHeader />
 
                 <main className="px-6 py-16">
                     <div className="max-w-3xl mx-auto">

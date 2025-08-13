@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getAllTags, getPostsByTag, paginatePosts } from '@/lib/blog'
 import { PageTransition, ScrollReveal, StaggerContainer, StaggerItem, AnimatedButton, FadeInUp } from '@/components/animations'
-import SiteNavLinks from '@/components/SiteNavLinks'
+import SiteHeader from '@/components/SiteHeader'
 import MobileMenu from '@/components/MobileMenu'
 
 const PAGE_SIZE = 6
@@ -23,15 +23,7 @@ export default async function BlogTagPage({ params }: { params: Promise<{ tag: s
     return (
         <PageTransition>
             <div className="min-h-screen theme-surface">
-                <nav className="p-6">
-                    <div className="max-w-6xl mx-auto flex justify-between items-center">
-                        <Link href="/" className="text-2xl font-bold text-white hover:text-accent transition-colors">
-                            Portfolio
-                        </Link>
-                        <SiteNavLinks variant="dark" activeBlog />
-                        <MobileMenu hideBlog />
-                    </div>
-                </nav>
+                <SiteHeader variant="dark" activeBlog />
 
                 <section className="px-6 py-16">
                     <div className="max-w-6xl mx-auto">

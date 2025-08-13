@@ -1,7 +1,6 @@
 import Footer from '@/components/Footer'
 import Link from 'next/link'
-import SiteNavLinks from '@/components/SiteNavLinks'
-import MobileMenu from '@/components/MobileMenu'
+import SiteHeader from '@/components/SiteHeader'
 import { notFound } from 'next/navigation'
 import { ReactNode } from 'react'
 import { getBlogPost, getBlogPostSlugs } from '@/lib/blog'
@@ -140,15 +139,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <script type="application/ld+json" suppressHydrationWarning>{JSON.stringify(jsonLd)}</script>
                 <script type="application/ld+json" suppressHydrationWarning>{JSON.stringify(breadcrumbLd)}</script>
                 {/* Navigation */}
-                <nav className="p-6">
-                    <div className="max-w-6xl mx-auto flex justify-between items-center">
-                        <Link href="/" className="text-2xl font-bold text-white hover:text-accent transition-colors">
-                            Portfolio
-                        </Link>
-                        <SiteNavLinks variant="dark" activeBlog showThemeSwitcher />
-                        <MobileMenu hideBlog />
-                    </div>
-                </nav>
+                <SiteHeader variant="dark" activeBlog />
 
                 {/* Back to Blog */}
                 <div className="px-6 pt-6">

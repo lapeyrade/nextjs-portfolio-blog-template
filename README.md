@@ -196,13 +196,9 @@ Consider implementing these features:
 - [x] Refactor the code: the footer is not showing on all pages. Remove code redundancy.
 - [x] Fix the footer : don't underline the links, display terms, privacy, contact and below copyright
 - [x] Improve the Hamburger menu on mobile : put text on the right and reduce the menu size.
+- [x] Global search (site-wide)
 - [ ] Internationalization (i18n) with `next-intl`
-- [ ] Add light theme gradients and use the browser default to choose between dark and light mode
 - [ ] CI/CD: GitHub Actions for lint/build/test on PRs
-- [ ] Dev DX: configure `experimental.allowedDevOrigins` in `next.config.ts`
-- [ ] Security: rate-limit `/api/contact` (e.g., Upstash), optional hCaptcha, verify Resend DKIM
-- [ ] Error monitoring: Sentry (frontend + API traces, optional session replay)
-- [ ] Global search (site-wide) with FlexSearch/Lunr and a `/search` page
 
 ## 🔧 Environment Variables
 
