@@ -53,23 +53,23 @@ export default function MobileMenu({ isHome = false, hideAbout = false, hideProj
                         aria-hidden="true"
                         onClick={() => setOpen(false)}
                     />
-                    <div className="relative ml-auto h-full w-80 max-w-[85%] theme-panel p-6 shadow-xl overflow-y-auto">
-                        <nav className="space-y-1">
+                    <div className="relative ml-auto h-full w-64 sm:w-72 max-w-[75%] theme-panel p-5 shadow-xl overflow-y-auto">
+                        <nav className="space-y-1 flex flex-col items-end text-right">
                             {!hideAbout && (
-                                <Link href={aboutHref} onClick={() => setOpen(false)} className="block rounded px-3 py-2 text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">About</Link>
+                                <Link href={aboutHref} onClick={() => setOpen(false)} className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">About</Link>
                             )}
                             {!hideProjects && (
-                                <Link href={projectsHref} onClick={() => setOpen(false)} className="block rounded px-3 py-2 text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">Projects</Link>
+                                <Link href={projectsHref} onClick={() => setOpen(false)} className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">Projects</Link>
                             )}
                             {!hideBlog && (
-                                <Link href="/blog" onClick={() => setOpen(false)} className="block rounded px-3 py-2 text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">Blog</Link>
+                                <Link href="/blog" onClick={() => setOpen(false)} className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">Blog</Link>
                             )}
-                            <Link href="/contact" onClick={() => setOpen(false)} className="block rounded px-3 py-2 text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">Contact</Link>
-                            <div className="h-px my-2 bg-[var(--panel-border)]" />
-                            <Link href="/cgu" onClick={() => setOpen(false)} className="block rounded px-3 py-2 text-foreground/80 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">Terms</Link>
-                            <Link href="/privacy" onClick={() => setOpen(false)} className="block rounded px-3 py-2 text-foreground/80 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">Privacy</Link>
+                            <Link href="/contact" onClick={() => setOpen(false)} className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">Contact</Link>
+                            <div className="h-px my-2 w-full bg-[var(--panel-border)]" />
+                            <Link href="/cgu" onClick={() => setOpen(false)} className="block rounded px-2 py-2 text-sm text-foreground/80 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">Terms</Link>
+                            <Link href="/privacy" onClick={() => setOpen(false)} className="block rounded px-2 py-2 text-sm text-foreground/80 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">Privacy</Link>
                         </nav>
-                        <div className="mt-4">
+                        <div className="mt-4 ml-auto w-fit">
                             <ThemeSwitcher />
                         </div>
                     </div>
