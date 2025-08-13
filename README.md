@@ -193,8 +193,9 @@ Consider implementing these features:
 - [x] Add more dark themes gradient (purple, pink, blue, green, orange, red, etc.) with a toogle button
 - [x] Add CGU and Privacy Policy pages
 - [x] Add an hamburger menu for mobile
-- [ ] Refactor the code: the footer is not showing on all pages. Remove code redundancy.
-- [ ] Fix the footer : don't underline the links, display terms, privacy, contact and below copyright
+- [x] Refactor the code: the footer is not showing on all pages. Remove code redundancy.
+- [x] Fix the footer : don't underline the links, display terms, privacy, contact and below copyright
+- [ ] Improve the Hamburger menu on mobile : put text on the right and reduce the menu size.
 - [ ] Internationalization (i18n) with `next-intl`
 - [ ] Add light theme gradients and use the browser default to choose between dark and light mode
 - [ ] CI/CD: GitHub Actions for lint/build/test on PRs
