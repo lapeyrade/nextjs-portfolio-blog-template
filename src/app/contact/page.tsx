@@ -2,6 +2,7 @@ import ContactForm from '@/components/ContactForm'
 import Link from 'next/link'
 import { PageTransition, FadeInUp, ScrollReveal, AnimatedButton } from '@/components/animations'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
+import MobileMenu from '@/components/MobileMenu'
 
 export const metadata = {
     title: 'Contact - Portfolio',
@@ -25,6 +26,7 @@ export default function ContactPage() {
                             <Link href="/contact" className="text-accent font-semibold">Contact</Link>
                             <ThemeSwitcher />
                         </div>
+                        <MobileMenu />
                     </div>
                 </nav>
 

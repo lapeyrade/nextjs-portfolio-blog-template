@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getAllBlogPosts, paginatePosts, getAllTags } from '@/lib/blog'
 import { PageTransition, ScrollReveal, StaggerContainer, StaggerItem, AnimatedButton } from '@/components/animations'
+import MobileMenu from '@/components/MobileMenu'
 
 const PAGE_SIZE = 6
 
@@ -40,6 +41,7 @@ export default async function BlogPaginatedPage({ params }: { params: Promise<Pa
                             <Link href="/blog" className="text-accent font-semibold">Blog</Link>
                             <Link href="/contact" className="text-gray-300 hover:text-white transition-colors">Contact</Link>
                         </div>
+                        <MobileMenu hideBlog />
                     </div>
                 </nav>
 

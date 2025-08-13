@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { getAllBlogPosts, getAllTags, paginatePosts } from '@/lib/blog'
 import { PageTransition, FadeInUp, ScrollReveal, StaggerContainer, StaggerItem, AnimatedButton } from '@/components/animations'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
+import MobileMenu from '@/components/MobileMenu'
 
 export const metadata = {
     title: 'Blog',
@@ -31,6 +32,7 @@ export default function BlogPage() {
                             <Link href="/contact" className="text-gray-300 hover:text-white transition-colors">Contact</Link>
                             <ThemeSwitcher />
                         </div>
+                        <MobileMenu hideBlog />
                     </div>
                 </nav>
 

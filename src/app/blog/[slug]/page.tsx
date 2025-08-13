@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import MobileMenu from '@/components/MobileMenu'
 import { notFound } from 'next/navigation'
 import { ReactNode } from 'react'
 import { getBlogPost, getBlogPostSlugs } from '@/lib/blog'
@@ -149,6 +150,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                             <Link href="/contact" className="text-gray-300 hover:text-white transition-colors">Contact</Link>
                             <ThemeSwitcher />
                         </div>
+                        <MobileMenu hideBlog />
                     </div>
                 </nav>
 

@@ -1,0 +1,82 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import ThemeSwitcher from '@/components/ThemeSwitcher'
+
+interface MobileMenuProps {
+    isHome?: boolean
+    hideAbout?: boolean
+    hideProjects?: boolean
+    hideBlog?: boolean
+}
+
+export default function MobileMenu({ isHome = false, hideAbout = false, hideProjects = false, hideBlog = false }: MobileMenuProps) {
+    const [open, setOpen] = useState(false)
+
+    useEffect(() => {
+        const onKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') setOpen(false)
+        }
+        if (open) document.addEventListener('keydown', onKeyDown)
+        return () => document.removeEventListener('keydown', onKeyDown)
+    }, [open])
+
+    const aboutHref = isHome ? '#about' : '/'
+    const projectsHref = isHome ? '#projects' : '/#projects'
+
+    return (
+        <div className="md:hidden">
+            <button
+                type="button"
+                aria-label={open ? 'Close menu' : 'Open menu'}
+                aria-expanded={open}
+                aria-controls="mobile-menu-panel"
+                onClick={() => setOpen((v) => !v)}
+                className="inline-flex items-center justify-center rounded-md p-2 text-foreground hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--accent)]"
+            >
+                {open ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">
+                        <path fillRule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
+                    </svg>
+                ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">
+                        <path fillRule="evenodd" d="M3.75 6.75A.75.75 0 0 1 4.5 6h15a.75.75 0 0 1 0 1.5h-15a.75.75 0 0 1-.75-.75Zm0 5.25a.75.75 0 0 1 .75-.75h15a.75.75 0 0 1 0 1.5h-15a.75.75 0 0 1-.75-.75Zm.75 4.5a.75.75 0 0 0 0 1.5h15a.75.75 0 0 0 0-1.5h-15Z" clipRule="evenodd" />
+                    </svg>
+                )}
+            </button>
+
+            {open && (
+                <div id="mobile-menu-panel" className="fixed inset-0 z-50">
+                    <div
+                        className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+                        aria-hidden="true"
+                        onClick={() => setOpen(false)}
+                    />
+                    <div className="relative ml-auto h-full w-80 max-w-[85%] theme-panel p-6 shadow-xl overflow-y-auto">
+                        <nav className="space-y-1">
+                            {!hideAbout && (
+                                <Link href={aboutHref} onClick={() => setOpen(false)} className="block rounded px-3 py-2 text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">About</Link>
+                            )}
+                            {!hideProjects && (
+                                <Link href={projectsHref} onClick={() => setOpen(false)} className="block rounded px-3 py-2 text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">Projects</Link>
+                            )}
+                            {!hideBlog && (
+                                <Link href="/blog" onClick={() => setOpen(false)} className="block rounded px-3 py-2 text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">Blog</Link>
+                            )}
+                            <Link href="/contact" onClick={() => setOpen(false)} className="block rounded px-3 py-2 text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">Contact</Link>
+                            <div className="h-px my-2 bg-[var(--panel-border)]" />
+                            <Link href="/cgu" onClick={() => setOpen(false)} className="block rounded px-3 py-2 text-foreground/80 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">Terms</Link>
+                            <Link href="/privacy" onClick={() => setOpen(false)} className="block rounded px-3 py-2 text-foreground/80 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">Privacy</Link>
+                        </nav>
+                        <div className="mt-4">
+                            <ThemeSwitcher />
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
+    )
+}
+
+

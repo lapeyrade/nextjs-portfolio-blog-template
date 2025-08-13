@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { PageTransition, FadeInUp, ScrollReveal, StaggerContainer, StaggerItem, AnimatedButton } from '@/components/animations'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
+import MobileMenu from '@/components/MobileMenu'
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
               <Link href="/contact" className="text-gray-300 hover:text-white transition-colors">Contact</Link>
               <ThemeSwitcher />
             </div>
+            <MobileMenu isHome hideAbout />
           </div>
         </nav>
 

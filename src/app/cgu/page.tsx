@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { PageTransition, FadeInUp } from '@/components/animations'
+import MobileMenu from '@/components/MobileMenu'
 
 export const metadata = {
     title: 'Terms & Conditions',
@@ -19,6 +20,7 @@ export default function CGUPage() {
                             <Link href="/blog" className="text-foreground hover:text-accent transition-colors">Blog</Link>
                             <Link href="/contact" className="text-foreground hover:text-accent transition-colors">Contact</Link>
                         </div>
+                        <MobileMenu />
                     </div>
                 </nav>
 

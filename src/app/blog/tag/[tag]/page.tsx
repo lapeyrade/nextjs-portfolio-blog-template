@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getAllTags, getPostsByTag, paginatePosts } from '@/lib/blog'
 import { PageTransition, ScrollReveal, StaggerContainer, StaggerItem, AnimatedButton, FadeInUp } from '@/components/animations'
+import MobileMenu from '@/components/MobileMenu'
 
 const PAGE_SIZE = 6
 
@@ -31,6 +32,7 @@ export default async function BlogTagPage({ params }: { params: Promise<{ tag: s
                             <Link href="/blog" className="text-accent font-semibold">Blog</Link>
                             <Link href="/contact" className="text-gray-300 hover:text-white transition-colors">Contact</Link>
                         </div>
+                        <MobileMenu hideBlog />
                     </div>
                 </nav>
 
