@@ -1,4 +1,6 @@
+import Footer from '@/components/Footer'
 import Link from 'next/link'
+import SiteNavLinks from '@/components/SiteNavLinks'
 import MobileMenu from '@/components/MobileMenu'
 import { notFound } from 'next/navigation'
 import { ReactNode } from 'react'
@@ -143,13 +145,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         <Link href="/" className="text-2xl font-bold text-white hover:text-accent transition-colors">
                             Portfolio
                         </Link>
-                        <div className="hidden md:flex items-center space-x-8">
-                            <Link href="/#about" className="text-gray-300 hover:text-white transition-colors">About</Link>
-                            <Link href="/#projects" className="text-gray-300 hover:text-white transition-colors">Projects</Link>
-                            <Link href="/blog" className="text-accent font-semibold">Blog</Link>
-                            <Link href="/contact" className="text-gray-300 hover:text-white transition-colors">Contact</Link>
-                            <ThemeSwitcher />
-                        </div>
+                        <SiteNavLinks variant="dark" activeBlog showThemeSwitcher />
                         <MobileMenu hideBlog />
                     </div>
                 </nav>
@@ -269,16 +265,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 </section>
 
                 {/* Footer */}
-                <footer className="px-6 py-8 border-t border-gray-800">
-                    <div className="max-w-6xl mx-auto text-center text-gray-400">
-                        <p>&copy; {new Date().getFullYear()} Your Portfolio. Built with Next.js 15 and TailwindCSS.</p>
-                        <div className="mt-2 space-x-4">
-                            <Link href="/cgu" className="underline hover:text-gray-200">Terms</Link>
-                            <span aria-hidden="true">·</span>
-                            <Link href="/privacy" className="underline hover:text-gray-200">Privacy</Link>
-                        </div>
-                    </div>
-                </footer>
+                <Footer />
             </div>
         </PageTransition>
     )

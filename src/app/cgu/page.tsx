@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { PageTransition, FadeInUp } from '@/components/animations'
 import MobileMenu from '@/components/MobileMenu'
+import Footer from '@/components/Footer'
+import SiteNavLinks from '@/components/SiteNavLinks'
 
 export const metadata = {
     title: 'Terms & Conditions',
@@ -14,12 +16,7 @@ export default function CGUPage() {
                 <nav className="p-6">
                     <div className="max-w-6xl mx-auto flex justify-between items-center">
                         <Link href="/" className="text-2xl font-bold text-foreground hover:text-accent transition-colors">Portfolio</Link>
-                        <div className="hidden md:flex items-center space-x-8">
-                            <Link href="/#about" className="text-foreground hover:text-accent transition-colors">About</Link>
-                            <Link href="/#projects" className="text-foreground hover:text-accent transition-colors">Projects</Link>
-                            <Link href="/blog" className="text-foreground hover:text-accent transition-colors">Blog</Link>
-                            <Link href="/contact" className="text-foreground hover:text-accent transition-colors">Contact</Link>
-                        </div>
+                        <SiteNavLinks />
                         <MobileMenu />
                     </div>
                 </nav>
@@ -49,6 +46,7 @@ export default function CGUPage() {
                         </div>
                     </div>
                 </main>
+                <Footer />
             </div>
         </PageTransition>
     )

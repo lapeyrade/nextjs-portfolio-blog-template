@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { PageTransition, FadeInUp, ScrollReveal, StaggerContainer, StaggerItem, AnimatedButton } from '@/components/animations'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
 import MobileMenu from '@/components/MobileMenu'
+import Footer from '@/components/Footer'
 
 export default function Home() {
   return (
@@ -144,17 +145,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Footer */}
-        <footer className="px-6 py-8 border-t border-gray-800">
-          <div className="max-w-6xl mx-auto text-center text-gray-400">
-            <p>&copy; {new Date().getFullYear()} Your Portfolio. Built with Next.js 15 and TailwindCSS.</p>
-            <div className="mt-2 space-x-4">
-              <Link href="/cgu" className="underline hover:text-gray-200">Terms</Link>
-              <span aria-hidden="true"> </span>
-              <Link href="/privacy" className="underline hover:text-gray-200">Privacy</Link>
-            </div>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </PageTransition>
   )

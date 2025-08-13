@@ -192,8 +192,8 @@ Consider implementing these features:
 - [x] Words count and improve reading time calculation to blog posts
 - [x] Add more dark themes gradient (purple, pink, blue, green, orange, red, etc.) with a toogle button
 - [x] Add CGU and Privacy Policy pages
-- [ ] Add an hamburger menu for mobile
-- [ ] Refactor the code: the footer and header is not showing on all pages. Remove code redundancy.
+- [x] Add an hamburger menu for mobile
+- [ ] Refactor the code: the footer is not showing on all pages. Remove code redundancy.
 - [ ] Fix the footer : don't underline the links, display terms, privacy, contact and below copyright
 - [ ] Internationalization (i18n) with `next-intl`
 - [ ] Add light theme gradients and use the browser default to choose between dark and light mode
