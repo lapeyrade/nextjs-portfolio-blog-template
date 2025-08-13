@@ -123,19 +123,7 @@ body {
   --surface-to: #0a1024;
 }
 
-[data-theme='mono'] {
-  --accent: #e5e7eb;
-  /* gray-200 */
-  --accent-strong: #d1d5db;
-  /* gray-300 */
-  --accent-grad-from: #9ca3af;
-  /* gray-400 */
-  --accent-grad-to: #e5e7eb;
-  /* gray-200 */
-  --surface-from: #0a0a0a;
-  --surface-via: #121212;
-  --surface-to: #0a0a0a;
-}
+/* mono theme removed */
 
 /* Helpers */
 .theme-surface {

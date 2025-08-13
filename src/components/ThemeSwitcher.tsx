@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react'
 
-type ThemeKey = 'ocean' | 'sunset' | 'forest' | 'purple' | 'rose' | 'aurora' | 'mono'
-const THEMES: ThemeKey[] = ['ocean', 'sunset', 'forest', 'purple', 'rose', 'aurora', 'mono']
+type ThemeKey = 'ocean' | 'sunset' | 'forest' | 'purple' | 'rose' | 'aurora'
+const THEMES: ThemeKey[] = ['ocean', 'sunset', 'forest', 'purple', 'rose', 'aurora']
 const THEME_PREVIEW: Record<ThemeKey, { from: string; to: string; label: string }> = {
     ocean: { from: '#22d3ee', to: '#3b82f6', label: 'Ocean' },
     sunset: { from: '#fb923c', to: '#ef4444', label: 'Sunset' },
@@ -11,7 +11,6 @@ const THEME_PREVIEW: Record<ThemeKey, { from: string; to: string; label: string 
     purple: { from: '#a78bfa', to: '#f472b6', label: 'Purple' },
     rose: { from: '#fb7185', to: '#f43f5e', label: 'Rose' },
     aurora: { from: '#22d3ee', to: '#a78bfa', label: 'Aurora' },
-    mono: { from: '#9ca3af', to: '#e5e7eb', label: 'Mono' },
 }
 
 export default function ThemeSwitcher() {
