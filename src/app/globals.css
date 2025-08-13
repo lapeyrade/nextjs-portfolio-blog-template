@@ -26,12 +26,16 @@
 :root {
   --background: var(--color-background);
   --foreground: var(--color-foreground);
+  --foreground-80: rgba(23, 23, 23, 0.8);
+  --foreground-90: rgba(23, 23, 23, 0.9);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: var(--color-background-dark);
     --foreground: var(--color-foreground-dark);
+    --foreground-80: rgba(237, 237, 237, 0.8);
+    --foreground-90: rgba(237, 237, 237, 0.9);
   }
 }
 
@@ -149,6 +153,19 @@ body {
 
 .text-accent-strong {
   color: var(--accent-strong);
+}
+
+/* Text color utilities */
+.text-foreground {
+  color: var(--foreground);
+}
+
+.text-foreground\/80 {
+  color: var(--foreground-80);
+}
+
+.text-foreground\/90 {
+  color: var(--foreground-90);
 }
 
 .border-accent {

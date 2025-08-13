@@ -10,6 +10,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
         '',
         '/blog',
         '/contact',
+        '/cgu',
+        '/privacy',
     ].map((path) => ({
         url: `${siteUrl}${path}`,
         lastModified: nowIso,
