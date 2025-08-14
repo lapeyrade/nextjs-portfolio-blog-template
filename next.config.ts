@@ -4,6 +4,8 @@ import createMDX from '@next/mdx'
 const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['@heroicons/react'],
+    // Target modern browsers only (remove Baseline polyfills)
+    forceSwcTransforms: false,
   },
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
   compiler: {

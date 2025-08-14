@@ -3,7 +3,7 @@
     "lib": [
       "dom",
       "dom.iterable",
-      "es6"
+      "es2022"
     ],
     "allowJs": true,
     "skipLibCheck": true,
@@ -26,7 +26,8 @@
         "./src/*"
       ]
     },
-    "target": "ES2017"
+    "target": "ES2022",
+    "useDefineForClassFields": true
   },
   "include": [
     "next-env.d.ts",
