@@ -17,18 +17,7 @@ const nextConfig: NextConfig = {
       },
     ]
   },
-  async rewrites() {
-    return {
-      beforeFiles: [
-        {
-          source: '/service-worker.js',
-          destination: '/src/app/service-worker.js',
-        },
-      ],
-      afterFiles: [],
-      fallback: [],
-    }
-  },
+  // No rewrite needed; service worker is served from public/
 }
 
 const withMDX = createMDX({

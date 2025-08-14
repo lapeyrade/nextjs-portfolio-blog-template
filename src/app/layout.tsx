@@ -80,7 +80,7 @@ export default function RootLayout({
           __html: `
           if ('serviceWorker' in navigator) {
             window.addEventListener('load', function () {
-              fetch('/service-worker.js', { method: 'HEAD' })
+              fetch('/service-worker.js', { method: 'HEAD', cache: 'no-store' })
                 .then(function (res) { if (res.ok) { return navigator.serviceWorker.register('/service-worker.js') } })
                 .catch(function () {})
             })

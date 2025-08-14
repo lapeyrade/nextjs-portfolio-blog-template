@@ -197,7 +197,8 @@ Consider implementing these features:
 - [x] Fix the footer : don't underline the links, display terms, privacy, contact and below copyright
 - [x] Improve the Hamburger menu on mobile : put text on the right and reduce the menu size.
 - [x] Global search (site-wide)
-- [ ] Internationalization (i18n) with `next-intl`
+- [x] Fix service-worker.js
+- [ ] Internationalization (i18n) with only English and French for now
 - [ ] CI/CD: GitHub Actions for lint/build/test on PRs
 
 ## 🔧 Environment Variables
