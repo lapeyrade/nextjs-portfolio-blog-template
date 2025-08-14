@@ -19,7 +19,7 @@ export default function ScrollReveal({
     className = ''
 }: ScrollRevealProps) {
     const ref = useRef(null)
-    const isInView = useInView(ref, { once: true, margin: '-100px' })
+    const isInView = useInView(ref, { once: true, amount: 0.1 })
     const prefersReducedMotion = useReducedMotion()
 
     const directionOffset = {
@@ -34,7 +34,7 @@ export default function ScrollReveal({
     return (
         <motion.div
             ref={ref}
-            className={className}
+            className={`cv-auto ${className}`}
             initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, x, y }}
             animate={isInView ? { opacity: 1, x: 0, y: 0 } : prefersReducedMotion ? { opacity: 0 } : { opacity: 0, x, y }}
             transition={{

@@ -179,6 +179,13 @@ body {
   background-image: linear-gradient(135deg, var(--accent-grad-from), var(--accent-grad-to));
 }
 
+/* Performance helpers */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 1000px;
+  contain: layout paint style;
+}
+
 /* Panel surface used for drawers, popovers, and menus */
 .theme-panel {
   background: var(--panel-bg);

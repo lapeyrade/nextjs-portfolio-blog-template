@@ -26,9 +26,10 @@ export default function FadeInUp({
 
     return (
         <motion.div
-            className={className}
+            className={`cv-auto ${className}`}
             initial={initialState}
-            animate={animateState}
+            whileInView={animateState}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{
                 duration: prefersReducedMotion ? 0.01 : duration,
                 delay: prefersReducedMotion ? 0 : delay,
