@@ -11,7 +11,11 @@ type Result = {
     date?: string
 }
 
-export default function Search() {
+interface SearchProps {
+    enableHotkey?: boolean
+}
+
+export default function Search({ enableHotkey = true }: SearchProps) {
     const [open, setOpen] = useState(false)
     const [q, setQ] = useState('')
     const [results, setResults] = useState<Result[]>([])
@@ -20,6 +24,8 @@ export default function Search() {
 
     // Toggle with cmd+k / ctrl+k
     useEffect(() => {
+        if (!enableHotkey) return
+
         const onKey = (e: KeyboardEvent) => {
             const isMac = navigator.platform.toUpperCase().includes('MAC')
             const combo = (isMac && e.metaKey && e.key.toLowerCase() === 'k') || (!isMac && e.ctrlKey && e.key.toLowerCase() === 'k')
@@ -45,7 +51,7 @@ export default function Search() {
         }
         window.addEventListener('keydown', onKey)
         return () => window.removeEventListener('keydown', onKey)
-    }, [open, results, activeIndex])
+    }, [open, results, activeIndex, enableHotkey])
 
     useEffect(() => {
         if (!open) return
@@ -72,13 +78,13 @@ export default function Search() {
                 type="button"
                 onClick={() => setOpen(true)}
                 className="inline-flex items-center gap-2 rounded-md border border-accent px-3 py-1.5 text-sm text-accent hover:bg-gray-800"
-                aria-label="Open search (⌘K)"
+                aria-label="Open search"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
                     <path fillRule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 4.27 12.03l3.74 3.73a.75.75 0 1 0 1.06-1.06l-3.73-3.74A6.75 6.75 0 0 0 10.5 3.75Zm-5.25 6.75a5.25 5.25 0 1 1 10.5 0 5.25 5.25 0 0 1-10.5 0Z" clipRule="evenodd" />
                 </svg>
                 <span>Search</span>
-                <span className="ml-1 rounded bg-gray-700/60 px-1.5 py-0.5 text-[10px]">⌘K</span>
+                {enableHotkey && <span className="ml-1 rounded bg-gray-700/60 px-1.5 py-0.5 text-[10px]">⌘K</span>}
             </button>
 
             {open && (

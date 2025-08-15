@@ -26,7 +26,7 @@ export default function FadeInUp({
 
     return (
         <motion.div
-            className={`cv-auto ${className}`}
+            className={className}
             initial={initialState}
             whileInView={animateState}
             viewport={{ once: true, amount: 0.2 }}

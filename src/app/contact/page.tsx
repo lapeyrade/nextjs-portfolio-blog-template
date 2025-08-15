@@ -15,7 +15,7 @@ export default function ContactPage() {
     return (
         <PageTransition>
             <div className="min-h-screen theme-surface">
-                <SiteHeader />
+                <SiteHeader variant="dark" />
 
                 {/* Hero Section */}
                 <section className="px-6 py-16">

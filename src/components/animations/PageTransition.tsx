@@ -31,7 +31,7 @@ export default function PageTransition({ children, className = '' }: PageTransit
 
     return (
         <motion.div
-            className={`cv-auto ${className}`}
+            className={className}
             initial="initial"
             animate="in"
             exit="out"

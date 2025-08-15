@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <PageTransition>
       <div className="min-h-screen theme-surface">
-        <SiteHeader isHome />
+        <SiteHeader isHome variant="dark" />
 
         {/* Hero Section */}
         <section className="px-6 py-20">

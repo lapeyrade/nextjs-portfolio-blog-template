@@ -20,10 +20,12 @@ export default function SiteHeader({ isHome = false, variant = 'themed', activeB
 
                 <div className="flex items-center gap-6 md:gap-8">
                     <SiteNavLinks isHome={isHome} variant={variant} activeBlog={activeBlog} />
-                    <div className="ml-2 md:ml-4">
+                    <div className="hidden md:block ml-2 md:ml-4">
                         <Search />
                     </div>
-                    <ThemeSwitcher />
+                    <div className="hidden md:block">
+                        <ThemeSwitcher />
+                    </div>
                     <MobileMenu isHome={isHome} hideBlog={activeBlog} hideAbout={isHome} />
                 </div>
             </div>

@@ -85,7 +85,7 @@ pnpm lint
 - Leverage Tailwind's design system (spacing, colors, typography)
 - Configure themes using @theme directive in globals.css
 - Use CSS variables for custom colors and values
-- Implement dark/light mode support when needed
+- Implement dark mode support when needed
 - Ensure responsive design with Tailwind breakpoints
 
 ### Animation Guidelines
@@ -198,6 +198,7 @@ Consider implementing these features:
 - [x] Improve the Hamburger menu on mobile : put text on the right and reduce the menu size.
 - [x] Global search (site-wide)
 - [x] Fix service-worker.js
+- [x] Fix header + remove light theme
 - [ ] Internationalization (i18n) with only English and French for now
 - [ ] CI/CD: GitHub Actions for lint/build/test on PRs
 

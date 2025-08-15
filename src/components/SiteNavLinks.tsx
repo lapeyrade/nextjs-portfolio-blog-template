@@ -16,7 +16,7 @@ export default function SiteNavLinks({
 }: SiteNavLinksProps) {
     const linkCls = variant === 'dark'
         ? 'text-gray-300 hover:text-white transition-colors'
-        : 'text-foreground hover:text-accent transition-colors'
+        : 'text-gray-700 dark:text-gray-200 hover:text-accent transition-colors'
 
     const aboutHref = isHome ? '#about' : '/'
     const projectsHref = isHome ? '#projects' : '/#projects'

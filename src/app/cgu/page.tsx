@@ -12,30 +12,30 @@ export default function CGUPage() {
     return (
         <PageTransition>
             <div className="min-h-screen theme-surface">
-                <SiteHeader />
+                <SiteHeader variant="dark" />
 
                 <main className="px-6 py-16">
                     <div className="max-w-3xl mx-auto">
                         <FadeInUp>
-                            <h1 className="text-4xl font-bold text-foreground mb-6">Terms & Conditions</h1>
+                            <h1 className="text-4xl font-bold text-white mb-6">Terms & Conditions</h1>
                         </FadeInUp>
                         <div className="max-w-none">
-                            <h2 className="text-2xl font-semibold text-foreground mt-8 mb-3">1. Acceptance of Terms</h2>
-                            <p className="text-foreground/90 mb-4">By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement.</p>
+                            <h2 className="text-2xl font-semibold text-white mt-8 mb-3">1. Acceptance of Terms</h2>
+                            <p className="text-gray-300 mb-4">By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement.</p>
 
-                            <h2 className="text-2xl font-semibold text-foreground mt-8 mb-3">2. Use of the Site</h2>
-                            <p className="text-foreground/90 mb-4">You agree to use the site only for lawful purposes and in a way that does not infringe the rights of, restrict or inhibit anyone else’s use.</p>
+                            <h2 className="text-2xl font-semibold text-white mt-8 mb-3">2. Use of the Site</h2>
+                            <p className="text-gray-300 mb-4">You agree to use the site only for lawful purposes and in a way that does not infringe the rights of, restrict or inhibit anyone else's use.</p>
 
-                            <h2 className="text-2xl font-semibold text-foreground mt-8 mb-3">3. Intellectual Property</h2>
-                            <p className="text-foreground/90 mb-4">All content, trademarks, and data on this website, including but not limited to software, databases, text, graphics, icons, and hyperlinks are the property of their respective owners.</p>
+                            <h2 className="text-2xl font-semibold text-white mt-8 mb-3">3. Intellectual Property</h2>
+                            <p className="text-gray-300 mb-4">All content, trademarks, and data on this website, including but not limited to software, databases, text, graphics, icons, and hyperlinks are the property of their respective owners.</p>
 
-                            <h2 className="text-2xl font-semibold text-foreground mt-8 mb-3">4. Limitation of Liability</h2>
-                            <p className="text-foreground/90 mb-4">The website owner will not be liable for any loss or damage of any nature arising from the use of or reliance on any information provided on the site.</p>
+                            <h2 className="text-2xl font-semibold text-white mt-8 mb-3">4. Limitation of Liability</h2>
+                            <p className="text-gray-300 mb-4">The website owner will not be liable for any loss or damage of any nature arising from the use of or reliance on any information provided on the site.</p>
 
-                            <h2 className="text-2xl font-semibold text-foreground mt-8 mb-3">5. Changes to These Terms</h2>
-                            <p className="text-foreground/90 mb-4">We may update our Terms from time to time. We will notify you of any changes by posting the new Terms on this page.</p>
+                            <h2 className="text-2xl font-semibold text-white mt-8 mb-3">5. Changes to These Terms</h2>
+                            <p className="text-gray-300 mb-4">We may update our Terms from time to time. We will notify you of any changes by posting the new Terms on this page.</p>
 
-                            <p className="text-foreground/80 mt-8">If you have questions, please <Link href="/contact" className="text-accent hover:text-accent-strong">contact me</Link>.</p>
+                            <p className="text-gray-400 mt-8">If you have questions, please <Link href="/contact" className="text-accent hover:text-accent-strong">contact me</Link>.</p>
                         </div>
                     </div>
                 </main>

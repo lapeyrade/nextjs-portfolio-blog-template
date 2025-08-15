@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
+import Search from '@/components/Search'
 
 interface MobileMenuProps {
     isHome?: boolean
@@ -33,7 +34,7 @@ export default function MobileMenu({ isHome = false, hideAbout = false, hideProj
                 aria-expanded={open}
                 aria-controls="mobile-menu-panel"
                 onClick={() => setOpen((v) => !v)}
-                className="inline-flex items-center justify-center rounded-md p-2 text-foreground hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--accent)]"
+                className="inline-flex items-center justify-center rounded-md p-2 text-gray-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--accent)]"
             >
                 {open ? (
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">
@@ -66,12 +67,16 @@ export default function MobileMenu({ isHome = false, hideAbout = false, hideProj
                             )}
                             <Link href="/contact" onClick={() => setOpen(false)} className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">Contact</Link>
                             <div className="h-px my-2 w-full bg-[var(--panel-border)]" />
+                            <div className="w-full flex justify-end mb-2">
+                                <Search enableHotkey={false} />
+                            </div>
+                            <div className="w-full flex justify-end mb-2">
+                                <ThemeSwitcher variant="mobile" />
+                            </div>
+                            <div className="h-px my-2 w-full bg-[var(--panel-border)]" />
                             <Link href="/cgu" onClick={() => setOpen(false)} className="block rounded px-2 py-2 text-sm text-foreground/80 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">Terms</Link>
                             <Link href="/privacy" onClick={() => setOpen(false)} className="block rounded px-2 py-2 text-sm text-foreground/80 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">Privacy</Link>
                         </nav>
-                        <div className="mt-4 ml-auto w-fit">
-                            <ThemeSwitcher />
-                        </div>
                     </div>
                 </div>
             )}
