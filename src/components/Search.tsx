@@ -21,6 +21,7 @@ export default function Search({ enableHotkey = true }: SearchProps) {
     const [results, setResults] = useState<Result[]>([])
     const [activeIndex, setActiveIndex] = useState(0)
     const inputRef = useRef<HTMLInputElement>(null)
+    const resultsRef = useRef<HTMLDivElement>(null)
 
     // Toggle with cmd+k / ctrl+k
     useEffect(() => {
@@ -58,6 +59,19 @@ export default function Search({ enableHotkey = true }: SearchProps) {
         inputRef.current?.focus()
         setActiveIndex(0)
     }, [open])
+
+    // Scroll active item into view
+    useEffect(() => {
+        if (!resultsRef.current || results.length === 0) return
+
+        const activeElement = resultsRef.current.children[activeIndex] as HTMLElement
+        if (activeElement) {
+            activeElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest'
+            })
+        }
+    }, [activeIndex, results.length])
 
     useEffect(() => {
         const controller = new AbortController()
@@ -105,7 +119,7 @@ export default function Search({ enableHotkey = true }: SearchProps) {
                             />
                             <button onClick={() => setOpen(false)} className="text-foreground/70 hover:text-accent" aria-label="Close search">Esc</button>
                         </div>
-                        <div className="mt-3 max-h-80 overflow-y-auto divide-y divide-[var(--panel-border)]">
+                        <div ref={resultsRef} className="mt-3 max-h-80 overflow-y-auto divide-y divide-[var(--panel-border)]">
                             {results.length === 0 ? (
                                 <div className="p-3 text-foreground/70">No results</div>
                             ) : (
