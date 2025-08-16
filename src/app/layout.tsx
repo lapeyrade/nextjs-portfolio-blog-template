@@ -2,6 +2,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import WebVitals from '@/components/monitoring/WebVitals'
 import ClientProviders from '@/components/ClientProviders'
+import RegisterServiceWorker from '@/components/RegisterServiceWorker'
 import { siteUrl } from '@/lib/seo'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -51,13 +52,14 @@ export default async function RootLayout({
   return (
     <html lang="en" data-theme="ocean">
       <body className={inter.className}>
+        {/* JSON-LD for the website. siteUrl is controlled server-side. Serialize safely. */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'WebSite',
-              url: siteUrl,
+              url: typeof siteUrl === 'string' ? siteUrl : undefined,
               name: 'Portfolio',
               potentialAction: {
                 '@type': 'SearchAction',
@@ -71,20 +73,12 @@ export default async function RootLayout({
         <WebVitals />
         <ClientProviders />
         <Analytics />
-        <SpeedInsights />
+  <SpeedInsights />
         <main id="main-content" tabIndex={-1}>
           {children}
         </main>
-        <script dangerouslySetInnerHTML={{
-          __html: `
-          if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function () {
-              fetch('/service-worker.js', { method: 'HEAD', cache: 'no-store' })
-                .then(function (res) { if (res.ok) { return navigator.serviceWorker.register('/service-worker.js') } })
-                .catch(function () {})
-            })
-          }
-        ` }} />
+  {/* Client component handles SW registration without inline scripts */}
+  <RegisterServiceWorker />
       </body>
     </html>
   )
