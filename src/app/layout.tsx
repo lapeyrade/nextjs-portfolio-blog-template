@@ -4,8 +4,7 @@ import WebVitals from '@/components/monitoring/WebVitals'
 import ClientProviders from '@/components/ClientProviders'
 import RegisterServiceWorker from '@/components/RegisterServiceWorker'
 import { siteUrl } from '@/lib/seo'
-import { Analytics } from '@vercel/analytics/react'
-import { SpeedInsights } from '@vercel/speed-insights/next'
+import LazyThirdParty from '@/components/LazyThirdParty'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -51,6 +50,12 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en" data-theme="ocean">
+      <head>
+        {/* Preconnect to likely external origins used by analytics, fonts and speed insights to reduce TLS/setup time */}
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://vercel.com" crossOrigin="" />
+      </head>
       <body className={inter.className}>
         {/* JSON-LD for the website. siteUrl is controlled server-side. Serialize safely. */}
         <script
@@ -72,8 +77,7 @@ export default async function RootLayout({
         <a href="#main-content" className="skip-link">Skip to content</a>
         <WebVitals />
         <ClientProviders />
-        <Analytics />
-        <SpeedInsights />
+  <LazyThirdParty />
         <main id="main-content" tabIndex={-1}>
           {children}
         </main>

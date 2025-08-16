@@ -236,7 +236,7 @@ Consider implementing these features:
 - [x] Limit client-side telemetry to aggregated/minimal data and consider sampling
 - [x] Lock down environment variables and avoid leaking sensitive values to the client
 - [x] CI/CD: GitHub Actions for lint/build/test on PRs
-- [ ] Improve performance: Remove Legacy JavaScript
+- [x] Improve performance from speed insights
 
 ## 🔧 Environment Variables
 
@@ -266,6 +266,21 @@ node ./scripts/check-env.js
 ```
 
 Use the script to verify you don't accidentally reference server-only secrets in client code or expose them via `NEXT_PUBLIC_`.
+
+### Performance changes applied
+
+- Preconnect hints for Google Fonts and Vercel were added to `src/app/layout.tsx` to reduce connection setup latency.
+- Analytics and Vercel Speed Insights are now lazy-loaded after hydration via `src/components/LazyThirdParty.tsx` to keep them out of the initial render bundle and reduce LCP impact.
+- A `browserslist` entry was added to `package.json` to prefer modern browser targets and avoid shipping legacy polyfills when building for production.
+
+To validate locally:
+
+```bash
+pnpm install
+pnpm build
+pnpm start
+# Inspect page source or run Lighthouse/Speed Insights to confirm reduced legacy JS and deferred third-party loading
+```
 
 ## 📝 Notes for AI Development
 
