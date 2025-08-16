@@ -269,7 +269,7 @@ This section summarizes a code audit (performance bottlenecks, suggested optimiz
 ### Summary Checklist
 
 - [x] Review service-worker caching strategy and adjust for safe resource caching
-- [ ] Validate /api endpoints and add rate-limiting or authentication if exposing sensitive logs
+- [x] Validate /api endpoints and add rate-limiting or authentication if exposing sensitive logs
 - [ ] Replace any unsafe use of `dangerouslySetInnerHTML` with safe serializers or strict input validation where feasible
 - [ ] Avoid blocking synchronous fs calls on the server in hot paths; prefer async APIs
 - [ ] Limit client-side telemetry to aggregated/minimal data and consider sampling
@@ -316,6 +316,29 @@ This section summarizes a code audit (performance bottlenecks, suggested optimiz
 - Convert `getAllBlogPosts()` to use async I/O and memoize results for the lifetime of a serverless invocation or process.
 - Add basic validation in `POST /api/web-vitals` to constrain numeric ranges (e.g., value between 0 and 100000) and string lengths.
 - Limit the service worker cache keys to known origins and avoid caching third-party responses.
+
+### Notes: Web Vitals endpoint configuration
+
+- Optional server-side API key: set `WEBVITALS_API_KEY` (server-only) to require an `x-api-key` header for `POST /api/web-vitals`.
+- Client sampling rate: set `NEXT_PUBLIC_WEBVITALS_SAMPLE` to a decimal between `0` and `1` (default 0.05) to control client-side sampling of metrics.
+
+Quick test (local):
+
+```bash
+# send a sample metric
+curl -X POST http://localhost:3000/api/web-vitals \
+  -H 'Content-Type: application/json' \
+  -d '{"name":"CLS","value":0.02,"timestamp":'"$(date +%s%3N)"'}'
+```
+
+If `WEBVITALS_API_KEY` is set, include the header:
+
+```bash
+curl -X POST http://localhost:3000/api/web-vitals \
+  -H 'Content-Type: application/json' \
+  -H "x-api-key: $WEBVITALS_API_KEY" \
+  -d '{"name":"LCP","value":1200,"timestamp":'"$(date +%s%3N)"'}'
+```
 
 ### Final notes
 

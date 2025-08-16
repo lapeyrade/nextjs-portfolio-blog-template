@@ -49,7 +49,7 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html data-theme="ocean">
+    <html lang="en" data-theme="ocean">
       <body className={inter.className}>
         <script
           type="application/ld+json"

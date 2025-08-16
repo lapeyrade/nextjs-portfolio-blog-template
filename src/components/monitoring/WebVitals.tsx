@@ -37,10 +37,25 @@ function sendToAnalytics(metric: SerializableRecord): void {
 }
 
 export default function WebVitals(): null {
+
+    // Sampling rate (0-1). Default to 0.05 (5%) to avoid high traffic.
+    const SAMPLE_RATE = typeof process !== 'undefined' && process.env.NEXT_PUBLIC_WEBVITALS_SAMPLE
+        ? Number(process.env.NEXT_PUBLIC_WEBVITALS_SAMPLE)
+        : 0.05
+
     useReportWebVitals((metric) => {
         // Metric is a typed object from Next.js; we serialize a minimal superset for transport
         // and avoid leaking PII beyond standard UA + URL
-        sendToAnalytics(metric as unknown as SerializableRecord)
+        try {
+            if (Math.random() <= SAMPLE_RATE) {
+                sendToAnalytics(metric as unknown as SerializableRecord)
+            } else if (process.env.NODE_ENV === 'development') {
+                // Log in dev so developers still see metrics locally
+                console.debug('[WebVitals] sampled out', metric)
+            }
+        } catch (e) {
+            if (process.env.NODE_ENV === 'development') console.error('[WebVitals] sampling error', e)
+        }
     })
 
     return null
