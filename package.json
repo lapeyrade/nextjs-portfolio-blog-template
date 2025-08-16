@@ -42,8 +42,7 @@
         "tailwindcss": "^4.1.11",
         "typescript": "^5.9.2"
     },
-    "packageManager": "pnpm@10.14.0"
-    ,
+    "packageManager": "pnpm@10.14.0",
     "browserslist": [
         "defaults and not IE 11",
         "last 2 chrome versions",

@@ -77,7 +77,7 @@ export default async function RootLayout({
         <a href="#main-content" className="skip-link">Skip to content</a>
         <WebVitals />
         <ClientProviders />
-  <LazyThirdParty />
+        <LazyThirdParty />
         <main id="main-content" tabIndex={-1}>
           {children}
         </main>
