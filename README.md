@@ -229,6 +229,13 @@ Consider implementing these features:
 - [x] Internationalization (i18n) with only English and French for now
     - [x] Add back: "Enjoyed this post? Let's connect and discuss your next project or any questions you might have." and "Read more posts" and "Get in touch" buttons at the end of the blog article
     - [x] Investigate initial loading time to change region.
+- [x] Review service-worker caching strategy and adjust for safe resource caching
+- [x] Validate /api endpoints and add rate-limiting or authentication if exposing sensitive logs
+- [x] Replace any unsafe use of `dangerouslySetInnerHTML` with safe serializers or strict input validation where feasible
+- [x] Avoid blocking synchronous fs calls on the server in hot paths; prefer async APIs
+- [x] Limit client-side telemetry to aggregated/minimal data and consider sampling
+- [x] Lock down environment variables and avoid leaking sensitive values to the client
+- [ ] Improve performance: Remove Legacy JavaScript
 - [ ] CI/CD: GitHub Actions for lint/build/test on PRs
 
 ## 🔧 Environment Variables
@@ -239,6 +246,26 @@ Set these in your Vercel project (Production & Preview):
 - `CONTACT_EMAIL` – Recipient email for contact form
 - `FROM_EMAIL` – Verified sender for Resend
 - `NEXT_PUBLIC_SITE_URL` – Public site URL (e.g., https://yourdomain.com) used for canonical/OG URLs
+
+### Server-only vs Client-visible env vars
+
+- Server-only secrets MUST NOT be prefixed with `NEXT_PUBLIC_` and should only be configured in your deployment platform (Vercel, Cloudflare Pages, Netlify) or a local `.env` file that is never committed. Examples of server-only envs in this project:
+  - `RESEND_API_KEY`, `WEBVITALS_API_KEY`, `FROM_EMAIL`, `CONTACT_EMAIL`
+
+- Client-visible values that are safe to expose to the browser may use the `NEXT_PUBLIC_` prefix (e.g., `NEXT_PUBLIC_SITE_URL`, sampling rates). Keep these minimal and non-sensitive.
+
+### Local helpers
+
+An example `.env.example` has been added to the repo showing the recommended variables and naming. Do NOT commit real secrets. You can copy it to a local `.env` for development.
+
+There is also a small helper script to find usages of `process.env` and `NEXT_PUBLIC_` in the codebase:
+
+```bash
+# from project root
+node ./scripts/check-env.js
+```
+
+Use the script to verify you don't accidentally reference server-only secrets in client code or expose them via `NEXT_PUBLIC_`.
 
 ## 📝 Notes for AI Development
 
