@@ -272,7 +272,7 @@ This section summarizes a code audit (performance bottlenecks, suggested optimiz
 - [x] Validate /api endpoints and add rate-limiting or authentication if exposing sensitive logs
 - [x] Replace any unsafe use of `dangerouslySetInnerHTML` with safe serializers or strict input validation where feasible
 - [x] Avoid blocking synchronous fs calls on the server in hot paths; prefer async APIs
-- [ ] Limit client-side telemetry to aggregated/minimal data and consider sampling
+- [x] Limit client-side telemetry to aggregated/minimal data and consider sampling
 - [ ] Lock down environment variables and avoid leaking sensitive values to the client
 
 ### Performance findings
@@ -321,6 +321,9 @@ This section summarizes a code audit (performance bottlenecks, suggested optimiz
 
 - Optional server-side API key: set `WEBVITALS_API_KEY` (server-only) to require an `x-api-key` header for `POST /api/web-vitals`.
 - Client sampling rate: set `NEXT_PUBLIC_WEBVITALS_SAMPLE` to a decimal between `0` and `1` (default 0.05) to control client-side sampling of metrics.
+ - Client batching & truncation: client-side metrics are batched and truncated to avoid PII. Two client-side configs can be set via env:
+   - `NEXT_PUBLIC_WEBVITALS_SAMPLE` (decimal 0-1) — sampling rate, default 0.05
+   - `NEXT_PUBLIC_WEBVITALS_BATCH_MAX` (integer) — batch size before immediate flush (default 10)
 
 Quick test (local):
 

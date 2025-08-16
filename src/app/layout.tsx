@@ -73,12 +73,12 @@ export default async function RootLayout({
         <WebVitals />
         <ClientProviders />
         <Analytics />
-  <SpeedInsights />
+        <SpeedInsights />
         <main id="main-content" tabIndex={-1}>
           {children}
         </main>
-  {/* Client component handles SW registration without inline scripts */}
-  <RegisterServiceWorker />
+        {/* Client component handles SW registration without inline scripts */}
+        <RegisterServiceWorker />
       </body>
     </html>
   )

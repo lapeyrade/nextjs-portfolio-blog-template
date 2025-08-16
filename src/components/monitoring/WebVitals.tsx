@@ -4,35 +4,69 @@ import { useReportWebVitals } from 'next/web-vitals'
 
 type SerializableRecord = Record<string, unknown>
 
-function sendToAnalytics(metric: SerializableRecord): void {
-    try {
-        const body = JSON.stringify({
-            ...metric,
-            url: typeof window !== 'undefined' ? window.location.href : undefined,
-            userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : undefined,
-            timestamp: Date.now(),
-        })
+// Client-side batching to reduce network churn. Flush interval and batch size configurable.
+const BATCH_FLUSH_INTERVAL_MS = 10_000 // 10s
+const BATCH_MAX_ITEMS = 10
+const metricBatch: SerializableRecord[] = []
+let flushTimer: ReturnType<typeof setTimeout> | null = null
 
+function scheduleFlush() {
+    if (flushTimer) return
+    flushTimer = setTimeout(() => {
+        flushTimer = null
+        void flushBatch()
+    }, BATCH_FLUSH_INTERVAL_MS)
+}
+
+async function flushBatch(): Promise<void> {
+    if (metricBatch.length === 0) return
+    const batch = metricBatch.splice(0, metricBatch.length)
+    try {
+        const body = JSON.stringify({ items: batch })
         if (typeof navigator !== 'undefined' && typeof navigator.sendBeacon === 'function') {
             const blob = new Blob([body], { type: 'application/json' })
             navigator.sendBeacon('/api/web-vitals', blob)
         } else {
-            // Fallback for environments without sendBeacon
-            void fetch('/api/web-vitals', {
+            await fetch('/api/web-vitals', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body,
                 keepalive: true,
             })
         }
+        if (process.env.NODE_ENV === 'development') console.log('[WebVitals] flushed', batch)
+    } catch (err) {
+        if (process.env.NODE_ENV === 'development') console.error('[WebVitals] flush failed', err)
+    }
+}
+
+function sendToAnalytics(metric: SerializableRecord): void {
+    try {
+        // Build a minimal, non-PII payload
+        const payload: SerializableRecord = {
+            name: String(metric.name || '').slice(0, 64),
+            value: typeof metric.value === 'number' ? metric.value : undefined,
+            delta: typeof metric.delta === 'number' ? metric.delta : undefined,
+            id: metric.id ? String(metric.id).slice(0, 256) : undefined,
+            ts: Date.now(),
+            path: typeof window !== 'undefined' ? window.location.pathname : undefined,
+            ua_snippet: typeof navigator !== 'undefined' && navigator.userAgent
+                ? String(navigator.userAgent).slice(0, 128)
+                : undefined,
+        }
+
+        metricBatch.push(payload)
+        if (metricBatch.length >= BATCH_MAX_ITEMS) {
+            void flushBatch()
+        } else {
+            scheduleFlush()
+        }
 
         if (process.env.NODE_ENV === 'development') {
-            console.log('[WebVitals]', metric)
+            console.debug('[WebVitals] queued', payload)
         }
     } catch (error) {
-        if (process.env.NODE_ENV === 'development') {
-            console.error('[WebVitals] Failed to send metric', error)
-        }
+        if (process.env.NODE_ENV === 'development') console.error('[WebVitals] Failed to queue metric', error)
     }
 }
 
