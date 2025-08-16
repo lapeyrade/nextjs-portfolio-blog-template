@@ -1,13 +1,12 @@
-'use client'
+"use client"
 
 import { useEffect } from 'react'
-import { useTranslations, useLocale } from 'next-intl'
+import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/routing'
-import { PageTransition, FadeInUp, AnimatedButton } from '@/components/animations'
+import { PageTransition, FadeInUp } from '@/components/animations'
 
 export default function LocalizedError({ error, reset }: { error: Error & { digest?: string }, reset: () => void }) {
     const t = useTranslations('error')
-    const locale = useLocale()
 
     useEffect(() => {
         // Optional: send to monitoring service

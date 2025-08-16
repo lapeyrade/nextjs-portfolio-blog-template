@@ -55,8 +55,9 @@ function getStaticPages(locale: string = 'en'): SearchItem[] {
     return basePages
 }
 
-function getBlogItems(locale: string = 'en'): SearchItem[] {
-    return getAllBlogPosts(locale).map((p) => ({
+async function getBlogItems(locale: string = 'en'): Promise<SearchItem[]> {
+    const posts = await getAllBlogPosts(locale)
+    return posts.map((p) => ({
         url: `/${locale}/blog/${p.slug}`,
         title: p.title,
         description: p.description,
@@ -88,7 +89,8 @@ export async function GET(req: NextRequest) {
     const q = searchParams.get('q') || ''
     const locale = searchParams.get('locale') || 'en'
 
-    const items = [...getStaticPages(locale), ...getBlogItems(locale)]
+    const blogItems = await getBlogItems(locale)
+    const items = [...getStaticPages(locale), ...blogItems]
     const results = (!q
         ? items.slice(0, 10)
         : items
@@ -97,7 +99,13 @@ export async function GET(req: NextRequest) {
             .sort((a, b) => b._score - a._score)
     ).slice(0, 12)
 
-    return NextResponse.json(results.map(({ content, ...rest }) => rest))
+    return NextResponse.json(results.map((it) => ({
+        url: it.url,
+        title: it.title,
+        description: it.description,
+        type: it.type,
+        date: it.date,
+    })))
 }
 
 

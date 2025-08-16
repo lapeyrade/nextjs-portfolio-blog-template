@@ -36,7 +36,6 @@ self.addEventListener('install', (event) => {
                     await cache.add(new Request(url, { credentials: 'same-origin' }))
                 } catch (err) {
                     // ignore - keep install resilient
-                    // eslint-disable-next-line no-console
                     console.warn('[SW] precache failed for', url, err)
                 }
             }
@@ -92,7 +91,7 @@ self.addEventListener('fetch', (event) => {
                         void trimCache(RUNTIME, 50)
                     }
                     return networkResponse
-                } catch (err) {
+                } catch {
                     const cache = await caches.open(RUNTIME)
                     const cached = await cache.match(request)
                     if (cached) return cached
@@ -120,7 +119,7 @@ self.addEventListener('fetch', (event) => {
                     void trimCache(RUNTIME, 100)
                 }
                 return networkResponse
-            } catch (err) {
+            } catch {
                 // fallback to runtime cache or offline page for navigation
                 const runtimeCache = await caches.open(RUNTIME)
                 const runtimeMatch = await runtimeCache.match(request)

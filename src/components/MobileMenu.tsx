@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
 import { useEffect, useState } from 'react'
-import { useTranslations, useLocale } from 'next-intl'
+import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/routing'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
 import Search from '@/components/Search'
@@ -15,14 +15,10 @@ interface MobileMenuProps {
     locale?: string
 }
 
-export default function MobileMenu({ isHome = false, hideAbout = false, hideProjects = false, hideBlog = false, locale: propLocale }: MobileMenuProps) {
+export default function MobileMenu({ isHome = false, hideAbout = false, hideProjects = false, hideBlog = false }: MobileMenuProps) {
     const [open, setOpen] = useState(false)
     const t = useTranslations('navigation')
     const tFooter = useTranslations('footer')
-    const hookLocale = useLocale()
-
-    // Use prop locale if provided, otherwise fall back to hook
-    const locale = propLocale || hookLocale
 
     useEffect(() => {
         const onKeyDown = (e: KeyboardEvent) => {

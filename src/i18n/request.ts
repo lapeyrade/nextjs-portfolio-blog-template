@@ -37,7 +37,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
             messages,
             timeZone: localeKey === 'fr' ? 'Europe/Paris' : 'America/New_York'
         }
-    } catch (error) {
+    } catch {
         // Fallback to default locale if messages fail to load
         console.warn(`Failed to load messages for locale ${locale}, falling back to ${routing.defaultLocale}`)
 

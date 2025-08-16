@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
         // No translation found, return the original path stripped of locale prefix
         const strippedPath = pathname.replace(/^\/(en|fr)/, '')
         return NextResponse.json({ path: strippedPath })
-    } catch (err) {
+    } catch {
         return NextResponse.json({ path: '/' })
     }
 }

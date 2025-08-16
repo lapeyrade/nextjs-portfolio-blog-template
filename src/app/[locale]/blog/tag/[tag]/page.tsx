@@ -16,8 +16,8 @@ interface TagPageProps {
 
 export async function generateStaticParams() {
     // Generate params for both locales
-    const enPosts = getAllBlogPosts('en')
-    const frPosts = getAllBlogPosts('fr')
+    const enPosts = await getAllBlogPosts('en')
+    const frPosts = await getAllBlogPosts('fr')
 
     const enTags = new Set<string>()
     const frTags = new Set<string>()
@@ -54,7 +54,7 @@ export default async function TagPage({ params }: TagPageProps) {
     setRequestLocale(locale)
 
     const decodedTag = decodeURIComponent(tag)
-    const posts = getPostsByTag(decodedTag, locale)
+    const posts = await getPostsByTag(decodedTag, locale)
     const t = await getTranslations({ locale, namespace: 'blog' })
 
     return (
@@ -145,8 +145,8 @@ export default async function TagPage({ params }: TagPageProps) {
                                                             key={postTag}
                                                             href={`/${locale}/blog/tag/${encodeURIComponent(postTag)}`}
                                                             className={`px-2 py-1 text-xs rounded-full transition-colors ${postTag === decodedTag
-                                                                    ? 'bg-accent text-white'
-                                                                    : 'bg-gray-800 text-accent hover:bg-gray-700'
+                                                                ? 'bg-accent text-white'
+                                                                : 'bg-gray-800 text-accent hover:bg-gray-700'
                                                                 }`}
                                                         >
                                                             {postTag}

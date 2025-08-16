@@ -32,9 +32,9 @@ export default async function BlogPage({ params }: BlogPageProps) {
 
     const t = await getTranslations({ locale, namespace: 'blog' })
 
-    const allPosts = getAllBlogPosts(locale)
+    const allPosts = await getAllBlogPosts(locale)
     const { posts, totalPages } = paginatePosts(allPosts, 1, PAGE_SIZE)
-    const tags = getAllTags(locale)
+    const tags = await getAllTags(locale)
 
     return (
         <PageTransition>

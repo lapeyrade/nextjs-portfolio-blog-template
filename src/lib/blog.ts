@@ -183,7 +183,6 @@ export async function getBlogPost(slug: string, locale: string = 'en'): Promise<
             lastModified,
         }
     } catch (error) {
-        // eslint-disable-next-line no-console
         console.error('Error reading blog post:', error)
         return null
     }

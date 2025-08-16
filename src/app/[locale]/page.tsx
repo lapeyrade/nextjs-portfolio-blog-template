@@ -96,7 +96,7 @@ export default async function Home({ params }: Props) {
                             <h2 className="text-4xl font-bold text-white text-center mb-12">{t('projects.title')}</h2>
                         </ScrollReveal>
                         <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {['project_1', 'project_2', 'project_3'].map((projectKey, index) => (
+                            {['project_1', 'project_2', 'project_3'].map((projectKey) => (
                                 <StaggerItem key={projectKey}>
                                     <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 hover:scale-105 transition-transform">
                                         <div className="h-48 accent-gradient-bg rounded-lg mb-4"></div>

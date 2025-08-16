@@ -11,7 +11,7 @@ export default function RegisterServiceWorker(): null {
                     if (res.ok) {
                         await navigator.serviceWorker.register('/service-worker.js')
                     }
-                } catch (e) {
+                } catch {
                     // swallow errors silently to avoid noisy logs in the client
                 }
             }

@@ -54,7 +54,7 @@ export default function LanguageSwitcher() {
 
                 const absolute = `/${newLocale}${finalPath === '/' ? '' : finalPath}`
                 router.replace(absolute)
-            } catch (err) {
+            } catch {
                 // Fallback to simple replace
                 const absolute = `/${newLocale}${targetPath === '/' ? '' : targetPath}`
                 router.replace(absolute)
@@ -67,7 +67,7 @@ export default function LanguageSwitcher() {
 
         // Clean up timeout if component unmounts
         return () => clearTimeout(timeoutId)
-    }, [locale, router, isLoading, getTargetPath])
+    }, [locale, router, isLoading, getTargetPath, pathname])
 
     return (
         <div className="flex items-center gap-1 bg-gray-800/50 rounded-lg p-1">

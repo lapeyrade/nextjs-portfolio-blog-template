@@ -89,7 +89,7 @@ export async function POST(request: Request) {
         })
 
         return NextResponse.json({ ok: true })
-    } catch (e) {
+    } catch {
         return NextResponse.json({ ok: false, error: 'Malformed JSON' }, { status: 400 })
     }
 }

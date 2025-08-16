@@ -29,8 +29,8 @@ interface BlogPostPageProps {
 }
 
 export async function generateStaticParams() {
-    const enPosts = getAllBlogPosts('en')
-    const frPosts = getAllBlogPosts('fr')
+    const enPosts = await getAllBlogPosts('en')
+    const frPosts = await getAllBlogPosts('fr')
 
     return [
         ...enPosts.map((post) => ({ locale: 'en', slug: post.slug })),
@@ -40,7 +40,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: BlogPostPageProps) {
     const { locale, slug } = await params
-    const post = getBlogPost(slug, locale)
+    const post = await getBlogPost(slug, locale)
 
     if (!post) {
         return {
@@ -70,7 +70,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     // Enable static rendering
     setRequestLocale(locale)
 
-    const post = getBlogPost(slug, locale)
+    const post = await getBlogPost(slug, locale)
 
     if (!post) {
         return (

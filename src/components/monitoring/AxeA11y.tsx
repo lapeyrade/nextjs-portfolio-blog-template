@@ -25,7 +25,6 @@ export default function AxeA11y() {
             let originalError: typeof console.error | null = null
             if (downgrade) {
                 originalError = console.error
-                // eslint-disable-next-line no-console
                 console.error = (...args: unknown[]) => console.warn('[axe]', ...args)
             }
 
