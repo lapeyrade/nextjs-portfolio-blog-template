@@ -14,10 +14,10 @@ export async function POST(req: NextRequest) {
         }
 
         const currentSlug = decodeURIComponent(match[1])
-        
+
         // Use the blog slug mapping to find the equivalent slug in the target language
         const equivalentSlug = getEquivalentSlug(currentSlug, targetLocale)
-        
+
         if (equivalentSlug) {
             // Found a translation
             return NextResponse.json({ path: `/blog/${equivalentSlug}` })

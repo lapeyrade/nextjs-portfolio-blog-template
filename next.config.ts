@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
   },
   // Move serverComponentsExternalPackages to the correct location
   serverExternalPackages: [],
-  
+
   // Configure webpack for better shiki support
   webpack: (config, { isServer }) => {
     if (isServer) {

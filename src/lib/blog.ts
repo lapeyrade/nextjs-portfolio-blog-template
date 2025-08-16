@@ -131,19 +131,19 @@ export function getBlogPost(slug: string, locale: string = 'en'): BlogPost | nul
         const rootPath = path.join(blogDirectory, `${slug}.mdx`)
 
         let fullPath = ''
-        
+
         // For French locale, check locale-specific directory first
         if (locale === 'fr' && fs.existsSync(localePath)) {
             fullPath = localePath
-        } 
+        }
         // For English or if French file doesn't exist, check root directory
         else if (fs.existsSync(rootPath)) {
             fullPath = rootPath
-        } 
+        }
         // Fallback to locale-specific directory
         else if (fs.existsSync(localePath)) {
             fullPath = localePath
-        } 
+        }
         else {
             return null
         }
