@@ -4,7 +4,7 @@ import { siteUrl } from '@/lib/seo'
 export const revalidate = 3600
 
 export async function GET() {
-    const posts = getAllBlogPosts()
+    const posts = await getAllBlogPosts()
 
     const feed = {
         version: 'https://jsonfeed.org/version/1.1',

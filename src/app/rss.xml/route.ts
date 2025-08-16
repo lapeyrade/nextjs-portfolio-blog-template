@@ -8,7 +8,7 @@ function escapeCdata(text: string): string {
 }
 
 export async function GET() {
-    const posts = getAllBlogPosts()
+  const posts = await getAllBlogPosts()
 
     const items = posts
         .map((post) => {

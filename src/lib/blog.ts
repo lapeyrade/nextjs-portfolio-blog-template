@@ -1,4 +1,4 @@
-import fs from 'fs'
+import fs from 'fs/promises'
 import path from 'path'
 import matter from 'gray-matter'
 import readingTime from 'reading-time'
@@ -48,55 +48,57 @@ function computeReadingMetrics(content: string): { readingTimeText: string; read
 
 const blogDirectory = path.join(process.cwd(), 'src/content/blog')
 
-export function getAllBlogPosts(locale: string = 'en'): BlogPost[] {
-    // Check if blog directory exists
-    if (!fs.existsSync(blogDirectory)) {
+// In-memory cache for process lifetime to avoid repeated disk reads
+let postsCache: BlogPost[] | null = null
+
+export async function getAllBlogPosts(locale: string = 'en'): Promise<BlogPost[]> {
+    if (postsCache) return postsCache
+
+    // Ensure blog directory exists
+    try {
+        await fs.stat(blogDirectory)
+    } catch {
         return []
     }
 
-    let allPostsData: BlogPost[] = []
+    const allPostsData: BlogPost[] = []
 
     if (locale === 'en') {
-        // For English, only get posts from the root directory
-        const fileNames = fs.readdirSync(blogDirectory)
-        allPostsData = fileNames
-            .filter((fileName) => fileName.endsWith('.mdx'))
-            .map((fileName) => {
-                // Remove ".mdx" from file name to get slug
-                const slug = fileName.replace(/\.mdx$/, '')
-                const fullPath = path.join(blogDirectory, fileName)
-                return parsePostFile(fullPath, slug)
-            })
+        const fileNames = await fs.readdir(blogDirectory)
+        for (const fileName of fileNames) {
+            if (!fileName.endsWith('.mdx')) continue
+            const slug = fileName.replace(/\.mdx$/, '')
+            const fullPath = path.join(blogDirectory, fileName)
+            const post = await parsePostFile(fullPath, slug)
+            allPostsData.push(post)
+        }
     } else {
-        // For other locales, get posts from locale-specific directory
         const localeDir = path.join(blogDirectory, locale)
-        if (fs.existsSync(localeDir)) {
-            const fileNames = fs.readdirSync(localeDir)
-            allPostsData = fileNames
-                .filter((fileName) => fileName.endsWith('.mdx'))
-                .map((fileName) => {
-                    // Remove ".mdx" from file name to get slug
-                    const slug = fileName.replace(/\.mdx$/, '')
-                    const fullPath = path.join(localeDir, fileName)
-                    return parsePostFile(fullPath, slug)
-                })
+        try {
+            await fs.stat(localeDir)
+            const fileNames = await fs.readdir(localeDir)
+            for (const fileName of fileNames) {
+                if (!fileName.endsWith('.mdx')) continue
+                const slug = fileName.replace(/\.mdx$/, '')
+                const fullPath = path.join(localeDir, fileName)
+                const post = await parsePostFile(fullPath, slug)
+                allPostsData.push(post)
+            }
+        } catch {
+            // locale dir missing, fall through
         }
     }
 
-    // Sort posts by date
-    return allPostsData.sort((a, b) => {
-        if (a.date < b.date) {
-            return 1
-        } else {
-            return -1
-        }
-    })
+    // Sort posts by date desc
+    allPostsData.sort((a, b) => (a.date < b.date ? 1 : -1))
+    postsCache = allPostsData
+    return allPostsData
 }
 
-function parsePostFile(fullPath: string, slug: string): BlogPost {
-    const fileContents = fs.readFileSync(fullPath, 'utf8')
+async function parsePostFile(fullPath: string, slug: string): Promise<BlogPost> {
+    const fileContents = await fs.readFile(fullPath, 'utf8')
     const matterResult = matter(fileContents)
-    const stats = fs.statSync(fullPath)
+    const stats = await fs.stat(fullPath)
     const fm = matterResult.data as BlogFrontmatter
     const updatedFromFm =
         normalizeToIsoString(fm.updated) ||
@@ -123,34 +125,41 @@ function parsePostFile(fullPath: string, slug: string): BlogPost {
     } as BlogPost
 }
 
-export function getBlogPost(slug: string, locale: string = 'en'): BlogPost | null {
+export async function getBlogPost(slug: string, locale: string = 'en'): Promise<BlogPost | null> {
     try {
-        // For French locale, prefer French-specific files first
         const localeDir = path.join(blogDirectory, locale)
         const localePath = path.join(localeDir, `${slug}.mdx`)
         const rootPath = path.join(blogDirectory, `${slug}.mdx`)
 
         let fullPath = ''
 
-        // For French locale, check locale-specific directory first
-        if (locale === 'fr' && fs.existsSync(localePath)) {
-            fullPath = localePath
-        }
-        // For English or if French file doesn't exist, check root directory
-        else if (fs.existsSync(rootPath)) {
-            fullPath = rootPath
-        }
-        // Fallback to locale-specific directory
-        else if (fs.existsSync(localePath)) {
-            fullPath = localePath
-        }
-        else {
-            return null
+        // Prefer locale-specific file when present
+        try {
+            if (locale === 'fr') {
+                await fs.stat(localePath)
+                fullPath = localePath
+            }
+        } catch {
+            // ignore
         }
 
-        const fileContents = fs.readFileSync(fullPath, 'utf8')
+        if (!fullPath) {
+            try {
+                await fs.stat(rootPath)
+                fullPath = rootPath
+            } catch {
+                try {
+                    await fs.stat(localePath)
+                    fullPath = localePath
+                } catch {
+                    return null
+                }
+            }
+        }
+
+        const fileContents = await fs.readFile(fullPath, 'utf8')
         const matterResult = matter(fileContents)
-        const stats = fs.statSync(fullPath)
+        const stats = await fs.stat(fullPath)
         const fm = matterResult.data as BlogFrontmatter
         const updatedFromFm =
             normalizeToIsoString(fm.updated) ||
@@ -174,41 +183,40 @@ export function getBlogPost(slug: string, locale: string = 'en'): BlogPost | nul
             lastModified,
         }
     } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('Error reading blog post:', error)
         return null
     }
 }
 
-export function getBlogPostSlugs(): string[] {
-    if (!fs.existsSync(blogDirectory)) {
+export async function getBlogPostSlugs(): Promise<string[]> {
+    try {
+        await fs.stat(blogDirectory)
+    } catch {
         return []
     }
 
-    const fileNames = fs.readdirSync(blogDirectory)
-    return fileNames
-        .filter((fileName) => fileName.endsWith('.mdx'))
-        .map((fileName) => fileName.replace(/\.mdx$/, ''))
+    const fileNames = await fs.readdir(blogDirectory)
+    return fileNames.filter((fileName) => fileName.endsWith('.mdx')).map((fileName) => fileName.replace(/\.mdx$/, ''))
 }
 
-export function getPostsByTag(tag: string, locale: string = 'en'): BlogPost[] {
+export async function getPostsByTag(tag: string, locale: string = 'en'): Promise<BlogPost[]> {
     const normalized = tag.trim().toLowerCase()
-    return getAllBlogPosts(locale).filter((post) =>
-        (post.tags || []).some((t) => String(t).trim().toLowerCase() === normalized)
-    )
+    const posts = await getAllBlogPosts(locale)
+    return posts.filter((post) => (post.tags || []).some((t) => String(t).trim().toLowerCase() === normalized))
 }
 
-export function getAllTags(locale: string = 'en'): Array<{ tag: string; count: number }> {
+export async function getAllTags(locale: string = 'en'): Promise<Array<{ tag: string; count: number }>> {
     const counts = new Map<string, number>()
-    for (const post of getAllBlogPosts(locale)) {
+    const posts = await getAllBlogPosts(locale)
+    for (const post of posts) {
         for (const tag of post.tags || []) {
             const key = String(tag).trim()
             if (!key) continue
             counts.set(key, (counts.get(key) || 0) + 1)
         }
     }
-    return Array.from(counts.entries())
-        .map(([tag, count]) => ({ tag, count }))
-        .sort((a, b) => (b.count - a.count) || a.tag.localeCompare(b.tag))
+    return Array.from(counts.entries()).map(([tag, count]) => ({ tag, count })).sort((a, b) => (b.count - a.count) || a.tag.localeCompare(b.tag))
 }
 
 export interface PaginatedPosts {

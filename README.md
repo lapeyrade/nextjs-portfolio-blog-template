@@ -271,7 +271,7 @@ This section summarizes a code audit (performance bottlenecks, suggested optimiz
 - [x] Review service-worker caching strategy and adjust for safe resource caching
 - [x] Validate /api endpoints and add rate-limiting or authentication if exposing sensitive logs
 - [x] Replace any unsafe use of `dangerouslySetInnerHTML` with safe serializers or strict input validation where feasible
-- [ ] Avoid blocking synchronous fs calls on the server in hot paths; prefer async APIs
+- [x] Avoid blocking synchronous fs calls on the server in hot paths; prefer async APIs
 - [ ] Limit client-side telemetry to aggregated/minimal data and consider sampling
 - [ ] Lock down environment variables and avoid leaking sensitive values to the client
 
