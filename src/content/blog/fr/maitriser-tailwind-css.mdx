@@ -1,0 +1,99 @@
+---
+title: "Maîtriser Tailwind CSS : Guide Complet 2025"
+description: "Un guide approfondi pour maîtriser Tailwind CSS, du setup de base aux techniques avancées pour créer des designs magnifiques et responsives."
+date: "2025-01-10"
+author: "Votre Nom"
+tags: ["Tailwind CSS", "CSS", "Design", "Frontend"]
+---
+
+# Maîtriser Tailwind CSS
+
+Tailwind CSS a révolutionné la façon dont nous approchons le styling en CSS. Ce framework utility-first offre une approche unique et puissante pour créer des interfaces utilisateur modernes.
+
+## Pourquoi Choisir Tailwind CSS ?
+
+### 1. Approche Utility-First
+
+Au lieu d'écrire du CSS personnalisé, vous composez des designs en appliquant des classes utilitaires pré-existantes directement dans votre HTML.
+
+```html
+<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+  Bouton
+</button>
+```
+
+### 2. Customisation Complète
+
+Tailwind est entièrement customisable via le fichier `tailwind.config.js` :
+
+```javascript
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        'brand-blue': '#1fb6ff',
+        'brand-purple': '#7e5bef',
+      }
+    }
+  }
+}
+```
+
+## Setup et Configuration
+
+### Installation
+
+```bash
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+```
+
+### Configuration
+
+Configurez votre `tailwind.config.js` :
+
+```javascript
+module.exports = {
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
+
+## Techniques Avancées
+
+### 1. Composants Réutilisables
+
+Créez des composants avec des styles cohérents :
+
+```css
+@layer components {
+  .btn-primary {
+    @apply py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700;
+  }
+}
+```
+
+### 2. Design Responsive
+
+Tailwind facilite le design responsive :
+
+```html
+<div class="text-base lg:text-xl xl:text-2xl">
+  Texte responsive
+</div>
+```
+
+## Bonnes Pratiques
+
+1. **Utilisez les modificateurs** : `hover:`, `focus:`, `active:`
+2. **Organisez vos classes** : groupez par fonction (layout, typography, colors)
+3. **Exploitez les variables CSS** : pour les valeurs dynamiques
+
+## Conclusion
+
+Tailwind CSS offre une productivité inégalée pour le développement frontend. Son approche utility-first permet de créer rapidement des designs cohérents et maintenables.

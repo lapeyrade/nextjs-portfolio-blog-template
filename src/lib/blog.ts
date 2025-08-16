@@ -48,51 +48,40 @@ function computeReadingMetrics(content: string): { readingTimeText: string; read
 
 const blogDirectory = path.join(process.cwd(), 'src/content/blog')
 
-export function getAllBlogPosts(): BlogPost[] {
+export function getAllBlogPosts(locale: string = 'en'): BlogPost[] {
     // Check if blog directory exists
     if (!fs.existsSync(blogDirectory)) {
         return []
     }
 
-    const fileNames = fs.readdirSync(blogDirectory)
-    const allPostsData = fileNames
-        .filter((fileName) => fileName.endsWith('.mdx'))
-        .map((fileName) => {
-            // Remove ".mdx" from file name to get slug
-            const slug = fileName.replace(/\.mdx$/, '')
+    let allPostsData: BlogPost[] = []
 
-            // Read markdown file as string
-            const fullPath = path.join(blogDirectory, fileName)
-            const fileContents = fs.readFileSync(fullPath, 'utf8')
-
-            // Use gray-matter to parse the post metadata section
-            const matterResult = matter(fileContents)
-            const stats = fs.statSync(fullPath)
-            const fm = matterResult.data as BlogFrontmatter
-            const updatedFromFm =
-                normalizeToIsoString(fm.updated) ||
-                normalizeToIsoString(fm.lastModified) ||
-                normalizeToIsoString(fm.modified) ||
-                normalizeToIsoString(fm.updateDate)
-            const lastModified: string = updatedFromFm ?? stats.mtime.toISOString()
-
-            // Calculate reading metrics
-            const { readingTimeText, readingTimeMinutes, wordCount } = computeReadingMetrics(matterResult.content)
-
-            return {
-                slug,
-                title: fm.title || 'Untitled',
-                description: fm.description || '',
-                date: fm.date || new Date().toISOString(),
-                author: fm.author || 'Anonymous',
-                tags: fm.tags || [],
-                readingTime: readingTimeText,
-                readingTimeMinutes,
-                wordCount,
-                content: matterResult.content,
-                lastModified,
-            } as BlogPost
-        })
+    if (locale === 'en') {
+        // For English, only get posts from the root directory
+        const fileNames = fs.readdirSync(blogDirectory)
+        allPostsData = fileNames
+            .filter((fileName) => fileName.endsWith('.mdx'))
+            .map((fileName) => {
+                // Remove ".mdx" from file name to get slug
+                const slug = fileName.replace(/\.mdx$/, '')
+                const fullPath = path.join(blogDirectory, fileName)
+                return parsePostFile(fullPath, slug)
+            })
+    } else {
+        // For other locales, get posts from locale-specific directory
+        const localeDir = path.join(blogDirectory, locale)
+        if (fs.existsSync(localeDir)) {
+            const fileNames = fs.readdirSync(localeDir)
+            allPostsData = fileNames
+                .filter((fileName) => fileName.endsWith('.mdx'))
+                .map((fileName) => {
+                    // Remove ".mdx" from file name to get slug
+                    const slug = fileName.replace(/\.mdx$/, '')
+                    const fullPath = path.join(localeDir, fileName)
+                    return parsePostFile(fullPath, slug)
+                })
+        }
+    }
 
     // Sort posts by date
     return allPostsData.sort((a, b) => {
@@ -104,11 +93,58 @@ export function getAllBlogPosts(): BlogPost[] {
     })
 }
 
-export function getBlogPost(slug: string): BlogPost | null {
-    try {
-        const fullPath = path.join(blogDirectory, `${slug}.mdx`)
+function parsePostFile(fullPath: string, slug: string): BlogPost {
+    const fileContents = fs.readFileSync(fullPath, 'utf8')
+    const matterResult = matter(fileContents)
+    const stats = fs.statSync(fullPath)
+    const fm = matterResult.data as BlogFrontmatter
+    const updatedFromFm =
+        normalizeToIsoString(fm.updated) ||
+        normalizeToIsoString(fm.lastModified) ||
+        normalizeToIsoString(fm.modified) ||
+        normalizeToIsoString(fm.updateDate)
+    const lastModified: string = updatedFromFm ?? stats.mtime.toISOString()
 
-        if (!fs.existsSync(fullPath)) {
+    // Calculate reading metrics
+    const { readingTimeText, readingTimeMinutes, wordCount } = computeReadingMetrics(matterResult.content)
+
+    return {
+        slug,
+        title: fm.title || 'Untitled',
+        description: fm.description || '',
+        date: fm.date || new Date().toISOString(),
+        author: fm.author || 'Anonymous',
+        tags: fm.tags || [],
+        readingTime: readingTimeText,
+        readingTimeMinutes,
+        wordCount,
+        content: matterResult.content,
+        lastModified,
+    } as BlogPost
+}
+
+export function getBlogPost(slug: string, locale: string = 'en'): BlogPost | null {
+    try {
+        // For French locale, prefer French-specific files first
+        const localeDir = path.join(blogDirectory, locale)
+        const localePath = path.join(localeDir, `${slug}.mdx`)
+        const rootPath = path.join(blogDirectory, `${slug}.mdx`)
+
+        let fullPath = ''
+        
+        // For French locale, check locale-specific directory first
+        if (locale === 'fr' && fs.existsSync(localePath)) {
+            fullPath = localePath
+        } 
+        // For English or if French file doesn't exist, check root directory
+        else if (fs.existsSync(rootPath)) {
+            fullPath = rootPath
+        } 
+        // Fallback to locale-specific directory
+        else if (fs.existsSync(localePath)) {
+            fullPath = localePath
+        } 
+        else {
             return null
         }
 
@@ -154,16 +190,16 @@ export function getBlogPostSlugs(): string[] {
         .map((fileName) => fileName.replace(/\.mdx$/, ''))
 }
 
-export function getPostsByTag(tag: string): BlogPost[] {
+export function getPostsByTag(tag: string, locale: string = 'en'): BlogPost[] {
     const normalized = tag.trim().toLowerCase()
-    return getAllBlogPosts().filter((post) =>
+    return getAllBlogPosts(locale).filter((post) =>
         (post.tags || []).some((t) => String(t).trim().toLowerCase() === normalized)
     )
 }
 
-export function getAllTags(): Array<{ tag: string; count: number }> {
+export function getAllTags(locale: string = 'en'): Array<{ tag: string; count: number }> {
     const counts = new Map<string, number>()
-    for (const post of getAllBlogPosts()) {
+    for (const post of getAllBlogPosts(locale)) {
         for (const tag of post.tags || []) {
             const key = String(tag).trim()
             if (!key) continue

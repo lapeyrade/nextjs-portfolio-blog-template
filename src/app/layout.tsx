@@ -1,4 +1,3 @@
-import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import WebVitals from '@/components/monitoring/WebVitals'
@@ -9,7 +8,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata: Metadata = {
+export const metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: 'Portfolio | Full-Stack Developer',
@@ -40,17 +39,17 @@ export const metadata: Metadata = {
   manifest: '/manifest.webmanifest',
 }
 
-export const viewport: Viewport = {
+export const viewport = {
   themeColor: '#8b5cf6',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" data-theme="ocean">
+    <html data-theme="ocean">
       <body className={inter.className}>
         <script
           type="application/ld+json"

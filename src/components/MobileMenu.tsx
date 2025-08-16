@@ -1,19 +1,28 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
+import { useTranslations, useLocale } from 'next-intl'
+import { Link } from '@/i18n/routing'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
 import Search from '@/components/Search'
+import LanguageSwitcher from '@/components/LanguageSwitcher'
 
 interface MobileMenuProps {
     isHome?: boolean
     hideAbout?: boolean
     hideProjects?: boolean
     hideBlog?: boolean
+    locale?: string
 }
 
-export default function MobileMenu({ isHome = false, hideAbout = false, hideProjects = false, hideBlog = false }: MobileMenuProps) {
+export default function MobileMenu({ isHome = false, hideAbout = false, hideProjects = false, hideBlog = false, locale: propLocale }: MobileMenuProps) {
     const [open, setOpen] = useState(false)
+    const t = useTranslations('navigation')
+    const tFooter = useTranslations('footer')
+    const hookLocale = useLocale()
+
+    // Use prop locale if provided, otherwise fall back to hook
+    const locale = propLocale || hookLocale
 
     useEffect(() => {
         const onKeyDown = (e: KeyboardEvent) => {
@@ -22,9 +31,6 @@ export default function MobileMenu({ isHome = false, hideAbout = false, hideProj
         if (open) document.addEventListener('keydown', onKeyDown)
         return () => document.removeEventListener('keydown', onKeyDown)
     }, [open])
-
-    const aboutHref = isHome ? '#about' : '/'
-    const projectsHref = isHome ? '#projects' : '/#projects'
 
     return (
         <div className="md:hidden">
@@ -57,25 +63,36 @@ export default function MobileMenu({ isHome = false, hideAbout = false, hideProj
                     <div className="relative ml-auto h-full w-64 sm:w-72 max-w-[75%] theme-panel p-5 shadow-xl overflow-y-auto">
                         <nav className="space-y-1 flex flex-col items-end text-right">
                             {!hideAbout && (
-                                <Link href={aboutHref} onClick={() => setOpen(false)} className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">About</Link>
+                                isHome ? (
+                                    <a href="#about" onClick={() => setOpen(false)} className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">{t('about')}</a>
+                                ) : (
+                                    <Link href="/" scroll={false} onClick={() => setOpen(false)} className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">{t('about')}</Link>
+                                )
                             )}
                             {!hideProjects && (
-                                <Link href={projectsHref} onClick={() => setOpen(false)} className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">Projects</Link>
+                                isHome ? (
+                                    <a href="#projects" onClick={() => setOpen(false)} className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">{t('projects')}</a>
+                                ) : (
+                                    <Link href="/" scroll={false} onClick={() => setOpen(false)} className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">{t('projects')}</Link>
+                                )
                             )}
                             {!hideBlog && (
-                                <Link href="/blog" onClick={() => setOpen(false)} className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">Blog</Link>
+                                <Link href="/blog" onClick={() => setOpen(false)} className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">{t('blog')}</Link>
                             )}
-                            <Link href="/contact" onClick={() => setOpen(false)} className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">Contact</Link>
+                            <Link href="/contact" onClick={() => setOpen(false)} className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">{t('contact')}</Link>
                             <div className="h-px my-2 w-full bg-[var(--panel-border)]" />
                             <div className="w-full flex justify-end mb-2">
                                 <Search enableHotkey={false} />
                             </div>
                             <div className="w-full flex justify-end mb-2">
+                                <LanguageSwitcher />
+                            </div>
+                            <div className="w-full flex justify-end mb-2">
                                 <ThemeSwitcher variant="mobile" />
                             </div>
                             <div className="h-px my-2 w-full bg-[var(--panel-border)]" />
-                            <Link href="/cgu" onClick={() => setOpen(false)} className="block rounded px-2 py-2 text-sm text-foreground/80 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">Terms</Link>
-                            <Link href="/privacy" onClick={() => setOpen(false)} className="block rounded px-2 py-2 text-sm text-foreground/80 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">Privacy</Link>
+                            <Link href="/terms" onClick={() => setOpen(false)} className="block rounded px-2 py-2 text-sm text-foreground/80 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">{tFooter('terms')}</Link>
+                            <Link href="/privacy" onClick={() => setOpen(false)} className="block rounded px-2 py-2 text-sm text-foreground/80 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]">{tFooter('privacy')}</Link>
                         </nav>
                     </div>
                 </div>

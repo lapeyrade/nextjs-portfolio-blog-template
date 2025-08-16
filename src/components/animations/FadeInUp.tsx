@@ -19,7 +19,7 @@ export default function FadeInUp({
     const prefersReducedMotion = useReducedMotion()
 
     const initialState = prefersReducedMotion
-        ? { opacity: 0 }
+        ? { opacity: 1 }
         : { opacity: 0, y: 60 }
 
     const animateState = { opacity: 1, y: 0 }
@@ -28,8 +28,9 @@ export default function FadeInUp({
         <motion.div
             className={className}
             initial={initialState}
+            animate={animateState}
             whileInView={animateState}
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.1 }}
             transition={{
                 duration: prefersReducedMotion ? 0.01 : duration,
                 delay: prefersReducedMotion ? 0 : delay,

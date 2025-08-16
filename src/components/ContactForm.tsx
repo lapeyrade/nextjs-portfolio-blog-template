@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, FormEvent } from 'react'
+import { useTranslations } from 'next-intl'
 import { StaggerContainer, StaggerItem, AnimatedButton } from '@/components/animations'
 
 interface FormData {
@@ -20,6 +21,9 @@ interface FormErrors {
 }
 
 export default function ContactForm() {
+    const t = useTranslations('contact_form')
+    const tValidation = useTranslations('validation')
+
     const [formData, setFormData] = useState<FormData>({
         name: '',
         email: '',
@@ -37,31 +41,31 @@ export default function ContactForm() {
 
         // Name validation
         if (!formData.name.trim()) {
-            newErrors.name = 'Name is required'
+            newErrors.name = tValidation('required_field')
         } else if (formData.name.trim().length < 2) {
-            newErrors.name = 'Name must be at least 2 characters'
+            newErrors.name = tValidation('min_length', { min: 2 })
         }
 
         // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
         if (!formData.email.trim()) {
-            newErrors.email = 'Email is required'
+            newErrors.email = tValidation('required_field')
         } else if (!emailRegex.test(formData.email)) {
-            newErrors.email = 'Please enter a valid email address'
+            newErrors.email = tValidation('invalid_email')
         }
 
         // Subject validation
         if (!formData.subject.trim()) {
-            newErrors.subject = 'Subject is required'
+            newErrors.subject = tValidation('required_field')
         } else if (formData.subject.trim().length < 5) {
-            newErrors.subject = 'Subject must be at least 5 characters'
+            newErrors.subject = tValidation('min_length', { min: 5 })
         }
 
         // Message validation
         if (!formData.message.trim()) {
-            newErrors.message = 'Message is required'
+            newErrors.message = tValidation('required_field')
         } else if (formData.message.trim().length < 10) {
-            newErrors.message = 'Message must be at least 10 characters'
+            newErrors.message = tValidation('min_length', { min: 10 })
         }
 
         setErrors(newErrors)
@@ -123,7 +127,7 @@ export default function ContactForm() {
                     <StaggerItem>
                         <div>
                             <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                                Full Name
+                                {t('name_label')}
                             </label>
                             <input
                                 type="text"
@@ -134,7 +138,7 @@ export default function ContactForm() {
                                     ? 'border-red-500 focus:ring-red-500'
                                     : 'border-gray-600 focus:ring-[var(--accent)] focus:border-[var(--accent)]'
                                     }`}
-                                placeholder="Enter your full name"
+                                placeholder={t('name_placeholder')}
                             />
                             {errors.name && (
                                 <p className="mt-2 text-sm text-red-400">{errors.name}</p>
@@ -146,7 +150,7 @@ export default function ContactForm() {
                     <StaggerItem>
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                                Email Address
+                                {t('email_label')}
                             </label>
                             <input
                                 type="email"
@@ -157,7 +161,7 @@ export default function ContactForm() {
                                     ? 'border-red-500 focus:ring-red-500'
                                     : 'border-gray-600 focus:ring-[var(--accent)] focus:border-[var(--accent)]'
                                     }`}
-                                placeholder="Enter your email address"
+                                placeholder={t('email_placeholder')}
                             />
                             {errors.email && (
                                 <p className="mt-2 text-sm text-red-400">{errors.email}</p>
@@ -168,7 +172,7 @@ export default function ContactForm() {
                     {/* Subject Field */}
                     <div>
                         <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">
-                            Subject
+                            {t('subject_label')}
                         </label>
                         <input
                             type="text"
@@ -179,7 +183,7 @@ export default function ContactForm() {
                                 ? 'border-red-500 focus:ring-red-500'
                                 : 'border-gray-600 focus:ring-[var(--accent)] focus:border-[var(--accent)]'
                                 }`}
-                            placeholder="What's this about?"
+                            placeholder={t('subject_placeholder')}
                         />
                         {errors.subject && (
                             <p className="mt-2 text-sm text-red-400">{errors.subject}</p>
@@ -189,7 +193,7 @@ export default function ContactForm() {
                     {/* Message Field */}
                     <div>
                         <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                            Message
+                            {t('message_label')}
                         </label>
                         <textarea
                             id="message"
@@ -200,7 +204,7 @@ export default function ContactForm() {
                                 ? 'border-red-500 focus:ring-red-500'
                                 : 'border-gray-600 focus:ring-[var(--accent)] focus:border-[var(--accent)]'
                                 }`}
-                            placeholder="Tell me about your project or idea..."
+                            placeholder={t('message_placeholder')}
                         />
                         {errors.message && (
                             <p className="mt-2 text-sm text-red-400">{errors.message}</p>
@@ -235,10 +239,10 @@ export default function ContactForm() {
                                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                     </svg>
-                                    Sending Message...
+                                    {t('submit_button')}...
                                 </span>
                             ) : (
-                                'Send Message'
+                                t('submit_button')
                             )}
                         </AnimatedButton>
                     </StaggerItem>
@@ -247,7 +251,7 @@ export default function ContactForm() {
                     {submitStatus === 'success' && (
                         <div className="p-4 bg-green-800/20 border border-green-600 rounded-lg" role="status" id="contact-status" aria-live="polite">
                             <p className="text-green-400 text-center">
-                                ✅ Thank you! Your message has been sent successfully. I&apos;ll get back to you soon.
+                                ✅ {t('success_message')}
                             </p>
                         </div>
                     )}
@@ -255,7 +259,7 @@ export default function ContactForm() {
                     {submitStatus === 'error' && (
                         <div className="p-4 bg-red-800/20 border border-red-600 rounded-lg" role="status" id="contact-status" aria-live="assertive">
                             <p className="text-red-400 text-center">
-                                ❌ Sorry, there was an error sending your message. Please try again.
+                                ❌ {t('error_message')}
                             </p>
                         </div>
                     )}

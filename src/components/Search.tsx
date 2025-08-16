@@ -1,7 +1,10 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import Link from 'next/link'
+import { Link } from '@/i18n/routing'
+import NextLink from 'next/link'
+import { useTranslations, useLocale } from 'next-intl'
+import { useRouter } from '@/i18n/routing'
 
 type Result = {
     url: string
@@ -16,6 +19,9 @@ interface SearchProps {
 }
 
 export default function Search({ enableHotkey = true }: SearchProps) {
+    const t = useTranslations('search')
+    const locale = useLocale()
+    const router = useRouter()
     const [open, setOpen] = useState(false)
     const [q, setQ] = useState('')
     const [results, setResults] = useState<Result[]>([])
@@ -45,14 +51,35 @@ export default function Search({ enableHotkey = true }: SearchProps) {
                 } else if (e.key === 'Enter') {
                     const target = results[activeIndex]
                     if (target) {
-                        window.location.href = target.url
+                        e.preventDefault()
+                        setOpen(false)
+
+                        // Handle routing based on URL type
+                        const isDynamic = target.url.includes('/blog/') && !target.url.endsWith('/blog')
+
+                        if (isDynamic) {
+                            // For dynamic blog posts, use window.location
+                            window.location.href = target.url
+                        } else {
+                            // For static pages, use router navigation with proper locale handling
+                            if (target.url === '/') {
+                                router.push('/')
+                            } else if (target.url === '/blog') {
+                                router.push('/blog')
+                            } else if (target.url === '/contact') {
+                                router.push('/contact')
+                            } else {
+                                // Fallback for other static pages
+                                window.location.href = target.url
+                            }
+                        }
                     }
                 }
             }
         }
         window.addEventListener('keydown', onKey)
         return () => window.removeEventListener('keydown', onKey)
-    }, [open, results, activeIndex, enableHotkey])
+    }, [open, results, activeIndex, enableHotkey, router])
 
     useEffect(() => {
         if (!open) return
@@ -76,7 +103,7 @@ export default function Search({ enableHotkey = true }: SearchProps) {
     useEffect(() => {
         const controller = new AbortController()
         const fetchResults = async () => {
-            const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`, { signal: controller.signal })
+            const res = await fetch(`/api/search?q=${encodeURIComponent(q)}&locale=${locale}`, { signal: controller.signal })
             if (!res.ok) return
             const data = await res.json()
             setResults(data)
@@ -84,7 +111,7 @@ export default function Search({ enableHotkey = true }: SearchProps) {
         }
         fetchResults().catch(() => { })
         return () => controller.abort()
-    }, [q])
+    }, [q, locale])
 
     return (
         <div>
@@ -97,7 +124,7 @@ export default function Search({ enableHotkey = true }: SearchProps) {
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
                     <path fillRule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 4.27 12.03l3.74 3.73a.75.75 0 1 0 1.06-1.06l-3.73-3.74A6.75 6.75 0 0 0 10.5 3.75Zm-5.25 6.75a5.25 5.25 0 1 1 10.5 0 5.25 5.25 0 0 1-10.5 0Z" clipRule="evenodd" />
                 </svg>
-                <span>Search</span>
+                <span>{t('button_text')}</span>
                 {enableHotkey && <span className="ml-1 rounded bg-gray-700/60 px-1.5 py-0.5 text-[10px]">⌘K</span>}
             </button>
 
@@ -113,31 +140,56 @@ export default function Search({ enableHotkey = true }: SearchProps) {
                                 ref={inputRef}
                                 value={q}
                                 onChange={(e) => setQ(e.target.value)}
-                                placeholder="Search docs, articles, pages..."
+                                placeholder={t('placeholder')}
                                 className="w-full bg-transparent text-foreground placeholder:text-foreground/70 focus:outline-none"
                                 aria-label="Search site"
                             />
-                            <button onClick={() => setOpen(false)} className="text-foreground/70 hover:text-accent" aria-label="Close search">Esc</button>
+                            <button onClick={() => setOpen(false)} className="text-foreground/70 hover:text-accent" aria-label="Close search">{t('close')}</button>
                         </div>
                         <div ref={resultsRef} className="mt-3 max-h-80 overflow-y-auto divide-y divide-[var(--panel-border)]">
                             {results.length === 0 ? (
-                                <div className="p-3 text-foreground/70">No results</div>
+                                <div className="p-3 text-foreground/70">{t('no_results')}</div>
                             ) : (
-                                results.map((r, idx) => (
-                                    <Link
-                                        key={r.url}
-                                        href={r.url}
-                                        className={`block p-3 rounded ${idx === activeIndex ? 'bg-gray-800/60' : 'hover:bg-gray-800/50'}`}
-                                        onMouseEnter={() => setActiveIndex(idx)}
-                                        onClick={() => setOpen(false)}
-                                    >
-                                        <div className="flex items-center justify-between">
-                                            <h4 className="font-medium text-foreground">{r.title}</h4>
-                                            <span className="text-xs text-foreground/60">{r.type}</span>
-                                        </div>
-                                        {r.description && <p className="text-sm text-foreground/80">{r.description}</p>}
-                                    </Link>
-                                ))
+                                results.map((r, idx) => {
+                                    const isDynamic = r.url.includes('/blog/') && !r.url.endsWith('/blog')
+
+                                    if (isDynamic) {
+                                        return (
+                                            <NextLink
+                                                key={r.url}
+                                                href={r.url}
+                                                className={`block p-3 rounded ${idx === activeIndex ? 'bg-gray-800/60' : 'hover:bg-gray-800/50'}`}
+                                                onMouseEnter={() => setActiveIndex(idx)}
+                                                onClick={() => setOpen(false)}
+                                            >
+                                                <div className="flex items-center justify-between">
+                                                    <h4 className="font-medium text-foreground">{r.title}</h4>
+                                                    <span className="text-xs text-foreground/60">{r.type}</span>
+                                                </div>
+                                                {r.description && <p className="text-sm text-foreground/80">{r.description}</p>}
+                                            </NextLink>
+                                        )
+                                    }
+
+                                    // For static pages, use i18n Link with known routes
+                                    const staticHref = r.url === '/' ? '/' : r.url === '/blog' ? '/blog' : r.url === '/contact' ? '/contact' : r.url
+
+                                    return (
+                                        <Link
+                                            key={r.url}
+                                            href={staticHref as '/' | '/blog' | '/contact' | '/terms' | '/privacy'}
+                                            className={`block p-3 rounded ${idx === activeIndex ? 'bg-gray-800/60' : 'hover:bg-gray-800/50'}`}
+                                            onMouseEnter={() => setActiveIndex(idx)}
+                                            onClick={() => setOpen(false)}
+                                        >
+                                            <div className="flex items-center justify-between">
+                                                <h4 className="font-medium text-foreground">{r.title}</h4>
+                                                <span className="text-xs text-foreground/60">{r.type}</span>
+                                            </div>
+                                            {r.description && <p className="text-sm text-foreground/80">{r.description}</p>}
+                                        </Link>
+                                    )
+                                })
                             )}
                         </div>
                     </div>

@@ -45,6 +45,33 @@ porfolio/
 └── tsconfig.json                              # TypeScript configuration
 ```
 
+## 🌍 Internationalization (i18n)
+
+- **Languages**: English (en) and French (fr)
+- **Library**: next-intl for comprehensive i18n support
+- **Content Management**: All content centralized in MDX files and JSON messages
+- **URL Structure**: `/en/...` and `/fr/...` for locale-specific routes
+- **Features**:
+  - Automatic locale detection and redirection
+  - Language switcher component in header
+  - Translated navigation, forms, and UI elements
+  - SEO-friendly URL structure
+  - Fallback to default locale (English)
+
+### Content Structure
+```
+src/
+├── content/i18n/
+│   ├── en/          # English content (MDX files)
+│   └── fr/          # French content (MDX files)
+├── messages/
+│   ├── en.json      # English UI translations
+│   └── fr.json      # French UI translations
+└── i18n/
+    ├── routing.ts   # Route definitions and navigation
+    └── request.ts   # i18n configuration
+```
+
 ## 🛠️ Development Guidelines
 
 ### Getting Started
@@ -199,7 +226,9 @@ Consider implementing these features:
 - [x] Global search (site-wide)
 - [x] Fix service-worker.js
 - [x] Fix header + remove light theme
-- [ ] Internationalization (i18n) with only English and French for now
+- [x] Internationalization (i18n) with only English and French for now
+    - [x] Add back: "Enjoyed this post? Let's connect and discuss your next project or any questions you might have." and "Read more posts" and "Get in touch" buttons at the end of the blog article
+    - [x] Investigate initial loading time to change region.
 - [ ] CI/CD: GitHub Actions for lint/build/test on PRs
 
 ## 🔧 Environment Variables

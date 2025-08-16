@@ -1,0 +1,53 @@
+import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { Link } from '@/i18n/routing'
+import { PageTransition, FadeInUp } from '@/components/animations'
+
+type NotFoundProps = {
+    params?: { locale?: string }
+}
+
+export default async function LocalizedNotFound({ params }: NotFoundProps) {
+    const locale = params?.locale || 'en'
+    setRequestLocale(locale)
+    const t = await getTranslations('notFound')
+
+    return (
+        <PageTransition>
+            <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center">
+                <main className="w-full px-6 py-20">
+                    <div className="max-w-3xl mx-auto text-center">
+                        <FadeInUp delay={0.1}>
+                            <p className="text-purple-300 font-semibold tracking-widest mb-3">{t('code')}</p>
+                        </FadeInUp>
+                        <FadeInUp delay={0.2}>
+                            <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6">{t('title')}</h1>
+                        </FadeInUp>
+                        <FadeInUp delay={0.3}>
+                            <p className="text-gray-300 mb-10 max-w-xl mx-auto">
+                                {t('description')}
+                            </p>
+                        </FadeInUp>
+
+                        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                            <Link href="/" className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-lg font-semibold transition-transform hover:scale-105">
+                                {t('goHome')}
+                            </Link>
+                            <Link href="/blog" className="bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                                {t('visitBlog')}
+                            </Link>
+                            <Link href="/contact" className="bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                                {t('contactMe')}
+                            </Link>
+                        </div>
+
+                        <div className="mt-10 text-sm text-gray-400">
+                            <Link href="/" className="underline hover:text-gray-200 transition-colors">
+                                {t('returnHome')}
+                            </Link>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </PageTransition>
+    )
+}
