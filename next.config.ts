@@ -4,6 +4,11 @@ import createNextIntlPlugin from 'next-intl/plugin'
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 
+// Bundle analyzer configuration
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
 const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['@heroicons/react'],
@@ -12,6 +17,17 @@ const nextConfig: NextConfig = {
   },
   // Move serverComponentsExternalPackages to the correct location
   serverExternalPackages: [],
+  
+  // Enhanced image optimization
+  images: {
+    formats: ['image/webp', 'image/avif'],
+    deviceSizes: [640, 768, 1024, 1280, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    minimumCacheTTL: 86400, // 24 hours
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+  },
 
   // Configure webpack for better shiki support
   webpack: (config, { isServer }) => {
@@ -44,7 +60,12 @@ const nextConfig: NextConfig = {
         source: '/(.*)',
         headers: [
           { key: 'Service-Worker-Allowed', value: '/' },
-          // Cache static assets more aggressively
+        ],
+      },
+      {
+        // Cache static assets more aggressively
+        source: '/(.*)\\.(ico|png|jpg|jpeg|gif|webp|avif|svg|woff|woff2|ttf|eot)$',
+        headers: [
           {
             key: 'Cache-Control',
             value: 'public, max-age=31536000, immutable',
@@ -58,6 +79,16 @@ const nextConfig: NextConfig = {
           {
             key: 'Cache-Control',
             value: 'public, max-age=86400, stale-while-revalidate=604800',
+          },
+        ],
+      },
+      {
+        // Cache API routes with shorter TTL
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=3600, stale-while-revalidate=86400',
           },
         ],
       },
@@ -75,4 +106,4 @@ const withMDX = createMDX({
 })
 
 // Wrap MDX and Next.js config with each other
-export default withNextIntl(withMDX(nextConfig))
+export default withBundleAnalyzer(withNextIntl(withMDX(nextConfig)))
