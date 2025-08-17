@@ -29,6 +29,12 @@ export default function Search({ enableHotkey = true }: SearchProps) {
     const inputRef = useRef<HTMLInputElement>(null)
     const resultsRef = useRef<HTMLDivElement>(null)
 
+    // Clear results when locale changes to prevent stale data
+    useEffect(() => {
+        setResults([])
+        setQ('')
+    }, [locale])
+
     // Toggle with cmd+k / ctrl+k
     useEffect(() => {
         if (!enableHotkey) return
@@ -38,6 +44,9 @@ export default function Search({ enableHotkey = true }: SearchProps) {
             const combo = (isMac && e.metaKey && e.key.toLowerCase() === 'k') || (!isMac && e.ctrlKey && e.key.toLowerCase() === 'k')
             if (combo) {
                 e.preventDefault()
+                // Clear any cached results when opening
+                setResults([])
+                setQ('')
                 setOpen((v) => !v)
             }
             if (e.key === 'Escape') setOpen(false)
@@ -85,6 +94,8 @@ export default function Search({ enableHotkey = true }: SearchProps) {
         if (!open) return
         inputRef.current?.focus()
         setActiveIndex(0)
+        // Force fresh fetch when opening search
+        setQ('')
     }, [open])
 
     // Scroll active item into view
@@ -103,7 +114,9 @@ export default function Search({ enableHotkey = true }: SearchProps) {
     useEffect(() => {
         const controller = new AbortController()
         const fetchResults = async () => {
-            const res = await fetch(`/api/search?q=${encodeURIComponent(q)}&locale=${locale}`, { signal: controller.signal })
+            // Add timestamp to prevent caching issues
+            const timestamp = Date.now()
+            const res = await fetch(`/api/search?q=${encodeURIComponent(q)}&locale=${locale}&t=${timestamp}`, { signal: controller.signal })
             if (!res.ok) return
             const data = await res.json()
             setResults(data)

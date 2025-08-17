@@ -49,10 +49,25 @@ function computeReadingMetrics(content: string): { readingTimeText: string; read
 const blogDirectory = path.join(process.cwd(), 'src/content/blog')
 
 // In-memory cache for process lifetime to avoid repeated disk reads
-let postsCache: BlogPost[] | null = null
+// Cache per locale to handle i18n correctly
+const postsCacheByLocale: Map<string, BlogPost[]> = new Map()
+
+// Function to clear cache (useful for development)
+export function clearBlogCache(locale?: string) {
+    if (locale) {
+        postsCacheByLocale.delete(locale)
+        console.log(`[DEBUG] Cleared cache for locale: ${locale}`)
+    } else {
+        postsCacheByLocale.clear()
+        console.log(`[DEBUG] Cleared all blog cache`)
+    }
+}
 
 export async function getAllBlogPosts(locale: string = 'en'): Promise<BlogPost[]> {
-    if (postsCache) return postsCache
+    // Check if we have cached posts for this locale
+    if (postsCacheByLocale.has(locale)) {
+        return postsCacheByLocale.get(locale)!
+    }
 
     // Ensure blog directory exists
     try {
@@ -84,14 +99,17 @@ export async function getAllBlogPosts(locale: string = 'en'): Promise<BlogPost[]
                 const post = await parsePostFile(fullPath, slug)
                 allPostsData.push(post)
             }
-        } catch {
-            // locale dir missing, fall through
+        } catch (error) {
+            // locale dir missing, fall through - this might be the issue!
+            console.error(`Error reading locale directory ${localeDir}:`, error)
         }
     }
 
     // Sort posts by date desc
     allPostsData.sort((a, b) => (a.date < b.date ? 1 : -1))
-    postsCache = allPostsData
+    
+    // Cache the results for this locale
+    postsCacheByLocale.set(locale, allPostsData)
     return allPostsData
 }
 

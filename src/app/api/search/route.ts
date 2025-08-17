@@ -44,11 +44,11 @@ function getStaticPages(locale: string = 'en'): SearchItem[] {
         },
     ]
 
-    // Add locale prefix for French, keep English clean (as-needed strategy)
-    if (locale === 'fr') {
+    // Use 'as-needed' URL strategy: no prefix for default locale (en), prefix for others
+    if (locale !== 'en') {
         return basePages.map(page => ({
             ...page,
-            url: page.url === '/' ? '/fr' : `/fr${page.url}`
+            url: page.url === '/' ? `/${locale}` : `/${locale}${page.url}`
         }))
     }
 
@@ -57,14 +57,18 @@ function getStaticPages(locale: string = 'en'): SearchItem[] {
 
 async function getBlogItems(locale: string = 'en'): Promise<SearchItem[]> {
     const posts = await getAllBlogPosts(locale)
-    return posts.map((p) => ({
-        url: `/${locale}/blog/${p.slug}`,
-        title: p.title,
-        description: p.description,
-        type: 'blog' as const,
-        date: p.date,
-        content: p.content,
-    }))
+    return posts.map((p) => {
+        // Use 'as-needed' URL strategy: no prefix for default locale (en), prefix for others
+        const urlPrefix = locale === 'en' ? '' : `/${locale}`
+        return {
+            url: `${urlPrefix}/blog/${p.slug}`,
+            title: p.title,
+            description: p.description,
+            type: 'blog' as const,
+            date: p.date,
+            content: p.content,
+        }
+    })
 }
 
 function scoreItem(item: SearchItem, q: string): number {
@@ -89,15 +93,23 @@ export async function GET(req: NextRequest) {
     const q = searchParams.get('q') || ''
     const locale = searchParams.get('locale') || 'en'
 
+    // DEBUG: Let's see what posts we actually get
     const blogItems = await getBlogItems(locale)
-    const items = [...getStaticPages(locale), ...blogItems]
-    const results = (!q
-        ? items.slice(0, 10)
-        : items
+    const staticPages = getStaticPages(locale)
+    
+    let results
+    if (!q) {
+        // When no query, show all pages first, then blog posts
+        results = [...staticPages, ...blogItems]
+    } else {
+        // When searching, combine all items and score them
+        const items = [...staticPages, ...blogItems]
+        results = items
             .map((it) => ({ ...it, _score: scoreItem(it, q) }))
             .filter((it) => it._score > 0)
             .sort((a, b) => b._score - a._score)
-    ).slice(0, 12)
+            .slice(0, 12)
+    }
 
     return NextResponse.json(results.map((it) => ({
         url: it.url,
