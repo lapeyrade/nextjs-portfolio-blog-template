@@ -13,19 +13,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Install pnpm first
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: "latest"
+          run_install: false
+
+      # Then setup Node.js and enable pnpm cache
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
           cache: 'pnpm'
-      # Install pnpm and dependencies in one step (adds pnpm to PATH)
-      - name: Setup pnpm & install deps
-        uses: pnpm/action-setup@v2
-        with:
-          version: latest
-          run_install: |
-            - recursive: false
-              args: [--frozen-lockfile]
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Lint
         run: pnpm lint
