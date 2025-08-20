@@ -64,13 +64,13 @@ This repository contains a production‑ready personal portfolio and technical b
 
 | Category | Technology | Version |
 |----------|------------|---------|
-| Framework | Next.js | 15.4.6 |
+| Framework | Next.js | 15.5.0 |
 | Language | TypeScript | 5.9.2 |
 | Runtime | Node.js (required) | >=18.17 |
 | UI | React | 19.1.1 |
 | Styling | Tailwind CSS | 4.1.11 |
 | Animations | Framer Motion | 12.23.12 |
-| Content | MDX (`@mdx-js/react`, `@next/mdx`) | 3.1.0 / 15.4.6 bridge |
+| Content | MDX (`@mdx-js/react`, `@next/mdx`) | 3.1.0 / 15.5.0 bridge |
 | i18n | next-intl | 4.3.4 |
 | Parsing | gray-matter | 4.0.3 |
 | Reading Time | reading-time | 1.5.0 |
@@ -80,7 +80,7 @@ This repository contains a production‑ready personal portfolio and technical b
 | Analytics | @vercel/analytics | 1.5.0 |
 | Speed Insights | @vercel/speed-insights | 1.2.0 |
 | A11y (dev) | @axe-core/react | 4.10.2 |
-| Linting | eslint / eslint-config-next | 9.32.0 / 15.4.6 |
+| Linting | eslint / eslint-config-next | 9.32.0 / 15.5.0 |
 | Package Manager | pnpm | 10.14.0 |
 
 Additional build tooling: PostCSS 8.5.6, Autoprefixer 10.4.21, Tailwind PostCSS plugin, Browserslist modern targets.
