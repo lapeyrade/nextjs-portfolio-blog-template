@@ -1,11 +1,12 @@
 import type { NextConfig } from 'next'
 import createMDX from '@next/mdx'
 import createNextIntlPlugin from 'next-intl/plugin'
+import bundleAnalyzer from '@next/bundle-analyzer'
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 
 // Bundle analyzer configuration
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
+const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 })
 
@@ -35,7 +36,7 @@ const nextConfig: NextConfig = {
       // Don't treat shiki as external
       config.externals = config.externals || []
       if (Array.isArray(config.externals)) {
-        config.externals = config.externals.filter((external: any) => {
+        config.externals = config.externals.filter((external: string | Record<string, unknown>) => {
           if (typeof external === 'string') {
             return !external.includes('shiki')
           }

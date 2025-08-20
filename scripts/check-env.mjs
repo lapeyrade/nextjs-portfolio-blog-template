@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 // Simple env checker to find potentially leaked server-only envs that are prefixed with NEXT_PUBLIC_
-// Run: node ./scripts/check-env.js
+// Run: node ./scripts/check-env.mjs
 
-const fs = require('fs')
-const path = require('path')
+import fs from 'fs'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 const root = path.resolve(__dirname, '..')
-const pkg = require(path.join(root, 'package.json'))
 
 function findInFiles(dir, pattern) {
     const results = []
@@ -20,7 +22,7 @@ function findInFiles(dir, pattern) {
             try {
                 const txt = fs.readFileSync(p, 'utf8')
                 if (pattern.test(txt)) results.push(p)
-            } catch (e) {
+            } catch {
                 // ignore unreadable files
             }
         }
