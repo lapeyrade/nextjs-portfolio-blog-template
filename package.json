@@ -34,7 +34,7 @@
         "@axe-core/react": "^4.10.2",
         "@eslint/eslintrc": "^3.3.1",
         "@next/bundle-analyzer": "^15.4.6",
-        "@tailwindcss/postcss": "^4.1.11",
+        "@tailwindcss/postcss": "^4.1.12",
         "@types/node": "^24.2.0",
         "@types/react": "^19.1.9",
         "@types/react-dom": "^19.1.7",
@@ -45,7 +45,7 @@
         "postcss": "^8.5.6",
         "rehype-pretty-code": "^0.14.1",
         "remark-gfm": "^4.0.1",
-        "tailwindcss": "^4.1.11",
+        "tailwindcss": "^4.1.12",
         "typescript": "^5.9.2"
     },
     "packageManager": "pnpm@10.14.0"
