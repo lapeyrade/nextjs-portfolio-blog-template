@@ -18,7 +18,7 @@ const nextConfig: NextConfig = {
   },
   // Move serverComponentsExternalPackages to the correct location
   serverExternalPackages: [],
-  
+
   // Enhanced image optimization
   images: {
     formats: ['image/webp', 'image/avif'],

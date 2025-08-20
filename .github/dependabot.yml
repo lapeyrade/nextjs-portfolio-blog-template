@@ -1,0 +1,83 @@
+version: 2
+updates:
+  # Enable version updates for npm (pnpm)
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    # Group updates for better PR management
+    groups:
+      # Group Next.js related packages
+      nextjs:
+        patterns:
+          - "next*"
+          - "@next/*"
+      # Group React related packages
+      react:
+        patterns:
+          - "react*"
+          - "@types/react*"
+      # Group TypeScript related packages
+      typescript:
+        patterns:
+          - "typescript"
+          - "@types/*"
+      # Group ESLint related packages
+      eslint:
+        patterns:
+          - "eslint*"
+          - "@typescript-eslint/*"
+      # Group Tailwind CSS related packages
+      tailwind:
+        patterns:
+          - "tailwindcss"
+          - "@tailwindcss/*"
+      # Group Vercel related packages
+      vercel:
+        patterns:
+          - "@vercel/*"
+      # Group development dependencies
+      dev-dependencies:
+        dependency-type: "development"
+        exclude-patterns:
+          - "next*"
+          - "@next/*"
+          - "react*"
+          - "typescript"
+          - "eslint*"
+          - "@typescript-eslint/*"
+          - "tailwindcss"
+          - "@tailwindcss/*"
+    # Additional configuration
+    open-pull-requests-limit: 10
+    reviewers:
+      - "lapeyrade"
+    assignees:
+      - "lapeyrade"
+    commit-message:
+      prefix: "deps"
+      prefix-development: "deps-dev"
+      include: "scope"
+    # Allow Dependabot to update lockfiles
+    versioning-strategy: increase
+    # Automatically rebase PRs when conflicts occur
+    rebase-strategy: auto
+
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    reviewers:
+      - "lapeyrade"
+    assignees:
+      - "lapeyrade"
