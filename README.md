@@ -145,7 +145,7 @@ pnpm start
 
 ### Optional: Environment Safety Audit
 ```bash
-node scripts/check-env.js
+node scripts/check-env.mjs
 ```
 
 ## 6. Deployment
