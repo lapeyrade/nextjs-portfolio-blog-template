@@ -18,19 +18,14 @@ jobs:
         with:
           node-version: 'lts/*'
           cache: 'pnpm'
-
-      - name: Enable Corepack (provides pnpm)
-        run: |
-          corepack enable
-          corepack prepare pnpm@latest --activate
-
-      - name: Setup pnpm
+      # Install pnpm and dependencies in one step (adds pnpm to PATH)
+      - name: Setup pnpm & install deps
         uses: pnpm/action-setup@v2
         with:
-          version: 'latest'
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+          version: latest
+          run_install: |
+            - recursive: false
+              args: [--frozen-lockfile]
 
       - name: Lint
         run: pnpm lint
