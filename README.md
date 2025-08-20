@@ -81,7 +81,7 @@ This repository contains a production‑ready personal portfolio and technical b
 | Speed Insights | @vercel/speed-insights | >=1.2.0 |
 | A11y (dev) | @axe-core/react | >=4.10.2 |
 | Linting | eslint / eslint-config-next | >=9.32.0 / >=15.5.0 |
-| Package Manager | pnpm | >=10.14.0 |
+| Package Manager | pnpm | >=10.15.0 |
 
 Additional build tooling: PostCSS 8.5.6, Autoprefixer 10.4.21, Tailwind PostCSS plugin, Browserslist modern targets.
 
