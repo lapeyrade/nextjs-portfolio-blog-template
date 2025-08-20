@@ -51,8 +51,8 @@ importers:
         specifier: ^1.5.0
         version: 1.5.0
       resend:
-        specifier: ^6.0.0
-        version: 6.0.0
+        specifier: ^6.0.1
+        version: 6.0.1
       shiki:
         specifier: ^3.9.2
         version: 3.9.2
@@ -2269,8 +2269,8 @@ packages:
   requestidlecallback@0.3.0:
     resolution: {integrity: sha512-TWHFkT7S9p7IxLC5A1hYmAYQx2Eb9w1skrXmQ+dS1URyvR8tenMLl4lHbqEOUnpEYxNKpkVMXUgknVpBZWXXfQ==}
 
-  resend@6.0.0:
-    resolution: {integrity: sha512-YOqhUbdrAvlC+mAV0Ga7qD8jG+fJTvrYVaIpr5Dgs+557RnC5p/6V3me5fQFK3bEpbBA9Gz3SRf6uG+fZriqUw==}
+  resend@6.0.1:
+    resolution: {integrity: sha512-xNZ0gKAOqQcH83lXsqNOwBbpKROnsZpQr9mXRdG6hrHTF9G9Il2pkoTRtq7rJzXMvCZX+I79oahsbSeaYOWRFA==}
     engines: {node: '>=18'}
     peerDependencies:
       '@react-email/render': ^1.1.0
@@ -5322,7 +5322,7 @@ snapshots:
 
   requestidlecallback@0.3.0: {}
 
-  resend@6.0.0: {}
+  resend@6.0.1: {}
 
   resolve-from@4.0.0: {}
 
