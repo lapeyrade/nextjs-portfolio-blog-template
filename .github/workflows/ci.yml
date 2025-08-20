@@ -11,6 +11,8 @@ jobs:
     name: CI
     runs-on: ubuntu-latest
     environment: ci
+    env:
+      RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
