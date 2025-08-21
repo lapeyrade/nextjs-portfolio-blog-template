@@ -175,6 +175,33 @@ body {
   contain: layout paint style;
 }
 
+/* LCP Optimization - Ensure content is visible immediately */
+.hero-content {
+  opacity: 1;
+  transform: translateY(0);
+  contain: layout style paint;
+}
+
+/* Prevent layout shift for animated elements */
+[data-framer-motion-id] {
+  opacity: 1;
+}
+
+/* Critical above-the-fold content should be visible immediately */
+.hero-title,
+.hero-subtitle,
+.hero-cta {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Optimize text rendering */
+.hero-title {
+  text-rendering: optimizeSpeed;
+  font-feature-settings: "kern" 1;
+  font-display: swap;
+}
+
 /* Panel surface used for drawers, popovers, and menus */
 .theme-panel {
   background: var(--panel-bg);

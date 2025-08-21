@@ -1,5 +1,6 @@
 export { default as PageTransition } from './PageTransition'
 export { default as FadeInUp } from './FadeInUp'
+export { default as HeroSection } from './HeroSection'
 export { default as ScrollReveal } from './ScrollReveal'
 export { default as StaggerContainer } from './StaggerContainer'
 export { default as StaggerItem } from './StaggerItem'

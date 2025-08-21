@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server'
 import { setRequestLocale } from 'next-intl/server'
-import { PageTransition, FadeInUp, ScrollReveal, StaggerContainer, StaggerItem, AnimatedButton } from '@/components/animations'
+import { PageTransition, ScrollReveal, StaggerContainer, StaggerItem, AnimatedButton, HeroSection } from '@/components/animations'
 import SiteHeader from '@/components/SiteHeader'
 import Footer from '@/components/Footer'
 
@@ -24,21 +24,17 @@ export default async function Home({ params }: Props) {
                 {/* Hero Section */}
                 <section className="px-6 py-20">
                     <div className="max-w-6xl mx-auto text-center">
-                        <FadeInUp delay={0.2}>
-                            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
+                        <HeroSection className="hero-content">
+                            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 hero-title">
                                 {t('hero.greeting')}{' '}
                                 <span className="text-accent-gradient">
                                     {t('hero.name')}
                                 </span>
                             </h1>
-                        </FadeInUp>
-                        <FadeInUp delay={0.4}>
-                            <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                            <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto hero-subtitle">
                                 {t('hero.subtitle')}
                             </p>
-                        </FadeInUp>
-                        <FadeInUp delay={0.6}>
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center hero-cta">
                                 <AnimatedButton
                                     href="#projects"
                                     className="btn-accent px-8 py-3 rounded-lg font-semibold"
@@ -52,7 +48,7 @@ export default async function Home({ params }: Props) {
                                     {t('hero.cta_secondary')}
                                 </AnimatedButton>
                             </div>
-                        </FadeInUp>
+                        </HeroSection>
                     </div>
                 </section>
 

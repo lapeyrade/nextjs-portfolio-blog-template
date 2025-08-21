@@ -10,8 +10,8 @@ interface PageTransitionProps {
 
 const pageVariants = {
     initial: {
-        opacity: 0,
-        y: 20,
+        opacity: 1, // Changed from 0 to 1 for better LCP
+        y: 0, // Changed from 20 to 0
     },
     in: {
         opacity: 1,

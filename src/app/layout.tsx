@@ -6,7 +6,11 @@ import RegisterServiceWorker from '@/components/RegisterServiceWorker'
 import { siteUrl } from '@/lib/seo'
 import LazyThirdParty from '@/components/LazyThirdParty'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  preload: true
+})
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
@@ -55,6 +59,12 @@ export default async function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://vercel.com" crossOrigin="" />
+
+        {/* Preload critical CSS for better LCP */}
+        <link rel="preload" href="/globals.css" as="style" />
+
+        {/* Optimize first paint with critical rendering hints */}
+        <link rel="preload" as="image" href="/hero-bg.webp" type="image/webp" />
       </head>
       <body className={inter.className}>
         {/* JSON-LD for the website. siteUrl is controlled server-side. Serialize safely. */}
