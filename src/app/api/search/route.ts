@@ -7,10 +7,18 @@ type SearchItem = {
     description?: string
     type: 'page' | 'blog'
     date?: string
-    content?: string
 }
 
+// Cache for search results to avoid repeated computations
+const searchCache = new Map<string, SearchItem[]>()
+const CACHE_TTL = 5 * 60 * 1000 // 5 minutes
+
 function getStaticPages(locale: string = 'en'): SearchItem[] {
+    const cacheKey = `static_${locale}`
+    if (searchCache.has(cacheKey)) {
+        return searchCache.get(cacheKey)!
+    }
+
     const basePages = [
         {
             url: '/',
@@ -45,19 +53,25 @@ function getStaticPages(locale: string = 'en'): SearchItem[] {
     ]
 
     // Use 'as-needed' URL strategy: no prefix for default locale (en), prefix for others
-    if (locale !== 'en') {
-        return basePages.map(page => ({
-            ...page,
-            url: page.url === '/' ? `/${locale}` : `/${locale}${page.url}`
-        }))
-    }
+    const pages = locale !== 'en' ? basePages.map(page => ({
+        ...page,
+        url: page.url === '/' ? `/${locale}` : `/${locale}${page.url}`
+    })) : basePages
 
-    return basePages
+    searchCache.set(cacheKey, pages)
+    // Clear cache after TTL
+    setTimeout(() => searchCache.delete(cacheKey), CACHE_TTL)
+    return pages
 }
 
 async function getBlogItems(locale: string = 'en'): Promise<SearchItem[]> {
+    const cacheKey = `blog_${locale}`
+    if (searchCache.has(cacheKey)) {
+        return searchCache.get(cacheKey)!
+    }
+
     const posts = await getAllBlogPosts(locale)
-    return posts.map((p) => {
+    const items = posts.map((p) => {
         // Use 'as-needed' URL strategy: no prefix for default locale (en), prefix for others
         const urlPrefix = locale === 'en' ? '' : `/${locale}`
         return {
@@ -66,15 +80,18 @@ async function getBlogItems(locale: string = 'en'): Promise<SearchItem[]> {
             description: p.description,
             type: 'blog' as const,
             date: p.date,
-            content: p.content,
         }
     })
+
+    searchCache.set(cacheKey, items)
+    // Clear cache after TTL
+    setTimeout(() => searchCache.delete(cacheKey), CACHE_TTL)
+    return items
 }
 
 function scoreItem(item: SearchItem, q: string): number {
     const hayTitle = item.title.toLowerCase()
     const hayDesc = (item.description || '').toLowerCase()
-    const hayContent = (item.content || '').toLowerCase()
     const query = q.toLowerCase().trim()
     if (!query) return 0
 
@@ -82,7 +99,6 @@ function scoreItem(item: SearchItem, q: string): number {
     if (hayTitle.includes(query)) score += 6
     if (hayTitle.startsWith(query)) score += 2
     if (hayDesc.includes(query)) score += 3
-    if (hayContent.includes(query)) score += 1
     // Recent boost for blogs
     if (item.type === 'blog' && item.date) score += 0.5
     return score
@@ -93,31 +109,48 @@ export async function GET(req: NextRequest) {
     const q = searchParams.get('q') || ''
     const locale = searchParams.get('locale') || 'en'
 
-    // DEBUG: Let's see what posts we actually get
-    const blogItems = await getBlogItems(locale)
-    const staticPages = getStaticPages(locale)
-    
-    let results
-    if (!q) {
-        // When no query, show all pages first, then blog posts
-        results = [...staticPages, ...blogItems]
-    } else {
-        // When searching, combine all items and score them
-        const items = [...staticPages, ...blogItems]
-        results = items
-            .map((it) => ({ ...it, _score: scoreItem(it, q) }))
-            .filter((it) => it._score > 0)
-            .sort((a, b) => b._score - a._score)
-            .slice(0, 12)
-    }
+    // Add caching headers
+    const headers = new Headers({
+        'Cache-Control': 'public, max-age=300, stale-while-revalidate=600', // 5 minutes cache, 10 minutes stale
+        'Content-Type': 'application/json'
+    })
 
-    return NextResponse.json(results.map((it) => ({
-        url: it.url,
-        title: it.title,
-        description: it.description,
-        type: it.type,
-        date: it.date,
-    })))
+    try {
+        const [blogItems, staticPages] = await Promise.all([
+            getBlogItems(locale),
+            Promise.resolve(getStaticPages(locale))
+        ])
+        
+        let results
+        if (!q) {
+            // When no query, show all pages first, then blog posts (limit to prevent large responses)
+            results = [...staticPages, ...blogItems.slice(0, 8)]
+        } else {
+            // When searching, combine all items and score them
+            const items = [...staticPages, ...blogItems]
+            results = items
+                .map((it) => ({ ...it, _score: scoreItem(it, q) }))
+                .filter((it) => it._score > 0)
+                .sort((a, b) => b._score - a._score)
+                .slice(0, 12)
+        }
+
+        const response = results.map((it) => ({
+            url: it.url,
+            title: it.title,
+            description: it.description,
+            type: it.type,
+            date: it.date,
+        }))
+
+        return new NextResponse(JSON.stringify(response), { headers })
+    } catch (error) {
+        console.error('[SEARCH API] Error:', error)
+        return new NextResponse(JSON.stringify({ error: 'Search failed' }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' }
+        })
+    }
 }
 
 

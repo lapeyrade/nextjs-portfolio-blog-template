@@ -1,21 +1,28 @@
-import { redirect } from 'next/navigation'
-import { headers } from 'next/headers'
+'use client'
+
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 // This page handles root access and redirects to appropriate locale
-export default async function RootPage() {
-  const headersList = await headers()
-  const acceptLanguage = headersList.get('accept-language')
-  
-  // Simple language detection - check if French is preferred
-  const prefersFrench = acceptLanguage?.includes('fr-') || 
-                       acceptLanguage?.startsWith('fr') ||
-                       acceptLanguage?.includes('fr,') ||
-                       acceptLanguage?.includes('fr;')
-  
-  // Redirect to appropriate locale
-  if (prefersFrench) {
-    redirect('/fr')
-  } else {
-    redirect('/en')
-  }
+export default function RootPage() {
+    const router = useRouter()
+
+    useEffect(() => {
+        // Simple language detection - check if French is preferred
+        const acceptLanguage = navigator.language || navigator.languages?.[0] || 'en'
+        const prefersFrench = acceptLanguage.includes('fr-') ||
+            acceptLanguage.startsWith('fr') ||
+            acceptLanguage.includes('fr,') ||
+            acceptLanguage.includes('fr;')
+
+        // Client-side redirect to avoid 307 response
+        if (prefersFrench) {
+            router.replace('/fr')
+        } else {
+            router.replace('/en')
+        }
+    }, [router])
+
+    // Return nothing while redirecting
+    return null
 }

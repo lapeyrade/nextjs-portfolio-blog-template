@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, useReducedMotion } from 'framer-motion'
-import { ReactNode } from 'react'
+import { ReactNode, memo, useMemo } from 'react'
 
 interface StaggerContainerProps {
     children: ReactNode
@@ -9,13 +9,14 @@ interface StaggerContainerProps {
     className?: string
 }
 
-export default function StaggerContainer({
+const StaggerContainer = memo(function StaggerContainer({
     children,
     staggerDelay = 0.1,
     className = ''
 }: StaggerContainerProps) {
     const prefersReducedMotion = useReducedMotion()
-    const containerVariants = {
+    
+    const containerVariants = useMemo(() => ({
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
@@ -23,7 +24,7 @@ export default function StaggerContainer({
                 staggerChildren: prefersReducedMotion ? 0 : staggerDelay,
             },
         },
-    }
+    }), [prefersReducedMotion, staggerDelay])
 
     return (
         <motion.div
@@ -35,4 +36,6 @@ export default function StaggerContainer({
             {children}
         </motion.div>
     )
-}
+})
+
+export default StaggerContainer

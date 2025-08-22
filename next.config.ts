@@ -12,9 +12,11 @@ const withBundleAnalyzer = bundleAnalyzer({
 
 const nextConfig: NextConfig = {
   experimental: {
-    optimizePackageImports: ['@heroicons/react'],
+    optimizePackageImports: ['@heroicons/react', 'framer-motion', 'react-dom'],
     // Target modern browsers only (remove Baseline polyfills)
     forceSwcTransforms: false,
+    // Enable optimizations for better performance
+    serverComponentsHmrCache: false, // Disable in production
   },
   // Move serverComponentsExternalPackages to the correct location
   serverExternalPackages: [],
@@ -30,8 +32,8 @@ const nextConfig: NextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
 
-  // Configure webpack for better shiki support
-  webpack: (config, { isServer }) => {
+  // Configure webpack for better performance
+  webpack: (config, { isServer, dev }) => {
     if (isServer) {
       // Don't treat shiki as external
       config.externals = config.externals || []
@@ -44,6 +46,17 @@ const nextConfig: NextConfig = {
         })
       }
     }
+
+    // Optimize for production builds
+    if (!dev) {
+      config.optimization = {
+        ...config.optimization,
+        moduleIds: 'deterministic',
+        chunkIds: 'deterministic',
+        mangleExports: true,
+      }
+    }
+
     return config
   },
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],

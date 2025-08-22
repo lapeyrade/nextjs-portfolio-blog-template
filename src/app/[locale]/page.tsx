@@ -1,8 +1,18 @@
 import { getTranslations } from 'next-intl/server'
 import { setRequestLocale } from 'next-intl/server'
-import { PageTransition, ScrollReveal, StaggerContainer, StaggerItem, AnimatedButton, HeroSection } from '@/components/animations'
+import dynamic from 'next/dynamic'
 import SiteHeader from '@/components/SiteHeader'
 import Footer from '@/components/Footer'
+
+// Lazy load animation components to reduce initial bundle size
+const PageTransition = dynamic(() => import('@/components/animations/PageTransition'), {
+    loading: () => <div className="min-h-screen theme-surface" />
+})
+const ScrollReveal = dynamic(() => import('@/components/animations/ScrollReveal'))
+const StaggerContainer = dynamic(() => import('@/components/animations/StaggerContainer'))
+const StaggerItem = dynamic(() => import('@/components/animations/StaggerItem'))
+const AnimatedButton = dynamic(() => import('@/components/animations/AnimatedButton'))
+const HeroSection = dynamic(() => import('@/components/animations/HeroSection'))
 
 type Props = {
     params: Promise<{ locale: string }>

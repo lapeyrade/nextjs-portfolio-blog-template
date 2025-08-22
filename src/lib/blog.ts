@@ -73,35 +73,66 @@ export async function getAllBlogPosts(locale: string = 'en'): Promise<BlogPost[]
     try {
         await fs.stat(blogDirectory)
     } catch {
+        console.warn(`[BLOG] Blog directory not found: ${blogDirectory}`)
         return []
     }
 
     const allPostsData: BlogPost[] = []
 
     if (locale === 'en') {
-        const fileNames = await fs.readdir(blogDirectory)
-        for (const fileName of fileNames) {
-            if (!fileName.endsWith('.mdx')) continue
-            const slug = fileName.replace(/\.mdx$/, '')
-            const fullPath = path.join(blogDirectory, fileName)
-            const post = await parsePostFile(fullPath, slug)
-            allPostsData.push(post)
+        try {
+            const fileNames = await fs.readdir(blogDirectory)
+            const mdxFiles = fileNames.filter(fileName => fileName.endsWith('.mdx'))
+            
+            // Process files in parallel for better performance
+            const posts = await Promise.allSettled(
+                mdxFiles.map(async (fileName) => {
+                    const slug = fileName.replace(/\.mdx$/, '')
+                    const fullPath = path.join(blogDirectory, fileName)
+                    return await parsePostFile(fullPath, slug)
+                })
+            )
+            
+            posts.forEach((result) => {
+                if (result.status === 'fulfilled') {
+                    allPostsData.push(result.value)
+                } else {
+                    console.error('[BLOG] Error parsing post:', result.reason)
+                }
+            })
+        } catch (error) {
+            console.error(`[BLOG] Error reading English posts:`, error)
         }
     } else {
         const localeDir = path.join(blogDirectory, locale)
         try {
             await fs.stat(localeDir)
             const fileNames = await fs.readdir(localeDir)
-            for (const fileName of fileNames) {
-                if (!fileName.endsWith('.mdx')) continue
-                const slug = fileName.replace(/\.mdx$/, '')
-                const fullPath = path.join(localeDir, fileName)
-                const post = await parsePostFile(fullPath, slug)
-                allPostsData.push(post)
-            }
+            const mdxFiles = fileNames.filter(fileName => fileName.endsWith('.mdx'))
+            
+            // Process files in parallel for better performance
+            const posts = await Promise.allSettled(
+                mdxFiles.map(async (fileName) => {
+                    const slug = fileName.replace(/\.mdx$/, '')
+                    const fullPath = path.join(localeDir, fileName)
+                    return await parsePostFile(fullPath, slug)
+                })
+            )
+            
+            posts.forEach((result) => {
+                if (result.status === 'fulfilled') {
+                    allPostsData.push(result.value)
+                } else {
+                    console.error('[BLOG] Error parsing localized post:', result.reason)
+                }
+            })
         } catch (error) {
-            // locale dir missing, fall through - this might be the issue!
-            console.error(`Error reading locale directory ${localeDir}:`, error)
+            console.warn(`[BLOG] Locale directory not found or error reading: ${localeDir}`, error)
+            // Fallback to English posts if locale directory doesn't exist
+            if (locale !== 'en') {
+                console.info(`[BLOG] Falling back to English posts for locale: ${locale}`)
+                return await getAllBlogPosts('en')
+            }
         }
     }
 
@@ -110,6 +141,7 @@ export async function getAllBlogPosts(locale: string = 'en'): Promise<BlogPost[]
     
     // Cache the results for this locale
     postsCacheByLocale.set(locale, allPostsData)
+    console.info(`[BLOG] Cached ${allPostsData.length} posts for locale: ${locale}`)
     return allPostsData
 }
 

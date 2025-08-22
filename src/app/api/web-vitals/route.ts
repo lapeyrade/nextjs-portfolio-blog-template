@@ -34,17 +34,26 @@ function validatePayload(data: unknown): { ok: boolean; payload?: WebVitalsPaylo
     const value = typeof d.value === 'number' && Number.isFinite(d.value) ? d.value : undefined
     if (value !== undefined && (value < -1e6 || value > 1e8)) return { ok: false, error: 'Metric value out of range' }
 
-    const timestamp = typeof d.timestamp === 'number' && Number.isFinite(d.timestamp) ? d.timestamp : Date.now()
+    // Handle both 'timestamp' and 'ts' fields
+    const timestamp = (typeof d.timestamp === 'number' && Number.isFinite(d.timestamp)) ? d.timestamp : 
+                     (typeof d.ts === 'number' && Number.isFinite(d.ts)) ? d.ts : Date.now()
+    
     // Accept timestamps within +/- 7 days
     const now = Date.now()
     if (Math.abs(now - timestamp) > 7 * 24 * 60 * 60 * 1000) return { ok: false, error: 'Timestamp out of acceptable range' }
 
-    const url = typeof d.url === 'string' ? d.url.trim().slice(0, 2000) : undefined
-    const userAgent = typeof d.userAgent === 'string' ? String(d.userAgent).slice(0, 512) : undefined
+    // Handle WebVitals component field names
+    const url = typeof d.url === 'string' ? d.url.trim().slice(0, 2000) : 
+                typeof d.path === 'string' ? d.path.trim().slice(0, 2000) : undefined
+    
+    const userAgent = typeof d.userAgent === 'string' ? String(d.userAgent).slice(0, 512) : 
+                     typeof d.ua_snippet === 'string' ? String(d.ua_snippet).slice(0, 512) : undefined
+    
     const id = typeof d.id === 'string' ? String(d.id).slice(0, 256) : undefined
     const label = typeof d.label === 'string' ? String(d.label).slice(0, 64) : undefined
+    const delta = typeof d.delta === 'number' && Number.isFinite(d.delta) ? d.delta : undefined
 
-    const payload: WebVitalsPayload = { id, name, value, label, url, userAgent, timestamp }
+    const payload: WebVitalsPayload = { id, name, value, label, delta, url, userAgent, timestamp }
     return { ok: true, payload }
 }
 
@@ -73,23 +82,52 @@ export async function POST(request: Request) {
         }
 
         const raw = await request.json()
-        const { ok, payload, error } = validatePayload(raw)
-        if (!ok) return NextResponse.json({ ok: false, error }, { status: 400 })
+        
+        // Handle both single metrics and batched metrics
+        let metrics: unknown[]
+        if (Array.isArray(raw)) {
+            // Direct array of metrics
+            metrics = raw
+        } else if (raw && typeof raw === 'object' && 'items' in raw && Array.isArray(raw.items)) {
+            // Batched format: { items: [...] }
+            metrics = raw.items
+        } else {
+            // Single metric object
+            metrics = [raw]
+        }
 
-        // Sanitize and log limited fields. For production, forward to an APM/telemetry service.
-        console.log('[WebVitals API]', {
-            name: payload!.name,
-            value: payload!.value,
-            id: payload!.id,
-            label: payload!.label,
-            url: payload!.url,
-            ua_snippet: payload!.userAgent ? payload!.userAgent.slice(0, 128) : undefined,
-            ts: payload!.timestamp,
-            ip: ip === 'unknown' ? undefined : ip,
+        // Validate each metric in the batch
+        const validatedMetrics: WebVitalsPayload[] = []
+        for (const metric of metrics) {
+            const { ok, payload, error } = validatePayload(metric)
+            if (!ok) {
+                return NextResponse.json({ ok: false, error: `Invalid metric: ${error}` }, { status: 400 })
+            }
+            validatedMetrics.push(payload!)
+        }
+
+        // Log all valid metrics
+        for (const payload of validatedMetrics) {
+            console.log('[WebVitals API]', {
+                name: payload.name,
+                value: payload.value,
+                id: payload.id,
+                label: payload.label,
+                url: payload.url,
+                ua_snippet: payload.userAgent ? payload.userAgent.slice(0, 128) : undefined,
+                ts: payload.timestamp,
+                ip: ip === 'unknown' ? undefined : ip,
+            })
+        }
+
+        return NextResponse.json({ 
+            ok: true, 
+            processed: validatedMetrics.length 
         })
-
-        return NextResponse.json({ ok: true })
-    } catch {
+    } catch (error) {
+        if (process.env.NODE_ENV === 'development') {
+            console.error('[WebVitals API] Error processing request:', error)
+        }
         return NextResponse.json({ ok: false, error: 'Malformed JSON' }, { status: 400 })
     }
 }
