@@ -3,8 +3,6 @@ import { routing } from './src/i18n/routing'
 
 export default createMiddleware({
     ...routing,
-    // Use 'as-needed' to show locale only for non-default language
-    localePrefix: 'as-needed',
     alternateLinks: false, // Disable alternate links for better performance
     localeCookie: {
         name: 'NEXT_LOCALE',
@@ -16,7 +14,7 @@ export default createMiddleware({
 })
 
 export const config = {
-    // Match only internationalized pathnames with more specific patterns
+    // Simplified matcher that focuses on essential paths
     matcher: [
         // Enable a redirect to a matching locale at the root
         '/',
@@ -27,7 +25,6 @@ export const config = {
 
         // Enable redirects that add missing locales
         // (e.g. `/pathnames` -> `/en/pathnames`)
-        // Exclude API routes, Next.js files, and static assets more efficiently
-        '/((?!api|_next|_vercel|favicon\\.ico|sitemap\\.xml|robots\\.txt|manifest\\.webmanifest|.*\\.[a-zA-Z0-9]+$).*)'
+        '/((?!api|_next|_vercel|.*\\..*).*)'
     ]
 }

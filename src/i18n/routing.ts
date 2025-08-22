@@ -11,9 +11,9 @@ export const routing = defineRouting({
     // Optimize locale detection for better performance
     localeDetection: true,
 
-    // Use 'never' to hide locale from URL, or 'always' to show it
-    // For now, let's use 'as-needed' which shows locale only for non-default
-    localePrefix: 'as-needed',
+    // Use 'always' to show locale in URL for all languages
+    // This ensures proper routing when root page doesn't exist
+    localePrefix: 'always',
 
     // Use domain-based routing for better SEO and performance
     // This can help with initial loading times
