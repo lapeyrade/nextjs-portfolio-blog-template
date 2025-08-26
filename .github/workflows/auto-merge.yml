@@ -1,0 +1,67 @@
+name: Auto-merge Dependabot PRs
+
+on:
+  workflow_run:
+    workflows: ["CI — lint / build"]
+    types:
+      - completed
+
+permissions:
+  pull-requests: write
+  contents: write
+
+jobs:
+  auto-merge:
+    name: Auto-merge for Dependabot PRs
+    runs-on: ubuntu-latest
+    if: >
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.triggering_actor.login == 'dependabot[bot]'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Get PR details
+        id: pr-details
+        run: |
+          PR_URL="${{ github.event.workflow_run.html_url }}"
+          PR_NUMBER=$(echo "$PR_URL" | grep -o 'pull/[0-9]*' | grep -o '[0-9]*' || echo "")
+          echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
+
+          # Get PR data
+          if [ -n "$PR_NUMBER" ]; then
+            PR_DATA=$(gh pr view $PR_NUMBER --json title,author,mergeable,mergeStateStatus,labels)
+            echo "pr_data=$PR_DATA" >> $GITHUB_OUTPUT
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Enable auto-merge for Dependabot PRs
+        if: steps.pr-details.outputs.pr_number != ''
+        run: |
+          PR_NUMBER="${{ steps.pr-details.outputs.pr_number }}"
+          PR_DATA="${{ steps.pr-details.outputs.pr_data }}"
+
+          # Check if PR is from Dependabot
+          if echo "$PR_DATA" | jq -e '.author.login == "dependabot[bot]"' > /dev/null; then
+            echo "Found Dependabot PR #$PR_NUMBER"
+
+            # Check if PR can be merged
+            MERGEABLE=$(echo "$PR_DATA" | jq -r '.mergeable')
+            MERGE_STATE=$(echo "$PR_DATA" | jq -r '.mergeStateStatus')
+
+            if [ "$MERGEABLE" = "true" ] && [ "$MERGE_STATE" = "CLEAN" ]; then
+              echo "PR is mergeable, enabling auto-merge..."
+
+              # Enable auto-merge
+              gh pr merge $PR_NUMBER --auto --squash --delete-branch false
+
+              echo "Auto-merge enabled for PR #$PR_NUMBER"
+            else
+              echo "PR is not ready for merge. Mergeable: $MERGEABLE, State: $MERGE_STATE"
+            fi
+          else
+            echo "PR #$PR_NUMBER is not from Dependabot, skipping auto-merge"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
