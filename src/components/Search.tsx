@@ -36,7 +36,7 @@ export default function Search({ enableHotkey = true }: SearchProps) {
   useEffect(() => {
     setResults([])
     setQ('')
-  }, [locale])
+  }, [])
 
   // Toggle with cmd+k / ctrl+k
   useEffect(() => {
@@ -93,7 +93,7 @@ export default function Search({ enableHotkey = true }: SearchProps) {
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [open, results, activeIndex, enableHotkey, router])
+  }, [open, results, activeIndex, enableHotkey, router, locale])
 
   useEffect(() => {
     if (!open) return

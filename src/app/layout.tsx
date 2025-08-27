@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
 import ClientProviders from '@/components/ClientProviders'
+import JsonLdScript from '@/components/JsonLdScript'
 import LazyThirdParty from '@/components/LazyThirdParty'
 import WebVitals from '@/components/monitoring/WebVitals'
 import RegisterServiceWorker from '@/components/RegisterServiceWorker'
@@ -65,23 +66,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel="preload" as="image" href="/hero-bg.webp" type="image/webp" />
       </head>
       <body className={inter.className}>
-        {/* JSON-LD for the website. siteUrl is controlled server-side. Serialize safely. */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'WebSite',
-              url: typeof siteUrl === 'string' ? siteUrl : undefined,
-              name: 'Portfolio',
-              potentialAction: {
-                '@type': 'SearchAction',
-                target: `${siteUrl}/search?q={search_term_string}`,
-                'query-input': 'required name=search_term_string',
-              },
-            }),
-          }}
-        />
+        {/* JSON-LD for the website. siteUrl is controlled server-side. */}
+        <JsonLdScript siteUrl={siteUrl} />
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>
