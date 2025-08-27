@@ -1,83 +1,66 @@
 version: 2
 updates:
-  # Enable version updates for npm (pnpm)
+  # Enable version updates for pnpm
   - package-ecosystem: "pnpm"
     directory: "/"
     schedule:
       interval: "weekly"
       day: "monday"
       time: "09:00"
-      timezone: "UTC"
-    # Group updates for better PR management
+      timezone: "Europe/Paris"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "sylva"
+    assignees:
+      - "sylva"
+    commit-message:
+      prefix: "chore"
+      prefix-development: "chore"
+      include: "scope"
     groups:
+      # Group biome updates together
+      biome:
+        patterns:
+          - "@biomejs/biome"
+        update-types:
+          - "minor"
+          - "patch"
       # Group Next.js related packages
       nextjs:
         patterns:
-          - "next*"
-          - "@next/*"
-      # Group React related packages
-      react:
+          - "next"
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
+        update-types:
+          - "minor"
+          - "patch"
+      # Group Radix UI components
+      radix-ui:
         patterns:
-          - "react*"
-          - "@types/react*"
-      # Group TypeScript related packages
-      typescript:
-        patterns:
-          - "typescript"
-          - "@types/*"
-      # Group ESLint related packages
-      eslint:
-        patterns:
-          - "eslint*"
-          - "@typescript-eslint/*"
-      # Group Tailwind CSS related packages
-      tailwind:
-        patterns:
-          - "tailwindcss"
-          - "@tailwindcss/*"
-      # Group Vercel related packages
-      vercel:
-        patterns:
-          - "@vercel/*"
+          - "@radix-ui/*"
+        update-types:
+          - "minor"
+          - "patch"
       # Group development dependencies
       dev-dependencies:
-        dependency-type: "development"
-        exclude-patterns:
-          - "next*"
-          - "@next/*"
-          - "react*"
+        patterns:
+          - "@types/*"
           - "typescript"
-          - "eslint*"
-          - "@typescript-eslint/*"
           - "tailwindcss"
           - "@tailwindcss/*"
-    # Additional configuration
-    open-pull-requests-limit: 10
-    reviewers:
-      - "lapeyrade"
-    assignees:
-      - "lapeyrade"
-    commit-message:
-      prefix: "deps"
-      prefix-development: "deps-dev"
-      include: "scope"
-    # Allow Dependabot to update lockfiles
-    versioning-strategy: increase
-    # Automatically rebase PRs when conflicts occur
-    rebase-strategy: auto
-
-  # Enable version updates for GitHub Actions
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "09:00"
-      timezone: "UTC"
-    commit-message:
-      prefix: "ci"
-      include: "scope"
-    reviewers:
-      - "lapeyrade"
-    assignees:
-      - "lapeyrade"
+          - "postcss"
+          - "autoprefixer"
+        update-types:
+          - "minor"
+          - "patch"
+      # Group testing dependencies (when added)
+      testing:
+        patterns:
+          - "@testing-library/*"
+          - "jest"
+          - "vitest"
+        update-types:
+          - "minor"
+          - "patch"

@@ -52,7 +52,7 @@ This repository contains a production‑ready personal portfolio and technical b
 
 ### Code Quality & Tooling
 - TypeScript strict mode
-- ESLint (Next.js + custom rules)
+- Biome (linting + formatting + import organization)
 - Centralized SEO and blog utility modules
 - Environment variable safety script (`scripts/check-env.js`)
 - CI/CD ready (GitHub Actions placeholder friendly)
@@ -80,7 +80,7 @@ This repository contains a production‑ready personal portfolio and technical b
 | Analytics | @vercel/analytics | >=1.5.0 |
 | Speed Insights | @vercel/speed-insights | >=1.2.0 |
 | A11y (dev) | @axe-core/react | >=4.10.2 |
-| Linting | eslint / eslint-config-next | >=9.32.0 / >=15.5.0 |
+| Linting | @biomejs/biome | >=2.2.2 |
 | Package Manager | pnpm | >=10.15.0 |
 
 Additional build tooling: PostCSS 8.5.6, Autoprefixer 10.4.21, Tailwind PostCSS plugin, Browserslist modern targets.
@@ -127,9 +127,19 @@ pnpm dev
 ```
 Visit http://localhost:3000.
 
-### Lint
+### Lint & Format
 ```bash
+# Lint only
 pnpm lint
+
+# Check (lint + format)
+pnpm check
+
+# Auto-fix issues
+pnpm fix
+
+# Format only
+pnpm format
 ```
 
 ### Type Check (if separate)
@@ -167,7 +177,7 @@ Contributions are welcome. Please keep scope focused and quality high.
 2. Create a feature branch: `git checkout -b feat/meaningful-name`
 3. Install dependencies & run dev server
 4. Make changes (maintain TypeScript strictness, accessibility, tests where applicable)
-5. Run lint + build locally
+5. Run lint/format check + build locally
 6. Commit using conventional style (e.g., `feat: add animated header`)
 7. Open a Pull Request with a clear description and screenshots (if UI)
 

@@ -1,15 +1,15 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
-import WebVitals from '@/components/monitoring/WebVitals'
 import ClientProviders from '@/components/ClientProviders'
+import LazyThirdParty from '@/components/LazyThirdParty'
+import WebVitals from '@/components/monitoring/WebVitals'
 import RegisterServiceWorker from '@/components/RegisterServiceWorker'
 import { siteUrl } from '@/lib/seo'
-import LazyThirdParty from '@/components/LazyThirdParty'
 
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
-  preload: true
+  preload: true,
 })
 
 export const metadata = {
@@ -47,11 +47,9 @@ export const viewport = {
   themeColor: '#8b5cf6',
 }
 
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  // Generate unique ID for main content
+  const _mainContentId = 'main-content'
   return (
     <html lang="en" data-theme="ocean">
       <head>
@@ -84,11 +82,13 @@ export default async function RootLayout({
             }),
           }}
         />
-        <a href="#main-content" className="skip-link">Skip to content</a>
+        <a href="#main-content" className="skip-link">
+          Skip to content
+        </a>
         <WebVitals />
         <ClientProviders />
         <LazyThirdParty />
-        <main id="main-content" tabIndex={-1}>
+        <main id={_mainContentId} tabIndex={-1}>
           {children}
         </main>
         {/* Client component handles SW registration without inline scripts */}

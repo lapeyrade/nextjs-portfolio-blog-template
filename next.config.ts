@@ -1,7 +1,7 @@
-import type { NextConfig } from 'next'
-import createMDX from '@next/mdx'
-import createNextIntlPlugin from 'next-intl/plugin'
 import bundleAnalyzer from '@next/bundle-analyzer'
+import createMDX from '@next/mdx'
+import type { NextConfig } from 'next'
+import createNextIntlPlugin from 'next-intl/plugin'
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 
@@ -11,6 +11,9 @@ const withBundleAnalyzer = bundleAnalyzer({
 })
 
 const nextConfig: NextConfig = {
+  turbopack: {
+    root: __dirname,
+  },
   experimental: {
     optimizePackageImports: ['@heroicons/react', 'framer-motion', 'react-dom'],
     // Target modern browsers only (remove Baseline polyfills)
@@ -72,9 +75,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/(.*)',
-        headers: [
-          { key: 'Service-Worker-Allowed', value: '/' },
-        ],
+        headers: [{ key: 'Service-Worker-Allowed', value: '/' }],
       },
       {
         // Cache static assets more aggressively
