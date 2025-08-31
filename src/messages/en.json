@@ -1,213 +1,220 @@
 {
-  "navigation": {
-    "home": "Home",
-    "about": "About",
-    "projects": "Projects",
-    "blog": "Blog",
-    "contact": "Contact"
-  },
-  "hero": {
-    "greeting": "Hello, I'm",
-    "name": "Your Name",
-    "subtitle": "A passionate developer creating amazing digital experiences with modern technologies",
-    "cta_primary": "View My Work",
-    "cta_secondary": "Contact Me"
-  },
-  "about": {
-    "title": "About Me",
-    "description_1": "I'm a full-stack developer with a passion for creating beautiful, functional, and user-friendly applications. With expertise in modern web technologies, I bring ideas to life through clean code and thoughtful design.",
-    "description_2": "When I'm not coding, you can find me exploring new technologies, contributing to open source projects, or sharing knowledge with the developer community.",
-    "skills": ["React", "Next.js", "TypeScript", "TailwindCSS", "Node.js", "Python"]
-  },
-  "projects": {
-    "title": "Featured Projects",
-    "project_1": {
-      "title": "Project 1",
-      "description": "A brief description of this amazing project and the technologies used to build it."
-    },
-    "project_2": {
-      "title": "Project 2",
-      "description": "A brief description of this amazing project and the technologies used to build it."
-    },
-    "project_3": {
-      "title": "Project 3",
-      "description": "A brief description of this amazing project and the technologies used to build it."
-    },
-    "live_demo": "Live Demo →",
-    "source_code": "Code →"
-  },
-  "contact": {
-    "title": "Let's Work Together",
-    "subtitle": "Have a project in mind? I'd love to hear about it and discuss how we can bring your ideas to life.",
-    "cta": "Get In Touch"
-  },
-  "search": {
-    "button_text": "Search",
-    "placeholder": "Search docs, articles, pages...",
-    "no_results": "No results",
-    "close": "Esc"
-  },
-  "footer": {
-    "copyright": "All rights reserved.",
-    "terms": "Terms of Service",
-    "privacy": "Privacy Policy",
-    "contact": "Contact"
-  },
-  "common": {
-    "read_more": "Read more",
-    "back": "Back",
-    "next": "Next",
-    "previous": "Previous",
-    "loading": "Loading...",
-    "error": "An error occurred",
-    "page_not_found": "Page not found",
-    "go_home": "Go Home"
-  },
-  "contact_form": {
-    "title": "Contact Me",
-    "subtitle": "Let's work together to bring your ideas to life",
-    "name_label": "Name",
-    "name_placeholder": "Your full name",
-    "email_label": "Email",
-    "email_placeholder": "your.email@example.com",
-    "subject_label": "Subject",
-    "subject_placeholder": "What's this about?",
-    "message_label": "Message",
-    "message_placeholder": "Tell me about your project...",
-    "submit_button": "Send Message",
-    "success_message": "Thank you for your message! I'll get back to you soon.",
-    "error_message": "Sorry, there was an error sending your message. Please try again."
-  },
-  "validation": {
-    "required_field": "This field is required",
-    "invalid_email": "Please enter a valid email address",
-    "min_length": "This field must be at least {min} characters long",
-    "max_length": "This field must be no more than {max} characters long"
-  },
-  "blog": {
-    "title": "Blog",
-    "description": "Thoughts, tutorials, and insights about web development, technology, and creative coding.",
-    "subtitle": "Thoughts, tutorials, and insights about web development",
-    "hero": {
-      "title": "My",
-      "titleHighlight": "Blog",
-      "description": "Thoughts, tutorials, and insights about web development, technology, and creative coding."
-    },
-    "feeds": {
-      "rssLabel": "Subscribe via RSS",
-      "jsonLabel": "Subscribe via JSON Feed"
-    },
-    "comingSoon": {
-      "title": "Coming Soon!",
-      "description": "I'm working on some exciting blog posts. Check back soon for updates!",
-      "backToHome": "Back to Home"
-    },
-    "post": {
-      "words": "words",
-      "readMore": "Read more",
-      "backToBlog": "Back to Blog",
-      "engagement": {
-        "title": "Enjoyed this post?",
-        "description": "Let's connect and discuss your next project or any questions you might have.",
-        "readMore": "Read more posts",
-        "getInTouch": "Get in touch"
-      }
-    },
-    "read_time": "min read",
-    "tags_title": "Tags",
-    "related_posts": "Related Posts",
-    "all_posts": "All Posts",
-    "no_posts": "No posts found"
-  },
-  "privacy": {
-    "title": "Privacy Policy",
-    "description": "How we collect, use, and protect your data.",
-    "sections": {
-      "collection": {
-        "title": "1. Information We Collect",
-        "content": "We may collect personal information such as your name, email address, and message content when you contact us through the site."
-      },
-      "usage": {
-        "title": "2. How We Use Your Information",
-        "content": "We use the information to respond to inquiries, improve the site, and provide requested services. We do not sell your data."
-      },
-      "cookies": {
-        "title": "3. Cookies & Analytics",
-        "content": "This site may use cookies or similar technologies for performance measurements (e.g., Web Vitals). You can control cookies via your browser settings."
-      },
-      "retention": {
-        "title": "4. Data Retention",
-        "content": "We retain personal data only as long as necessary to fulfill the purposes described in this policy or as required by law."
-      },
-      "rights": {
-        "title": "5. Your Rights",
-        "content": "You may request access, correction, or deletion of your personal data. Contact us to exercise your rights."
-      },
-      "contact": {
-        "title": "6. Contact",
-        "content": "Questions about this policy?",
-        "link": "Contact me"
-      }
-    }
-  },
-  "terms": {
-    "title": "Terms & Conditions",
-    "description": "Terms and conditions of use",
-    "sections": {
-      "acceptance": {
-        "title": "1. Acceptance of Terms",
-        "content": "By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement."
-      },
-      "usage": {
-        "title": "2. Use of the Site",
-        "content": "You agree to use the site only for lawful purposes and in a way that does not infringe the rights of, restrict or inhibit anyone else's use."
-      },
-      "property": {
-        "title": "3. Intellectual Property",
-        "content": "All content, trademarks, and data on this website, including but not limited to software, databases, text, graphics, icons, and hyperlinks are the property of their respective owners."
-      },
-      "liability": {
-        "title": "4. Limitation of Liability",
-        "content": "The website owner will not be liable for any loss or damage of any nature arising from the use of or reliance on any information provided on the site."
-      },
-      "changes": {
-        "title": "5. Changes to These Terms",
-        "content": "We may update our Terms from time to time. We will notify you of any changes by posting the new Terms on this page."
-      }
-    },
-    "footer": {
-      "question": "If you have questions, please",
-      "contact": "contact me"
-    }
-  },
-  "pagination": {
-    "page": "Page",
-    "of": "of",
-    "first": "First",
-    "last": "Last"
-  },
-  "metadata": {
-    "author": "Your Name",
-    "published": "Published on",
-    "updated": "Updated on",
-    "words": "words"
-  },
-  "notFound": {
-    "code": "404",
-    "title": "Page not found",
-    "description": "The page you are looking for doesn't exist or has been moved.",
-    "goHome": "Go to Homepage",
-    "visitBlog": "Visit the Blog",
-    "contactMe": "Contact Me",
-    "returnHome": "Or return to the homepage"
-  },
-  "error": {
-    "label": "Something went wrong",
-    "title": "An unexpected error occurred",
-    "description": "Please try again. If the problem persists, feel free to reach out via the contact page.",
-    "tryAgain": "Try Again",
-    "goHome": "Go Home",
-    "contactMe": "Contact Me",
-    "returnHome": "Return to the homepage"
-  }
+	"navigation": {
+		"home": "Home",
+		"about": "About",
+		"projects": "Projects",
+		"blog": "Blog",
+		"contact": "Contact"
+	},
+	"hero": {
+		"greeting": "Hello, I'm",
+		"name": "Your Name",
+		"subtitle": "A passionate developer creating amazing digital experiences with modern technologies",
+		"cta_primary": "View My Work",
+		"cta_secondary": "Contact Me"
+	},
+	"about": {
+		"title": "About Me",
+		"description_1": "I'm a full-stack developer with a passion for creating beautiful, functional, and user-friendly applications. With expertise in modern web technologies, I bring ideas to life through clean code and thoughtful design.",
+		"description_2": "When I'm not coding, you can find me exploring new technologies, contributing to open source projects, or sharing knowledge with the developer community.",
+		"skills": [
+			"React",
+			"Next.js",
+			"TypeScript",
+			"TailwindCSS",
+			"Node.js",
+			"Python"
+		]
+	},
+	"projects": {
+		"title": "Featured Projects",
+		"project_1": {
+			"title": "Project 1",
+			"description": "A brief description of this amazing project and the technologies used to build it."
+		},
+		"project_2": {
+			"title": "Project 2",
+			"description": "A brief description of this amazing project and the technologies used to build it."
+		},
+		"project_3": {
+			"title": "Project 3",
+			"description": "A brief description of this amazing project and the technologies used to build it."
+		},
+		"live_demo": "Live Demo →",
+		"source_code": "Code →"
+	},
+	"contact": {
+		"title": "Let's Work Together",
+		"subtitle": "Have a project in mind? I'd love to hear about it and discuss how we can bring your ideas to life.",
+		"cta": "Get In Touch"
+	},
+	"search": {
+		"button_text": "Search",
+		"placeholder": "Search docs, articles, pages...",
+		"no_results": "No results",
+		"close": "Esc"
+	},
+	"footer": {
+		"copyright": "All rights reserved.",
+		"terms": "Terms of Service",
+		"privacy": "Privacy Policy",
+		"contact": "Contact"
+	},
+	"common": {
+		"read_more": "Read more",
+		"back": "Back",
+		"next": "Next",
+		"previous": "Previous",
+		"loading": "Loading...",
+		"error": "An error occurred",
+		"page_not_found": "Page not found",
+		"go_home": "Go Home"
+	},
+	"contact_form": {
+		"title": "Contact Me",
+		"subtitle": "Let's work together to bring your ideas to life",
+		"name_label": "Name",
+		"name_placeholder": "Your full name",
+		"email_label": "Email",
+		"email_placeholder": "your.email@example.com",
+		"subject_label": "Subject",
+		"subject_placeholder": "What's this about?",
+		"message_label": "Message",
+		"message_placeholder": "Tell me about your project...",
+		"submit_button": "Send Message",
+		"success_message": "Thank you for your message! I'll get back to you soon.",
+		"error_message": "Sorry, there was an error sending your message. Please try again."
+	},
+	"validation": {
+		"required_field": "This field is required",
+		"invalid_email": "Please enter a valid email address",
+		"min_length": "This field must be at least {min} characters long",
+		"max_length": "This field must be no more than {max} characters long"
+	},
+	"blog": {
+		"title": "Blog",
+		"description": "Thoughts, tutorials, and insights about web development, technology, and creative coding.",
+		"subtitle": "Thoughts, tutorials, and insights about web development",
+		"hero": {
+			"title": "My",
+			"titleHighlight": "Blog",
+			"description": "Thoughts, tutorials, and insights about web development, technology, and creative coding."
+		},
+		"feeds": {
+			"rssLabel": "Subscribe via RSS",
+			"jsonLabel": "Subscribe via JSON Feed"
+		},
+		"comingSoon": {
+			"title": "Coming Soon!",
+			"description": "I'm working on some exciting blog posts. Check back soon for updates!",
+			"backToHome": "Back to Home"
+		},
+		"post": {
+			"words": "words",
+			"readMore": "Read more",
+			"backToBlog": "Back to Blog",
+			"engagement": {
+				"title": "Enjoyed this post?",
+				"description": "Let's connect and discuss your next project or any questions you might have.",
+				"readMore": "Read more posts",
+				"getInTouch": "Get in touch"
+			}
+		},
+		"read_time": "min read",
+		"tags_title": "Tags",
+		"related_posts": "Related Posts",
+		"all_posts": "All Posts",
+		"no_posts": "No posts found"
+	},
+	"privacy": {
+		"title": "Privacy Policy",
+		"description": "How we collect, use, and protect your data.",
+		"sections": {
+			"collection": {
+				"title": "1. Information We Collect",
+				"content": "We may collect personal information such as your name, email address, and message content when you contact us through the site."
+			},
+			"usage": {
+				"title": "2. How We Use Your Information",
+				"content": "We use the information to respond to inquiries, improve the site, and provide requested services. We do not sell your data."
+			},
+			"cookies": {
+				"title": "3. Cookies & Analytics",
+				"content": "This site may use cookies or similar technologies for performance measurements (e.g., Web Vitals). You can control cookies via your browser settings."
+			},
+			"retention": {
+				"title": "4. Data Retention",
+				"content": "We retain personal data only as long as necessary to fulfill the purposes described in this policy or as required by law."
+			},
+			"rights": {
+				"title": "5. Your Rights",
+				"content": "You may request access, correction, or deletion of your personal data. Contact us to exercise your rights."
+			},
+			"contact": {
+				"title": "6. Contact",
+				"content": "Questions about this policy?",
+				"link": "Contact me"
+			}
+		}
+	},
+	"terms": {
+		"title": "Terms & Conditions",
+		"description": "Terms and conditions of use",
+		"sections": {
+			"acceptance": {
+				"title": "1. Acceptance of Terms",
+				"content": "By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement."
+			},
+			"usage": {
+				"title": "2. Use of the Site",
+				"content": "You agree to use the site only for lawful purposes and in a way that does not infringe the rights of, restrict or inhibit anyone else's use."
+			},
+			"property": {
+				"title": "3. Intellectual Property",
+				"content": "All content, trademarks, and data on this website, including but not limited to software, databases, text, graphics, icons, and hyperlinks are the property of their respective owners."
+			},
+			"liability": {
+				"title": "4. Limitation of Liability",
+				"content": "The website owner will not be liable for any loss or damage of any nature arising from the use of or reliance on any information provided on the site."
+			},
+			"changes": {
+				"title": "5. Changes to These Terms",
+				"content": "We may update our Terms from time to time. We will notify you of any changes by posting the new Terms on this page."
+			}
+		},
+		"footer": {
+			"question": "If you have questions, please",
+			"contact": "contact me"
+		}
+	},
+	"pagination": {
+		"page": "Page",
+		"of": "of",
+		"first": "First",
+		"last": "Last"
+	},
+	"metadata": {
+		"author": "Your Name",
+		"published": "Published on",
+		"updated": "Updated on",
+		"words": "words"
+	},
+	"notFound": {
+		"code": "404",
+		"title": "Page not found",
+		"description": "The page you are looking for doesn't exist or has been moved.",
+		"goHome": "Go to Homepage",
+		"visitBlog": "Visit the Blog",
+		"contactMe": "Contact Me",
+		"returnHome": "Or return to the homepage"
+	},
+	"error": {
+		"label": "Something went wrong",
+		"title": "An unexpected error occurred",
+		"description": "Please try again. If the problem persists, feel free to reach out via the contact page.",
+		"tryAgain": "Try Again",
+		"goHome": "Go Home",
+		"contactMe": "Contact Me",
+		"returnHome": "Return to the homepage"
+	}
 }

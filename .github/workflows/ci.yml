@@ -13,6 +13,8 @@ jobs:
     environment: ci
     env:
       RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+      FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+      CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5

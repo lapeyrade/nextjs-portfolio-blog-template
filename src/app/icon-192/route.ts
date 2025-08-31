@@ -1,1 +1,1 @@
-export { default as GET } from '@/app/icon-192'
+export { default as GET } from "@/app/icon-192";

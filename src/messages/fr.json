@@ -1,213 +1,220 @@
 {
-  "navigation": {
-    "home": "Accueil",
-    "about": "À Propos",
-    "projects": "Projets",
-    "blog": "Blog",
-    "contact": "Contact"
-  },
-  "hero": {
-    "greeting": "Bonjour, je suis",
-    "name": "Votre Nom",
-    "subtitle": "Un développeur passionné créant des expériences numériques extraordinaires avec des technologies modernes",
-    "cta_primary": "Voir Mes Réalisations",
-    "cta_secondary": "Me Contacter"
-  },
-  "about": {
-    "title": "À Propos",
-    "description_1": "Je suis un développeur full-stack passionné par la création d'applications belles, fonctionnelles et conviviales. Avec une expertise dans les technologies web modernes, je donne vie aux idées grâce à du code propre et un design réfléchi.",
-    "description_2": "Quand je ne code pas, vous pouvez me trouver en train d'explorer de nouvelles technologies, de contribuer à des projets open source, ou de partager mes connaissances avec la communauté des développeurs.",
-    "skills": ["React", "Next.js", "TypeScript", "TailwindCSS", "Node.js", "Python"]
-  },
-  "projects": {
-    "title": "Projets Phares",
-    "project_1": {
-      "title": "Projet 1",
-      "description": "Une brève description de ce projet incroyable et des technologies utilisées pour le construire."
-    },
-    "project_2": {
-      "title": "Projet 2",
-      "description": "Une brève description de ce projet incroyable et des technologies utilisées pour le construire."
-    },
-    "project_3": {
-      "title": "Projet 3",
-      "description": "Une brève description de ce projet incroyable et des technologies utilisées pour le construire."
-    },
-    "live_demo": "Démo en Direct →",
-    "source_code": "Code →"
-  },
-  "contact": {
-    "title": "Travaillons Ensemble",
-    "subtitle": "Vous avez un projet en tête ? J'aimerais en entendre parler et discuter de la façon dont nous pouvons donner vie à vos idées.",
-    "cta": "Entrer en Contact"
-  },
-  "search": {
-    "button_text": "Rechercher",
-    "placeholder": "Rechercher docs, articles, pages...",
-    "no_results": "Aucun résultat",
-    "close": "Échap"
-  },
-  "footer": {
-    "copyright": "Tous droits réservés.",
-    "terms": "Conditions d'Utilisation",
-    "privacy": "Politique de Confidentialité",
-    "contact": "Contact"
-  },
-  "common": {
-    "read_more": "Lire la suite",
-    "back": "Retour",
-    "next": "Suivant",
-    "previous": "Précédent",
-    "loading": "Chargement...",
-    "error": "Une erreur s'est produite",
-    "page_not_found": "Page non trouvée",
-    "go_home": "Aller à l'Accueil"
-  },
-  "contact_form": {
-    "title": "Me Contacter",
-    "subtitle": "Travaillons ensemble pour donner vie à vos idées",
-    "name_label": "Nom",
-    "name_placeholder": "Votre nom complet",
-    "email_label": "Email",
-    "email_placeholder": "votre.email@exemple.com",
-    "subject_label": "Sujet",
-    "subject_placeholder": "De quoi s'agit-il ?",
-    "message_label": "Message",
-    "message_placeholder": "Parlez-moi de votre projet...",
-    "submit_button": "Envoyer le Message",
-    "success_message": "Merci pour votre message ! Je vous répondrai bientôt.",
-    "error_message": "Désolé, une erreur s'est produite lors de l'envoi de votre message. Veuillez réessayer."
-  },
-  "validation": {
-    "required_field": "Ce champ est requis",
-    "invalid_email": "Veuillez saisir une adresse email valide",
-    "min_length": "Ce champ doit contenir au moins {min} caractères",
-    "max_length": "Ce champ ne doit pas dépasser {max} caractères"
-  },
-  "blog": {
-    "title": "Blog",
-    "description": "Réflexions, tutoriels et insights sur le développement web, la technologie et le code créatif.",
-    "subtitle": "Réflexions, tutoriels et insights sur le développement web",
-    "hero": {
-      "title": "Mon",
-      "titleHighlight": "Blog",
-      "description": "Réflexions, tutoriels et insights sur le développement web, la technologie et le code créatif."
-    },
-    "feeds": {
-      "rssLabel": "S'abonner via RSS",
-      "jsonLabel": "S'abonner via JSON Feed"
-    },
-    "comingSoon": {
-      "title": "Bientôt disponible !",
-      "description": "Je travaille sur des articles passionnants. Revenez bientôt pour des mises à jour !",
-      "backToHome": "Retour à l'accueil"
-    },
-    "post": {
-      "words": "mots",
-      "readMore": "Lire la suite",
-      "backToBlog": "Retour au blog",
-      "engagement": {
-        "title": "Cet article vous a plu ?",
-        "description": "Connectons-nous et discutons de votre prochain projet ou de toute question que vous pourriez avoir.",
-        "readMore": "Lire plus d'articles",
-        "getInTouch": "Me contacter"
-      }
-    },
-    "read_time": "min de lecture",
-    "tags_title": "Tags",
-    "related_posts": "Articles Connexes",
-    "all_posts": "Tous les Articles",
-    "no_posts": "Aucun article trouvé"
-  },
-  "privacy": {
-    "title": "Politique de Confidentialité",
-    "description": "Comment nous collectons, utilisons et protégeons vos données.",
-    "sections": {
-      "collection": {
-        "title": "1. Informations que nous collectons",
-        "content": "Nous pouvons collecter des informations personnelles telles que votre nom, votre adresse e-mail et le contenu de votre message lorsque vous nous contactez via le site."
-      },
-      "usage": {
-        "title": "2. Comment nous utilisons vos informations",
-        "content": "Nous utilisons les informations pour répondre aux demandes, améliorer le site et fournir les services demandés. Nous ne vendons pas vos données."
-      },
-      "cookies": {
-        "title": "3. Cookies et Analyses",
-        "content": "Ce site peut utiliser des cookies ou des technologies similaires pour les mesures de performance (par exemple, Web Vitals). Vous pouvez contrôler les cookies via les paramètres de votre navigateur."
-      },
-      "retention": {
-        "title": "4. Conservation des données",
-        "content": "Nous conservons les données personnelles uniquement aussi longtemps que nécessaire pour remplir les objectifs décrits dans cette politique ou selon les exigences légales."
-      },
-      "rights": {
-        "title": "5. Vos droits",
-        "content": "Vous pouvez demander l'accès, la correction ou la suppression de vos données personnelles. Contactez-nous pour exercer vos droits."
-      },
-      "contact": {
-        "title": "6. Contact",
-        "content": "Des questions sur cette politique ?",
-        "link": "Contactez-moi"
-      }
-    }
-  },
-  "terms": {
-    "title": "Conditions Générales d'Utilisation",
-    "description": "Conditions générales d'utilisation",
-    "sections": {
-      "acceptance": {
-        "title": "1. Acceptation des conditions",
-        "content": "En accédant et en utilisant ce site web, vous acceptez et vous engagez à respecter les termes et dispositions de cet accord."
-      },
-      "usage": {
-        "title": "2. Utilisation du site",
-        "content": "Vous acceptez d'utiliser le site uniquement à des fins légales et d'une manière qui ne porte pas atteinte aux droits, ne restreint pas ou n'inhibe pas l'utilisation d'autrui."
-      },
-      "property": {
-        "title": "3. Propriété intellectuelle",
-        "content": "Tout le contenu, les marques déposées et les données de ce site web, y compris mais sans s'y limiter les logiciels, bases de données, textes, graphiques, icônes et liens hypertextes sont la propriété de leurs propriétaires respectifs."
-      },
-      "liability": {
-        "title": "4. Limitation de responsabilité",
-        "content": "Le propriétaire du site web ne sera pas responsable de toute perte ou dommage de quelque nature que ce soit résultant de l'utilisation ou de la dépendance à toute information fournie sur le site."
-      },
-      "changes": {
-        "title": "5. Modifications de ces conditions",
-        "content": "Nous pouvons mettre à jour nos Conditions de temps à autre. Nous vous informerons de toute modification en publiant les nouvelles Conditions sur cette page."
-      }
-    },
-    "footer": {
-      "question": "Si vous avez des questions, veuillez",
-      "contact": "me contacter"
-    }
-  },
-  "pagination": {
-    "page": "Page",
-    "of": "sur",
-    "first": "Premier",
-    "last": "Dernier"
-  },
-  "metadata": {
-    "author": "Votre Nom",
-    "published": "Publié le",
-    "updated": "Mis à jour le",
-    "words": "mots"
-  },
-  "notFound": {
-    "code": "404",
-    "title": "Page non trouvée",
-    "description": "La page que vous recherchez n'existe pas ou a été déplacée.",
-    "goHome": "Aller à l'accueil",
-    "visitBlog": "Visiter le blog",
-    "contactMe": "Me contacter",
-    "returnHome": "Ou retourner à l'accueil"
-  },
-  "error": {
-    "label": "Quelque chose s'est mal passé",
-    "title": "Une erreur inattendue s'est produite",
-    "description": "Veuillez réessayer. Si le problème persiste, n'hésitez pas à nous contacter via la page de contact.",
-    "tryAgain": "Réessayer",
-    "goHome": "Aller à l'accueil",
-    "contactMe": "Me contacter",
-    "returnHome": "Retourner à l'accueil"
-  }
+	"navigation": {
+		"home": "Accueil",
+		"about": "À Propos",
+		"projects": "Projets",
+		"blog": "Blog",
+		"contact": "Contact"
+	},
+	"hero": {
+		"greeting": "Bonjour, je suis",
+		"name": "Votre Nom",
+		"subtitle": "Un développeur passionné créant des expériences numériques extraordinaires avec des technologies modernes",
+		"cta_primary": "Voir Mes Réalisations",
+		"cta_secondary": "Me Contacter"
+	},
+	"about": {
+		"title": "À Propos",
+		"description_1": "Je suis un développeur full-stack passionné par la création d'applications belles, fonctionnelles et conviviales. Avec une expertise dans les technologies web modernes, je donne vie aux idées grâce à du code propre et un design réfléchi.",
+		"description_2": "Quand je ne code pas, vous pouvez me trouver en train d'explorer de nouvelles technologies, de contribuer à des projets open source, ou de partager mes connaissances avec la communauté des développeurs.",
+		"skills": [
+			"React",
+			"Next.js",
+			"TypeScript",
+			"TailwindCSS",
+			"Node.js",
+			"Python"
+		]
+	},
+	"projects": {
+		"title": "Projets Phares",
+		"project_1": {
+			"title": "Projet 1",
+			"description": "Une brève description de ce projet incroyable et des technologies utilisées pour le construire."
+		},
+		"project_2": {
+			"title": "Projet 2",
+			"description": "Une brève description de ce projet incroyable et des technologies utilisées pour le construire."
+		},
+		"project_3": {
+			"title": "Projet 3",
+			"description": "Une brève description de ce projet incroyable et des technologies utilisées pour le construire."
+		},
+		"live_demo": "Démo en Direct →",
+		"source_code": "Code →"
+	},
+	"contact": {
+		"title": "Travaillons Ensemble",
+		"subtitle": "Vous avez un projet en tête ? J'aimerais en entendre parler et discuter de la façon dont nous pouvons donner vie à vos idées.",
+		"cta": "Entrer en Contact"
+	},
+	"search": {
+		"button_text": "Rechercher",
+		"placeholder": "Rechercher docs, articles, pages...",
+		"no_results": "Aucun résultat",
+		"close": "Échap"
+	},
+	"footer": {
+		"copyright": "Tous droits réservés.",
+		"terms": "Conditions d'Utilisation",
+		"privacy": "Politique de Confidentialité",
+		"contact": "Contact"
+	},
+	"common": {
+		"read_more": "Lire la suite",
+		"back": "Retour",
+		"next": "Suivant",
+		"previous": "Précédent",
+		"loading": "Chargement...",
+		"error": "Une erreur s'est produite",
+		"page_not_found": "Page non trouvée",
+		"go_home": "Aller à l'Accueil"
+	},
+	"contact_form": {
+		"title": "Me Contacter",
+		"subtitle": "Travaillons ensemble pour donner vie à vos idées",
+		"name_label": "Nom",
+		"name_placeholder": "Votre nom complet",
+		"email_label": "Email",
+		"email_placeholder": "votre.email@exemple.com",
+		"subject_label": "Sujet",
+		"subject_placeholder": "De quoi s'agit-il ?",
+		"message_label": "Message",
+		"message_placeholder": "Parlez-moi de votre projet...",
+		"submit_button": "Envoyer le Message",
+		"success_message": "Merci pour votre message ! Je vous répondrai bientôt.",
+		"error_message": "Désolé, une erreur s'est produite lors de l'envoi de votre message. Veuillez réessayer."
+	},
+	"validation": {
+		"required_field": "Ce champ est requis",
+		"invalid_email": "Veuillez saisir une adresse email valide",
+		"min_length": "Ce champ doit contenir au moins {min} caractères",
+		"max_length": "Ce champ ne doit pas dépasser {max} caractères"
+	},
+	"blog": {
+		"title": "Blog",
+		"description": "Réflexions, tutoriels et insights sur le développement web, la technologie et le code créatif.",
+		"subtitle": "Réflexions, tutoriels et insights sur le développement web",
+		"hero": {
+			"title": "Mon",
+			"titleHighlight": "Blog",
+			"description": "Réflexions, tutoriels et insights sur le développement web, la technologie et le code créatif."
+		},
+		"feeds": {
+			"rssLabel": "S'abonner via RSS",
+			"jsonLabel": "S'abonner via JSON Feed"
+		},
+		"comingSoon": {
+			"title": "Bientôt disponible !",
+			"description": "Je travaille sur des articles passionnants. Revenez bientôt pour des mises à jour !",
+			"backToHome": "Retour à l'accueil"
+		},
+		"post": {
+			"words": "mots",
+			"readMore": "Lire la suite",
+			"backToBlog": "Retour au blog",
+			"engagement": {
+				"title": "Cet article vous a plu ?",
+				"description": "Connectons-nous et discutons de votre prochain projet ou de toute question que vous pourriez avoir.",
+				"readMore": "Lire plus d'articles",
+				"getInTouch": "Me contacter"
+			}
+		},
+		"read_time": "min de lecture",
+		"tags_title": "Tags",
+		"related_posts": "Articles Connexes",
+		"all_posts": "Tous les Articles",
+		"no_posts": "Aucun article trouvé"
+	},
+	"privacy": {
+		"title": "Politique de Confidentialité",
+		"description": "Comment nous collectons, utilisons et protégeons vos données.",
+		"sections": {
+			"collection": {
+				"title": "1. Informations que nous collectons",
+				"content": "Nous pouvons collecter des informations personnelles telles que votre nom, votre adresse e-mail et le contenu de votre message lorsque vous nous contactez via le site."
+			},
+			"usage": {
+				"title": "2. Comment nous utilisons vos informations",
+				"content": "Nous utilisons les informations pour répondre aux demandes, améliorer le site et fournir les services demandés. Nous ne vendons pas vos données."
+			},
+			"cookies": {
+				"title": "3. Cookies et Analyses",
+				"content": "Ce site peut utiliser des cookies ou des technologies similaires pour les mesures de performance (par exemple, Web Vitals). Vous pouvez contrôler les cookies via les paramètres de votre navigateur."
+			},
+			"retention": {
+				"title": "4. Conservation des données",
+				"content": "Nous conservons les données personnelles uniquement aussi longtemps que nécessaire pour remplir les objectifs décrits dans cette politique ou selon les exigences légales."
+			},
+			"rights": {
+				"title": "5. Vos droits",
+				"content": "Vous pouvez demander l'accès, la correction ou la suppression de vos données personnelles. Contactez-nous pour exercer vos droits."
+			},
+			"contact": {
+				"title": "6. Contact",
+				"content": "Des questions sur cette politique ?",
+				"link": "Contactez-moi"
+			}
+		}
+	},
+	"terms": {
+		"title": "Conditions Générales d'Utilisation",
+		"description": "Conditions générales d'utilisation",
+		"sections": {
+			"acceptance": {
+				"title": "1. Acceptation des conditions",
+				"content": "En accédant et en utilisant ce site web, vous acceptez et vous engagez à respecter les termes et dispositions de cet accord."
+			},
+			"usage": {
+				"title": "2. Utilisation du site",
+				"content": "Vous acceptez d'utiliser le site uniquement à des fins légales et d'une manière qui ne porte pas atteinte aux droits, ne restreint pas ou n'inhibe pas l'utilisation d'autrui."
+			},
+			"property": {
+				"title": "3. Propriété intellectuelle",
+				"content": "Tout le contenu, les marques déposées et les données de ce site web, y compris mais sans s'y limiter les logiciels, bases de données, textes, graphiques, icônes et liens hypertextes sont la propriété de leurs propriétaires respectifs."
+			},
+			"liability": {
+				"title": "4. Limitation de responsabilité",
+				"content": "Le propriétaire du site web ne sera pas responsable de toute perte ou dommage de quelque nature que ce soit résultant de l'utilisation ou de la dépendance à toute information fournie sur le site."
+			},
+			"changes": {
+				"title": "5. Modifications de ces conditions",
+				"content": "Nous pouvons mettre à jour nos Conditions de temps à autre. Nous vous informerons de toute modification en publiant les nouvelles Conditions sur cette page."
+			}
+		},
+		"footer": {
+			"question": "Si vous avez des questions, veuillez",
+			"contact": "me contacter"
+		}
+	},
+	"pagination": {
+		"page": "Page",
+		"of": "sur",
+		"first": "Premier",
+		"last": "Dernier"
+	},
+	"metadata": {
+		"author": "Votre Nom",
+		"published": "Publié le",
+		"updated": "Mis à jour le",
+		"words": "mots"
+	},
+	"notFound": {
+		"code": "404",
+		"title": "Page non trouvée",
+		"description": "La page que vous recherchez n'existe pas ou a été déplacée.",
+		"goHome": "Aller à l'accueil",
+		"visitBlog": "Visiter le blog",
+		"contactMe": "Me contacter",
+		"returnHome": "Ou retourner à l'accueil"
+	},
+	"error": {
+		"label": "Quelque chose s'est mal passé",
+		"title": "Une erreur inattendue s'est produite",
+		"description": "Veuillez réessayer. Si le problème persiste, n'hésitez pas à nous contacter via la page de contact.",
+		"tryAgain": "Réessayer",
+		"goHome": "Aller à l'accueil",
+		"contactMe": "Me contacter",
+		"returnHome": "Retourner à l'accueil"
+	}
 }
