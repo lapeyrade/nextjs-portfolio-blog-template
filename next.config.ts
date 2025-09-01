@@ -11,15 +11,15 @@ const withBundleAnalyzer = bundleAnalyzer({
 });
 
 const nextConfig: NextConfig = {
-	turbopack: {
-		root: __dirname,
-	},
+	// Turbopack config (kept minimal; defaults are sufficient for most apps)
+	turbopack: {},
 	experimental: {
-		optimizePackageImports: ["@heroicons/react", "framer-motion", "react-dom"],
-		// Target modern browsers only (remove Baseline polyfills)
-		forceSwcTransforms: false,
-		// Enable optimizations for better performance
-		serverComponentsHmrCache: false, // Disable in production
+		// Optimize large packages by rewriting imports
+		optimizePackageImports: ["@heroicons/react", "framer-motion"],
+		// Enable Rust-based MDX for faster builds
+		mdxRs: true,
+		// Cache RSC fetches across HMR only in dev for faster refreshes
+		serverComponentsHmrCache: process.env.NODE_ENV === "development",
 		typedEnv: true,
 		// Enable attribution for specific Web Vitals to aid debugging
 		webVitalsAttribution: ["CLS", "LCP"],
