@@ -1,5 +1,6 @@
 "use client";
 
+import type { Route } from "next";
 import { useRouter as useNextRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import { startTransition, useCallback, useId, useState } from "react";
@@ -58,11 +59,13 @@ export default function LanguageSwitcher() {
 						}
 					}
 
-					const absolute = `/${newLocale}${finalPath === "/" ? "" : finalPath}`;
+					const absolute =
+						`/${newLocale}${finalPath === "/" ? "" : finalPath}` as Route;
 					router.replace(absolute);
 				} catch {
 					// Fallback to simple replace
-					const absolute = `/${newLocale}${targetPath === "/" ? "" : targetPath}`;
+					const absolute =
+						`/${newLocale}${targetPath === "/" ? "" : targetPath}` as Route;
 					router.replace(absolute);
 				}
 			});

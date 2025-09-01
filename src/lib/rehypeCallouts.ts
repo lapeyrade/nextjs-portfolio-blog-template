@@ -18,8 +18,8 @@ const TYPE_MAP: Record<string, string> = {
 	INFO: "info",
 };
 
-function isElement(node: HastNode, tag?: string): boolean {
-	return node && node.type === "element" && (!tag || node.tagName === tag);
+function isElement(node: HastNode | undefined, tag?: string): boolean {
+	return !!node && node.type === "element" && (!tag || node.tagName === tag);
 }
 
 function ensureArrayClassName(props: Record<string, unknown> = {}) {
@@ -38,13 +38,13 @@ export default function rehypeCallouts() {
 				Array.isArray(node.children) &&
 				node.children.length > 0
 			) {
-				const first = node.children[0];
+				const first = node.children?.[0];
 				if (
 					isElement(first, "p") &&
-					Array.isArray(first.children) &&
-					first.children.length > 0
+					Array.isArray(first?.children) &&
+					(first?.children?.length ?? 0) > 0
 				) {
-					const firstChild = first.children[0];
+					const firstChild = first.children?.[0];
 					if (
 						firstChild &&
 						firstChild.type === "text" &&

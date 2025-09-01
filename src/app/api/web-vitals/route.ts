@@ -21,8 +21,11 @@ const rateLimits: Map<string, { count: number; windowStart: number }> =
 
 function getClientIp(request: Request): string {
 	const forwarded =
-		request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip");
-	if (forwarded) return forwarded.split(",")[0].trim();
+		request.headers.get("x-forwarded-for") ?? request.headers.get("x-real-ip");
+	if (forwarded != null && forwarded.length > 0) {
+		const first = forwarded.split(",")[0] ?? "";
+		return first.trim() || "unknown";
+	}
 	return "unknown";
 }
 
@@ -81,16 +84,15 @@ function validatePayload(data: unknown): {
 			? d.delta
 			: undefined;
 
-	const payload: WebVitalsPayload = {
-		id,
-		name,
-		value,
-		label,
-		delta,
-		url,
-		userAgent,
-		timestamp,
-	};
+	const payload: WebVitalsPayload = { timestamp };
+	// Only assign fields when defined to satisfy exactOptionalPropertyTypes
+	if (id !== undefined) payload.id = id;
+	if (name !== undefined) payload.name = name;
+	if (value !== undefined) payload.value = value;
+	if (label !== undefined) payload.label = label;
+	if (delta !== undefined) payload.delta = delta;
+	if (url !== undefined) payload.url = url;
+	if (userAgent !== undefined) payload.userAgent = userAgent;
 	return { ok: true, payload };
 }
 

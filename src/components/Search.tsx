@@ -1,5 +1,6 @@
 "use client";
 
+import type { Route } from "next";
 import NextLink from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useId, useRef, useState } from "react";
@@ -241,7 +242,7 @@ export default function Search({ enableHotkey = true }: SearchProps) {
 										return (
 											<NextLink
 												key={r.url}
-												href={r.url}
+												href={{ pathname: r.url }}
 												className={`block p-3 rounded ${idx === activeIndex ? "bg-gray-800/60" : "hover:bg-gray-800/50"}`}
 												onMouseEnter={() => setActiveIndex(idx)}
 												onClick={() => setOpen(false)}
@@ -277,7 +278,7 @@ export default function Search({ enableHotkey = true }: SearchProps) {
 										<Link
 											key={r.url}
 											href={
-												staticHref as
+												staticHref as Route as
 													| "/"
 													| "/blog"
 													| "/contact"

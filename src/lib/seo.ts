@@ -1,5 +1,6 @@
 export const siteUrl: string = (
-	process.env.NEXT_PUBLIC_SITE_URL || "http://nextjs-portfolio-blog-template.vercel.app"
+	process.env.NEXT_PUBLIC_SITE_URL ||
+	"http://nextjs-portfolio-blog-template.vercel.app"
 ).replace(/\/$/, "");
 
 export function absoluteUrl(path: string): string {

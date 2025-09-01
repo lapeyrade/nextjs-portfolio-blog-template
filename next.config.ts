@@ -20,7 +20,9 @@ const nextConfig: NextConfig = {
 		forceSwcTransforms: false,
 		// Enable optimizations for better performance
 		serverComponentsHmrCache: false, // Disable in production
+		typedEnv: true,
 	},
+	typedRoutes: true,
 	// Move serverComponentsExternalPackages to the correct location
 	serverExternalPackages: [],
 

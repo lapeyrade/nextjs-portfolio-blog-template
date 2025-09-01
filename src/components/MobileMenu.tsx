@@ -107,8 +107,7 @@ export default function MobileMenu({
 									</button>
 								) : (
 									<Link
-										href="/"
-										scroll={false}
+										href={{ pathname: "/", hash: "about" }}
 										onClick={() => setOpen(false)}
 										className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
 									>
@@ -130,8 +129,7 @@ export default function MobileMenu({
 									</button>
 								) : (
 									<Link
-										href="/"
-										scroll={false}
+										href={{ pathname: "/", hash: "projects" }}
 										onClick={() => setOpen(false)}
 										className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
 									>

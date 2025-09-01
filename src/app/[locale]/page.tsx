@@ -36,10 +36,10 @@ export default async function Home({ params }: Props) {
 	// Enable static rendering
 	setRequestLocale(locale);
 
-	// Generate unique IDs for navigation anchors
-	const aboutId = `about-${locale}`;
-	const projectsId = `projects-${locale}`;
-	const contactId = `contact-${locale}`;
+	// Stable IDs for navigation anchors used by header/menu links
+	const aboutId = "about";
+	const projectsId = "projects";
+	const contactId = "contact";
 
 	const t = await getTranslations();
 

@@ -17,11 +17,14 @@ export default function RootPage() {
 			acceptLanguage.includes("fr,") ||
 			acceptLanguage.includes("fr;");
 
+		// Preserve any hash (e.g., #projects) when redirecting
+		const hash = typeof window !== "undefined" ? window.location.hash : "";
+
 		// Client-side redirect to avoid 307 response
 		if (prefersFrench) {
-			router.replace("/fr");
+			router.replace(`/fr${hash}`);
 		} else {
-			router.replace("/en");
+			router.replace(`/en${hash}`);
 		}
 	}, [router]);
 
