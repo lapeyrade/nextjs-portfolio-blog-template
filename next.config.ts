@@ -21,6 +21,8 @@ const nextConfig: NextConfig = {
 		// Enable optimizations for better performance
 		serverComponentsHmrCache: false, // Disable in production
 		typedEnv: true,
+		// Enable attribution for specific Web Vitals to aid debugging
+		webVitalsAttribution: ["CLS", "LCP"],
 	},
 	typedRoutes: true,
 	// Move serverComponentsExternalPackages to the correct location

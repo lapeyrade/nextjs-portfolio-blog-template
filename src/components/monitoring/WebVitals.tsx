@@ -1,8 +1,17 @@
 "use client";
 
 import { useReportWebVitals } from "next/web-vitals";
+import { useEffect } from "react";
 
 type SerializableRecord = Record<string, unknown>;
+type MinimalMetric = {
+	name: string;
+	value?: number;
+	delta?: number;
+	id?: string;
+	rating?: string;
+	navigationType?: string;
+};
 
 // Client-side batching to reduce network churn. Flush interval and batch size configurable.
 const BATCH_FLUSH_INTERVAL_MS = 10_000; // 10s
@@ -45,14 +54,20 @@ async function flushBatch(): Promise<void> {
 	}
 }
 
-function sendToAnalytics(metric: SerializableRecord): void {
+type ReportWebVitalsCallback = Parameters<typeof useReportWebVitals>[0];
+
+function sendToAnalytics(metric: MinimalMetric): void {
 	try {
-		// Build a minimal, non-PII payload
+		// Build a minimal, non-PII payload per Next.js 15.5 guidance
 		const payload: SerializableRecord = {
 			name: String(metric.name || "").slice(0, 64),
 			value: typeof metric.value === "number" ? metric.value : undefined,
 			delta: typeof metric.delta === "number" ? metric.delta : undefined,
 			id: metric.id ? String(metric.id).slice(0, 256) : undefined,
+			rating: metric.rating ? String(metric.rating).slice(0, 16) : undefined,
+			navigationType: metric.navigationType
+				? String(metric.navigationType).slice(0, 32)
+				: undefined,
 			ts: Date.now(),
 			path:
 				typeof window !== "undefined" ? window.location.pathname : undefined,
@@ -85,12 +100,24 @@ export default function WebVitals(): null {
 			? Number(process.env.NEXT_PUBLIC_WEBVITALS_SAMPLE)
 			: 0.05;
 
-	useReportWebVitals((metric) => {
+	// Use a stable, typed callback as recommended
+	const handleWebVitals: ReportWebVitalsCallback = (metric) => {
 		// Metric is a typed object from Next.js; we serialize a minimal superset for transport
 		// and avoid leaking PII beyond standard UA + URL
 		try {
 			if (Math.random() <= SAMPLE_RATE) {
-				sendToAnalytics(metric as unknown as SerializableRecord);
+				const minimal: MinimalMetric = { name: String(metric.name) };
+				if (typeof metric.value === "number") minimal.value = metric.value;
+				if (typeof metric.delta === "number") minimal.delta = metric.delta;
+				if (typeof metric.id === "string") minimal.id = metric.id;
+				const maybeRating = (metric as unknown as { rating?: unknown }).rating;
+				if (typeof maybeRating === "string") minimal.rating = maybeRating;
+				const maybeNavType = (metric as unknown as { navigationType?: unknown })
+					.navigationType;
+				if (typeof maybeNavType === "string")
+					minimal.navigationType = maybeNavType;
+
+				sendToAnalytics(minimal);
 			} else if (process.env.NODE_ENV === "development") {
 				// Log in dev so developers still see metrics locally
 				console.debug("[WebVitals] sampled out", metric);
@@ -99,7 +126,28 @@ export default function WebVitals(): null {
 			if (process.env.NODE_ENV === "development")
 				console.error("[WebVitals] sampling error", e);
 		}
-	});
+	};
+
+	useReportWebVitals(handleWebVitals);
+
+	// Ensure pending metrics are flushed on page lifecycle events
+	useEffect(() => {
+		const flush = () => {
+			void flushBatch();
+		};
+		const onVisibilityChange = () => {
+			if (document.visibilityState === "hidden") flush();
+		};
+		window.addEventListener("pagehide", flush);
+		window.addEventListener("beforeunload", flush);
+		document.addEventListener("visibilitychange", onVisibilityChange);
+		return () => {
+			window.removeEventListener("pagehide", flush);
+			window.removeEventListener("beforeunload", flush);
+			document.removeEventListener("visibilitychange", onVisibilityChange);
+			void flushBatch();
+		};
+	}, []);
 
 	return null;
 }

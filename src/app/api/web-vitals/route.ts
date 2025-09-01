@@ -6,6 +6,8 @@ interface WebVitalsPayload {
 	value?: number;
 	label?: string;
 	delta?: number;
+	rating?: string;
+	navigationType?: string;
 	url?: string;
 	userAgent?: string;
 	timestamp?: number;
@@ -83,6 +85,15 @@ function validatePayload(data: unknown): {
 		typeof d.delta === "number" && Number.isFinite(d.delta)
 			? d.delta
 			: undefined;
+	const maybeExtra = d as { rating?: unknown; navigationType?: unknown };
+	const rating =
+		typeof maybeExtra.rating === "string"
+			? String(maybeExtra.rating).slice(0, 16)
+			: undefined;
+	const navigationType =
+		typeof maybeExtra.navigationType === "string"
+			? String(maybeExtra.navigationType).slice(0, 32)
+			: undefined;
 
 	const payload: WebVitalsPayload = { timestamp };
 	// Only assign fields when defined to satisfy exactOptionalPropertyTypes
@@ -91,6 +102,8 @@ function validatePayload(data: unknown): {
 	if (value !== undefined) payload.value = value;
 	if (label !== undefined) payload.label = label;
 	if (delta !== undefined) payload.delta = delta;
+	if (rating !== undefined) payload.rating = rating;
+	if (navigationType !== undefined) payload.navigationType = navigationType;
 	if (url !== undefined) payload.url = url;
 	if (userAgent !== undefined) payload.userAgent = userAgent;
 	return { ok: true, payload };
@@ -168,6 +181,8 @@ export async function POST(request: Request) {
 				value: payload.value,
 				id: payload.id,
 				label: payload.label,
+				rating: payload.rating,
+				navigationType: payload.navigationType,
 				url: payload.url,
 				ua_snippet: payload.userAgent
 					? payload.userAgent.slice(0, 128)
