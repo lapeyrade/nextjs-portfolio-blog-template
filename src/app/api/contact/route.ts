@@ -1,9 +1,25 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const CONTACT_EMAIL = process.env.CONTACT_EMAIL;
+const FROM_EMAIL = process.env.FROM_EMAIL ?? `no-reply@${process.env.NEXT_PUBLIC_SITE_DOMAIN ?? "localhost"}`;
 
 export async function POST(request: NextRequest) {
+	// Fail early if server-side email configuration is missing
+	if (!RESEND_API_KEY) {
+		console.error("Missing RESEND_API_KEY environment variable.");
+		return NextResponse.json({ error: "Server email service not configured." }, { status: 500 });
+	}
+
+	if (!CONTACT_EMAIL) {
+		console.error("Missing CONTACT_EMAIL environment variable.");
+		return NextResponse.json({ error: "Recipient email not configured." }, { status: 500 });
+	}
+
+	// Instantiate the Resend client now that we know the API key exists
+	const resend = new Resend(RESEND_API_KEY);
+
 	try {
 		const body = await request.json();
 		const { name, email, subject, message, website } = body;
@@ -47,8 +63,8 @@ export async function POST(request: NextRequest) {
 		// Send email using Resend
 		try {
 			const emailData = await resend.emails.send({
-				from: process.env.FROM_EMAIL || "onboarding@resend.dev",
-				to: process.env.CONTACT_EMAIL || "sylvain.lapeyrade@hotmail.fr",
+				from: FROM_EMAIL,
+				to: CONTACT_EMAIL,
 				subject: `Portfolio Contact: ${subject}`,
 				html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -91,7 +107,7 @@ Timestamp: ${new Date().toLocaleString()}
         `,
 			});
 
-			console.log("Email sent successfully:", emailData);
+			console.log("Email sent successfully. id=", emailData?.data?.id);
 
 			return NextResponse.json({
 				success: true,
