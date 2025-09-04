@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "next dev --turbopack",
 		"build": "next build --turbopack",
-		"check-env": "node ./scripts/check-env.js",
+		"start": "next start",
 		"lint": "biome lint .",
 		"check": "biome check .",
 		"fix": "biome check --write .",

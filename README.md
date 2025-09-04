@@ -54,7 +54,6 @@ This repository contains a production‑ready personal portfolio and technical b
 - TypeScript strict mode
 - Biome (linting + formatting + import organization)
 - Centralized SEO and blog utility modules
-- Environment variable safety script (`scripts/check-env.js`)
 - CI/CD ready (GitHub Actions placeholder friendly)
 
 ### Progressive Web App
@@ -95,7 +94,6 @@ src/
   i18n/               # Routing + request helpers for next-intl
   lib/                # Blog + SEO utilities
   messages/           # JSON translation dictionaries
-  scripts/            # Tooling scripts (env checking)
 ```
 
 ## 5. Getting Started
@@ -151,11 +149,6 @@ pnpm tsc --noEmit
 ```bash
 pnpm build
 pnpm start
-```
-
-### Optional: Environment Safety Audit
-```bash
-node scripts/check-env.mjs
 ```
 
 ## 6. Deployment

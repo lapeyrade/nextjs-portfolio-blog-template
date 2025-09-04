@@ -119,7 +119,7 @@ const nextConfig: NextConfig = {
 			},
 		];
 	},
-	// No rewrite needed; service worker is served from public/
+	// No rewrite needed; service worker is served via App Router
 };
 
 const withMDX = createMDX({
