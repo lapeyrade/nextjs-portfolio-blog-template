@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Site icon">
+  <title>Portfolio Icon</title>
+  <rect width="64" height="64" rx="12" fill="#0f172a"/>
+  <g fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Y -->
+    <line x1="14" y1="18" x2="24" y2="28"/>
+    <line x1="34" y1="18" x2="24" y2="28"/>
+    <line x1="24" y1="28" x2="24" y2="44"/>
+    <!-- P -->
+    <line x1="40" y1="18" x2="40" y2="44"/>
+    <path d="M40 18h10a7 7 0 0 1 0 14H40"/>
+  </g>
+</svg>

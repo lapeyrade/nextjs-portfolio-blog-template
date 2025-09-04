@@ -12,13 +12,13 @@ export async function GET() {
 		background_color: "#0f172a",
 		theme_color: "#8b5cf6",
 		icons: [
-			{ src: "/icon-192.png", sizes: "192x192", type: "image/png" },
-			{ src: "/icon-512.png", sizes: "512x512", type: "image/png" },
+			// Use the single scalable SVG icon for all platforms. Some platforms may
+			// still prefer PNGs, but the user requested SVG-only assets.
 			{
-				src: "/apple-icon.png",
-				sizes: "180x180",
-				type: "image/png",
-				purpose: "maskable",
+				src: "/icon.svg",
+				sizes: "any",
+				type: "image/svg+xml",
+				purpose: "any maskable",
 			},
 		],
 		screenshots: [

@@ -1,26 +1,7 @@
-import { ImageResponse } from "next/og";
+import { siteUrl } from "@/lib/seo";
 
-export const runtime = "nodejs";
-export const size = { width: 192, height: 192 };
-export const contentType = "image/png";
-
+// Serve or redirect to the single SVG icon to enforce SVG-only assets.
 export default function Icon192() {
-	return new ImageResponse(
-		<div
-			style={{
-				width: "100%",
-				height: "100%",
-				display: "flex",
-				alignItems: "center",
-				justifyContent: "center",
-				background: "#0f172a",
-				color: "white",
-				fontSize: 72,
-				fontWeight: 800,
-			}}
-		>
-			YP
-		</div>,
-		size,
-	);
+	const dst = new URL("/icon.svg", siteUrl).toString();
+	return Response.redirect(dst, 307);
 }

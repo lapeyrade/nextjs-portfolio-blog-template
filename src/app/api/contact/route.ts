@@ -3,18 +3,26 @@ import { Resend } from "resend";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const CONTACT_EMAIL = process.env.CONTACT_EMAIL;
-const FROM_EMAIL = process.env.FROM_EMAIL ?? `no-reply@${process.env.NEXT_PUBLIC_SITE_DOMAIN ?? "localhost"}`;
+const FROM_EMAIL =
+	process.env.FROM_EMAIL ??
+	`no-reply@${process.env.NEXT_PUBLIC_SITE_DOMAIN ?? "localhost"}`;
 
 export async function POST(request: NextRequest) {
 	// Fail early if server-side email configuration is missing
 	if (!RESEND_API_KEY) {
 		console.error("Missing RESEND_API_KEY environment variable.");
-		return NextResponse.json({ error: "Server email service not configured." }, { status: 500 });
+		return NextResponse.json(
+			{ error: "Server email service not configured." },
+			{ status: 500 },
+		);
 	}
 
 	if (!CONTACT_EMAIL) {
 		console.error("Missing CONTACT_EMAIL environment variable.");
-		return NextResponse.json({ error: "Recipient email not configured." }, { status: 500 });
+		return NextResponse.json(
+			{ error: "Recipient email not configured." },
+			{ status: 500 },
+		);
 	}
 
 	// Instantiate the Resend client now that we know the API key exists
