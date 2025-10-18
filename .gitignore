@@ -10,7 +10,11 @@
 .yarn/install-state.gz
 .pnp.*
 
-# pnpm
+# Bun
+.bun/
+
+
+# pnpm (legacy)
 .pnpm-debug.log*
 .pnpm-store/
 
@@ -76,6 +80,7 @@ Thumbs.db
 *.temp
 *.log
 
-# Package manager lock files (keep pnpm-lock.yaml but ignore others)
+# Package manager lock files
 package-lock.json
 yarn.lock
+pnpm-lock.yaml

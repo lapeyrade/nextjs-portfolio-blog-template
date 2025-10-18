@@ -80,7 +80,7 @@ This repository contains a production‑ready personal portfolio and technical b
 | Speed Insights | @vercel/speed-insights | >=1.2.0 |
 | A11y (dev) | @axe-core/react | >=4.10.2 |
 | Linting | @biomejs/biome | >=2.2.2 |
-| Package Manager | pnpm | >=10.15.0 |
+| Package Manager | Bun | >=1.3.0 |
 
 Additional build tooling: PostCSS 8.5.6, Autoprefixer 10.4.21, Tailwind PostCSS plugin, Browserslist modern targets.
 
@@ -99,14 +99,13 @@ src/
 ## 5. Getting Started
 
 ### Prerequisites
-- Node.js 18.17+ (recommend latest LTS)
-- pnpm 10.14.0 (or use corepack / npm to install)
+- Bun 1.3+ (includes its own JS runtime) or Node.js 18.17+ (recommend latest LTS)
 
 ### Clone & Install
 ```bash
 git clone https://github.com/<your-username>/portfolio.git
 cd portfolio
-pnpm install
+bun install
 ```
 
 ### Environment Variables
@@ -121,34 +120,34 @@ Never commit real secrets. Server‑only variables must not use the `NEXT_PUBLIC
 
 ### Development
 ```bash
-pnpm dev
+bun run dev
 ```
 Visit http://localhost:3000.
 
 ### Lint & Format
 ```bash
 # Lint only
-pnpm lint
+bun run lint
 
 # Check (lint + format)
-pnpm check
+bun run check
 
 # Auto-fix issues
-pnpm fix
+bun run fix
 
 # Format only
-pnpm format
+bun run format
 ```
 
 ### Type Check (if separate)
 ```bash
-pnpm tsc --noEmit
+bunx tsc --noEmit
 ```
 
 ### Build & Start Production
 ```bash
-pnpm build
-pnpm start
+bun run build
+bun run start
 ```
 
 ## 6. Deployment
@@ -160,7 +159,7 @@ Optimized for Vercel (zero config). Steps:
 4. Trigger first deployment (Vercel auto-detects Next.js). 
 5. Verify: sitemap, robots, RSS, JSON feed, PWA installability, analytics data.
 
-For custom hosting, run `pnpm build` then serve `.next/standalone` (if output configured) or use `next start` behind a reverse proxy.
+For custom hosting, run `bun run build` then serve `.next/standalone` (if output configured) or use `next start` behind a reverse proxy.
 
 ## 7. Contribution Guidelines
 
@@ -209,7 +208,3 @@ Potential future enhancements may include additional locales, micro-CMS integrat
 ## 10. Acknowledgements
 
 Built with the Next.js ecosystem and open-source libraries listed above.
-
----
-
-Last Updated: August 2025
