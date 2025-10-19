@@ -1,4 +1,4 @@
-name: CI — lint / build
+name: ci — lint / build
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   ci:
-    name: CI
+    name: ci
     runs-on: ubuntu-latest
     environment: ci
     env:
