@@ -18,10 +18,11 @@ updates:
       prefix-development: "chore"
       include: "scope"
     groups:
-      # Group biome updates together
-      biome:
+      # Group OXC linter updates together
+      oxlint:
         patterns:
-          - "@biomejs/biome"
+          - "oxlint"
+          - "oxlint-*"
         update-types:
           - "minor"
           - "patch"

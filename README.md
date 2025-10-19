@@ -24,18 +24,19 @@ This repository contains a production‑ready personal portfolio and technical b
 
 ### UI & UX
 - Responsive, mobile‑first layout; semantic HTML landmarks
-- Theming via Tailwind CSS with multiple dark gradient variants (purple, pink, blue, green, orange, red, etc.)
+- Theming via Tailwind CSS 4 with multiple dark gradient variants (ocean, purple, pink, blue, green, orange, red, etc.)
 - Framer Motion animation system (page transitions, staggered reveals, scroll-triggered fades)
 - Accessible focus management (`:focus-visible`), reduced motion support, skip link
 - Polished MDX rendering: GFM (tables, task lists), syntax highlighting (Shiki / rehype-pretty-code), callouts/admonitions, automatic `next/image` mapping
 - Interactive components: animated buttons, cards, mobile hamburger menu, language & theme switchers
 
 ### Performance & Monitoring
-- Web Vitals collection (client) posted to `/api/web-vitals` + server logging
+- Web Vitals collection (client) posted to `/api/web-vitals` + server logging with configurable sampling
 - Lazy loading of analytics and Speed Insights (Vercel) outside critical path
 - Preconnect hints for fonts and critical third-parties
-- Modern browser targeting via `browserslist`
 - Service worker for offline fallback and asset caching (installable PWA)
+- Bundle analyzer support (`ANALYZE=true bun run build`)
+- Turbopack integration for faster builds and HMR
 - Achieves perfect 100 scores on Google PageSpeed Insights (mobile & desktop) and Vercel Speed Insights
 
 ### SEO & Sharing
@@ -52,7 +53,7 @@ This repository contains a production‑ready personal portfolio and technical b
 
 ### Code Quality & Tooling
 - TypeScript strict mode
-- Biome (linting + formatting + import organization)
+- OXLint (linting + formatting + import organization)
 - Centralized SEO and blog utility modules
 - CI/CD ready (GitHub Actions placeholder friendly)
 
@@ -63,26 +64,28 @@ This repository contains a production‑ready personal portfolio and technical b
 
 | Category | Technology | Version |
 |----------|------------|---------|
-| Framework | Next.js | >=15.5.0 |
-| Language | TypeScript | >=5.9.2 |
-| Runtime | Node.js (required) | >=18.17 |
-| UI | React | >=19.1.1 |
-| Styling | Tailwind CSS | >=4.1.11 |
-| Animations | Framer Motion | >=12.23.12 |
-| Content | MDX (`@mdx-js/react`, `@next/mdx`) | >=3.1.0 / >=15.5.0 (bridge) |
-| i18n | next-intl | >=4.3.4 |
-| Parsing | gray-matter | >=4.0.3 |
-| Reading Time | reading-time | >=1.5.0 |
-| Email | resend | >=6.0.0 |
-| Syntax Highlighting | shiki + rehype-pretty-code | >=3.9.2 / >=0.14.1 |
-| Markdown Extensions | remark-gfm | >=4.0.1 |
-| Analytics | @vercel/analytics | >=1.5.0 |
-| Speed Insights | @vercel/speed-insights | >=1.2.0 |
-| A11y (dev) | @axe-core/react | >=4.10.2 |
-| Linting | @biomejs/biome | >=2.2.2 |
-| Package Manager | Bun | >=1.3.0 |
+| Framework | Next.js | 15+ |
+| Language | TypeScript | 5+ |
+| Runtime | Bun (required) | 1.3+ |
+| UI | React | 19+ |
+| Styling | Tailwind CSS | 4.1.14+ |
+| Animations | Framer Motion | 12+ |
+| Content | MDX (`@mdx-js/react`, `@next/mdx`, `next-mdx-remote`) | 3.1.1 / 15.5.6 / 5.0.0 |
+| i18n | next-intl | 4+ |
+| Parsing | gray-matter | 4+ |
+| Reading Time | reading-time | 1+ |
+| Email | resend | 6+ |
+| Syntax Highlighting | shiki + rehype-pretty-code | 3.13.0 / 0.14.1 |
+| Markdown Extensions | remark-gfm | 4+ |
+| Analytics | @vercel/analytics | 1+ |
+| Speed Insights | @vercel/speed-insights | 1+ |
+| A11y (dev) | @axe-core/react | 4+ |
+| Linting & Formatting | oxlint & oxlint-tsgolint | 1.23.0+ / 0.2.0+ |
+| Package Manager | Bun | 1.3.0 (required) |
+| Build Tool | Turbopack | Built into Next.js 15 |
+| Bundle Analysis | @next/bundle-analyzer | 15.5.6+ |
 
-Additional build tooling: PostCSS 8.5.6, Autoprefixer 10.4.21, Tailwind PostCSS plugin, Browserslist modern targets.
+Additional build tooling: PostCSS 8.5.6, Autoprefixer 10.4.21, @tailwindcss/postcss 4.1.14, Bundle Analyzer 15.5.6.
 
 ## 4. Directory Structure (Excerpt)
 
@@ -90,16 +93,16 @@ Additional build tooling: PostCSS 8.5.6, Autoprefixer 10.4.21, Tailwind PostCSS 
 src/
   app/                # App Router entrypoints, routes, metadata, assets
   components/         # Reusable UI + animation primitives
-  content/            # MDX content (blog + i18n)
+  content/            # MDX content (blog + i18n + legal)
   i18n/               # Routing + request helpers for next-intl
-  lib/                # Blog + SEO utilities
+  lib/                # Blog + SEO utilities + email + callouts
   messages/           # JSON translation dictionaries
 ```
 
 ## 5. Getting Started
 
 ### Prerequisites
-- Bun 1.3+ (includes its own JS runtime) or Node.js 18.17+ (recommend latest LTS)
+- Bun 1.3+ (required as package manager)
 
 ### Clone & Install
 ```bash
@@ -112,9 +115,12 @@ bun install
 Create `.env.local` (or `.env`) using the provided `.env.example` as a template:
 ```
 RESEND_API_KEY=...
+WEBVITALS_API_KEY=...
 CONTACT_EMAIL=...
 FROM_EMAIL=...
 NEXT_PUBLIC_SITE_URL=https://yourdomain.com
+NEXT_PUBLIC_WEBVITALS_SAMPLE=0.05
+NEXT_PUBLIC_WEBVITALS_BATCH_MAX=10
 ```
 Never commit real secrets. Server‑only variables must not use the `NEXT_PUBLIC_` prefix.
 
@@ -122,15 +128,12 @@ Never commit real secrets. Server‑only variables must not use the `NEXT_PUBLIC
 ```bash
 bun run dev
 ```
-Visit http://localhost:3000.
+This uses Turbopack for faster development builds. Visit http://localhost:3000.
 
 ### Lint & Format
 ```bash
 # Lint only
 bun run lint
-
-# Check (lint + format)
-bun run check
 
 # Auto-fix issues
 bun run fix
@@ -149,6 +152,7 @@ bunx tsc --noEmit
 bun run build
 bun run start
 ```
+The build command also uses Turbopack for optimized production builds.
 
 ## 6. Deployment
 

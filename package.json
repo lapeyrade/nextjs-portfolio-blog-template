@@ -7,10 +7,9 @@
 		"dev": "next dev --turbopack",
 		"build": "next build --turbopack",
 		"start": "next start",
-		"lint": "biome lint .",
-		"check": "biome check .",
-		"fix": "biome check --write .",
-		"format": "biome format --write ."
+		"lint": "oxlint --type-aware .",
+		"fix": "oxlint --type-aware --fix --fix-suggestions .",
+		"format": "oxlint format ."
 	},
 	"dependencies": {
 		"@mdx-js/loader": "^3.1.1",
@@ -31,13 +30,14 @@
 	},
 	"devDependencies": {
 		"@axe-core/react": "^4.10.2",
-		"@biomejs/biome": "^2.2.6",
 		"@next/bundle-analyzer": "^15.5.6",
 		"@tailwindcss/postcss": "^4.1.14",
 		"@types/node": "^24.8.1",
 		"@types/react": "^19.2.2",
 		"@types/react-dom": "^19.2.2",
 		"autoprefixer": "^10.4.21",
+		"oxlint": "^1.23.0",
+		"oxlint-tsgolint": "^0.2.0",
 		"postcss": "^8.5.6",
 		"rehype-pretty-code": "^0.14.1",
 		"remark-gfm": "^4.0.1",
