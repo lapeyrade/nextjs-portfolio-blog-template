@@ -29,7 +29,7 @@ export default function AxeA11y() {
 				console.error = (...args: unknown[]) => console.warn("[axe]", ...args);
 			}
 
-			axe.default(
+			await axe.default(
 				ReactMod.default,
 				ReactDOMMod.default as unknown as typeof import("react-dom"),
 				1000,
@@ -43,7 +43,9 @@ export default function AxeA11y() {
 			}
 		}
 
-		run();
+		run().catch((error: unknown) => {
+			console.error("[axe] initialization failed", error);
+		});
 
 		return () => {
 			cancelled = true;

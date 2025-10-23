@@ -99,7 +99,7 @@ async function trimCache(cacheName: string, maxItems: number): Promise<void> {
 						const networkResponse: Response = await fetch(request);
 						if (networkResponse?.ok && networkResponse.type === "basic") {
 							const cache: Cache = await caches.open(RUNTIME);
-							cache.put(request, networkResponse.clone());
+							await cache.put(request, networkResponse.clone());
 							void trimCache(RUNTIME, 50);
 						}
 						return networkResponse;
@@ -125,7 +125,7 @@ async function trimCache(cacheName: string, maxItems: number): Promise<void> {
 					const networkResponse: Response = await fetch(request);
 					if (networkResponse?.ok && networkResponse.type === "basic") {
 						const runtimeCache: Cache = await caches.open(RUNTIME);
-						runtimeCache.put(request, networkResponse.clone());
+						await runtimeCache.put(request, networkResponse.clone());
 						void trimCache(RUNTIME, 100);
 					}
 					return networkResponse;
