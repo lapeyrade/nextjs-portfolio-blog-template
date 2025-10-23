@@ -1,50 +1,74 @@
 {
-	"compilerOptions": {
-		// --- Core Environment Options ---
-		"target": "ESNext",
-		"lib": ["dom", "dom.iterable", "esnext"],
-		"jsx": "preserve",
-		// --- Module Resolution & Bundling ---
-		"module": "esnext",
-		"moduleResolution": "bundler",
-		"resolveJsonModule": true,
-		"isolatedModules": true,
-		// --- JavaScript Interoperability & Module Syntax ---
-		"verbatimModuleSyntax": true,
-		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true,
-		// --- Path Aliases ---
-		"baseUrl": ".",
-		"paths": {
-			"@/*": ["./src/*"],
-			"@/components/*": ["./src/components/*"],
-			"@/lib/*": ["./src/lib/*"],
-			"@/app/*": ["./src/app/*"],
-			"@/content/*": ["./src/content/*"]
-		},
-		// --- Strictness & Code Quality Checks ---
-		"strict": true,
-		"noUncheckedIndexedAccess": true,
-		"exactOptionalPropertyTypes": true,
-		"noImplicitOverride": true,
-		"noFallthroughCasesInSwitch": true,
-		"noImplicitReturns": true,
-		"noUnusedLocals": true,
-		"noUnusedParameters": true,
-		"useUnknownInCatchVariables": true,
-		// --- Build & Transpilation Settings ---
-		"noEmit": true,
-		"skipLibCheck": true,
-		"incremental": true,
-		"tsBuildInfoFile": ".next/tsbuildinfo",
-		// --- Framework-Specific Plugins ---
-		"plugins": [
-			{
-				"name": "next"
-			}
-		],
-		"allowJs": false
-	},
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-	"exclude": ["node_modules", "out", "dist"]
+  "compilerOptions": {
+    // --- Core Environment Options ---
+    "target": "ESNext",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "jsx": "react-jsx",
+    // --- Module Resolution & Bundling ---
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    // --- JavaScript Interoperability & Module Syntax ---
+    "verbatimModuleSyntax": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    // --- Path Aliases ---
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@/components/*": [
+        "./src/components/*"
+      ],
+      "@/lib/*": [
+        "./src/lib/*"
+      ],
+      "@/app/*": [
+        "./src/app/*"
+      ],
+      "@/content/*": [
+        "./src/content/*"
+      ]
+    },
+    // --- Strictness & Code Quality Checks ---
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "useUnknownInCatchVariables": true,
+    // --- Build & Transpilation Settings ---
+    "noEmit": true,
+    "skipLibCheck": true,
+    "incremental": true,
+    "tsBuildInfoFile": ".next/tsbuildinfo",
+    // --- Framework-Specific Plugins ---
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "allowJs": false
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "out",
+    "dist"
+  ]
 }

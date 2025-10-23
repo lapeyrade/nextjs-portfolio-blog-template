@@ -64,7 +64,7 @@ This repository contains a production‑ready personal portfolio and technical b
 
 | Category | Technology | Version |
 |----------|------------|---------|
-| Framework | Next.js | 15+ |
+| Framework | Next.js | 16+ |
 | Language | TypeScript | 5+ |
 | Runtime | Bun (required) | 1.3+ |
 | UI | React | 19+ |
