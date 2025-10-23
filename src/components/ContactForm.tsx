@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { type FormEvent, useId, useState } from "react";
+import { type FormEvent, useEffect, useId, useState } from "react";
 import {
 	AnimatedButton,
 	StaggerContainer,
@@ -50,6 +50,20 @@ export default function ContactForm() {
 	const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(
 		null,
 	);
+	const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+
+	// Warn on unsaved changes before navigation
+	useEffect(() => {
+		const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+			if (hasUnsavedChanges) {
+				e.preventDefault();
+				e.returnValue = "";
+			}
+		};
+
+		window.addEventListener("beforeunload", handleBeforeUnload);
+		return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+	}, [hasUnsavedChanges]);
 
 	const validateForm = (): boolean => {
 		const newErrors: FormErrors = {};
@@ -84,6 +98,22 @@ export default function ContactForm() {
 		}
 
 		setErrors(newErrors);
+
+		// Focus first error field on submit
+		if (Object.keys(newErrors).length > 0) {
+			const firstErrorField = Object.keys(newErrors)[0] as keyof FormErrors;
+			const errorElement = document.getElementById(
+				firstErrorField === "name"
+					? nameId
+					: firstErrorField === "email"
+						? emailId
+						: firstErrorField === "subject"
+							? subjectId
+							: messageId,
+			);
+			errorElement?.focus();
+		}
+
 		return Object.keys(newErrors).length === 0;
 	};
 
@@ -97,11 +127,15 @@ export default function ContactForm() {
 		setIsSubmitting(true);
 		setSubmitStatus(null);
 
+		// Generate idempotency key for this submission
+		const idempotencyKey = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+
 		try {
 			const response = await fetch("/api/contact", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
+					"X-Idempotency-Key": idempotencyKey,
 				},
 				body: JSON.stringify(formData),
 			});
@@ -118,6 +152,7 @@ export default function ContactForm() {
 					website: "",
 				});
 				setErrors({});
+				setHasUnsavedChanges(false);
 				console.log("Form submitted successfully:", result);
 			} else {
 				setSubmitStatus("error");
@@ -133,6 +168,7 @@ export default function ContactForm() {
 
 	const handleChange = (field: keyof FormData, value: string) => {
 		setFormData((prev) => ({ ...prev, [field]: value }));
+		setHasUnsavedChanges(true);
 		// Clear error when user starts typing
 		if (errors[field]) {
 			setErrors((prev) => ({ ...prev, [field]: undefined }));
@@ -160,9 +196,13 @@ export default function ContactForm() {
 							<input
 								type="text"
 								id={nameId}
+								name="name"
 								value={formData.name}
 								onChange={(e) => handleChange("name", e.target.value)}
-								className={`w-full px-4 py-3 bg-gray-800/50 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-colors ${
+								autoComplete="name"
+								aria-invalid={!!errors.name}
+								aria-describedby={errors.name ? `${nameId}-error` : undefined}
+								className={`w-full px-4 py-3 bg-gray-800/50 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-colors text-base ${
 									errors.name
 										? "border-red-500 focus:ring-red-500"
 										: "border-gray-600 focus:ring-[var(--accent)] focus:border-[var(--accent)]"
@@ -170,7 +210,9 @@ export default function ContactForm() {
 								placeholder={t("name_placeholder")}
 							/>
 							{errors.name && (
-								<p className="mt-2 text-sm text-red-400">{errors.name}</p>
+								<p id={`${nameId}-error`} className="mt-2 text-sm text-red-400">
+									{errors.name}
+								</p>
 							)}
 						</div>
 					</StaggerItem>
@@ -187,9 +229,17 @@ export default function ContactForm() {
 							<input
 								type="email"
 								id={emailId}
+								name="email"
 								value={formData.email}
 								onChange={(e) => handleChange("email", e.target.value)}
-								className={`w-full px-4 py-3 bg-gray-800/50 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-colors ${
+								autoComplete="email"
+								inputMode="email"
+								spellCheck="false"
+								aria-invalid={!!errors.email}
+								aria-describedby={
+									errors.email ? `${emailId}-error` : undefined
+								}
+								className={`w-full px-4 py-3 bg-gray-800/50 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-colors text-base ${
 									errors.email
 										? "border-red-500 focus:ring-red-500"
 										: "border-gray-600 focus:ring-[var(--accent)] focus:border-[var(--accent)]"
@@ -197,7 +247,9 @@ export default function ContactForm() {
 								placeholder={t("email_placeholder")}
 							/>
 							{errors.email && (
-								<p className="mt-2 text-sm text-red-400">{errors.email}</p>
+								<p id={`${emailId}-error`} className="mt-2 text-sm text-red-400">
+									{errors.email}
+								</p>
 							)}
 						</div>
 					</StaggerItem>
@@ -214,9 +266,15 @@ export default function ContactForm() {
 							<input
 								type="text"
 								id={subjectId}
+								name="subject"
 								value={formData.subject}
 								onChange={(e) => handleChange("subject", e.target.value)}
-								className={`w-full px-4 py-3 bg-gray-800/50 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-colors ${
+								autoComplete="off"
+								aria-invalid={!!errors.subject}
+								aria-describedby={
+									errors.subject ? `${subjectId}-error` : undefined
+								}
+								className={`w-full px-4 py-3 bg-gray-800/50 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-colors text-base ${
 									errors.subject
 										? "border-red-500 focus:ring-red-500"
 										: "border-gray-600 focus:ring-[var(--accent)] focus:border-[var(--accent)]"
@@ -224,7 +282,12 @@ export default function ContactForm() {
 								placeholder={t("subject_placeholder")}
 							/>
 							{errors.subject && (
-								<p className="mt-2 text-sm text-red-400">{errors.subject}</p>
+								<p
+									id={`${subjectId}-error`}
+									className="mt-2 text-sm text-red-400"
+								>
+									{errors.subject}
+								</p>
 							)}
 						</div>
 					</StaggerItem>
@@ -240,10 +303,16 @@ export default function ContactForm() {
 							</label>
 							<textarea
 								id={messageId}
+								name="message"
 								rows={6}
 								value={formData.message}
 								onChange={(e) => handleChange("message", e.target.value)}
-								className={`w-full px-4 py-3 bg-gray-800/50 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-colors resize-none ${
+								autoComplete="off"
+								aria-invalid={!!errors.message}
+								aria-describedby={
+									errors.message ? `${messageId}-error` : undefined
+								}
+								className={`w-full px-4 py-3 bg-gray-800/50 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-colors resize-none text-base ${
 									errors.message
 										? "border-red-500 focus:ring-red-500"
 										: "border-gray-600 focus:ring-[var(--accent)] focus:border-[var(--accent)]"
@@ -251,7 +320,12 @@ export default function ContactForm() {
 								placeholder={t("message_placeholder")}
 							/>
 							{errors.message && (
-								<p className="mt-2 text-sm text-red-400">{errors.message}</p>
+								<p
+									id={`${messageId}-error`}
+									className="mt-2 text-sm text-red-400"
+								>
+									{errors.message}
+								</p>
 							)}
 						</div>
 					</StaggerItem>
@@ -302,7 +376,7 @@ export default function ContactForm() {
 											d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
 										></path>
 									</svg>
-									{t("submit_button")}...
+									{t("submit_button")}…
 								</span>
 							) : (
 								t("submit_button")

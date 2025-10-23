@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import Search from "@/components/Search";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
@@ -24,6 +24,7 @@ export default function MobileMenu({
 	const [open, setOpen] = useState(false);
 	const t = useTranslations("navigation");
 	const tFooter = useTranslations("footer");
+	const menuRef = useRef<HTMLDivElement>(null);
 
 	// Generate unique IDs for accessibility
 	const menuPanelId = useId();
@@ -38,6 +39,50 @@ export default function MobileMenu({
 		return () => document.removeEventListener("keydown", onKeyDown);
 	}, [open]);
 
+	// Prevent body scroll when menu is open
+	useEffect(() => {
+		if (open) {
+			document.body.style.overflow = "hidden";
+		} else {
+			document.body.style.overflow = "";
+		}
+		return () => {
+			document.body.style.overflow = "";
+		};
+	}, [open]);
+
+	// Focus trap for mobile menu
+	useEffect(() => {
+		if (!open || !menuRef.current) return;
+
+		const handleTabKey = (e: KeyboardEvent) => {
+			if (e.key !== "Tab") return;
+
+			const focusableElements = menuRef.current!.querySelectorAll(
+				'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+			);
+			const firstElement = focusableElements[0] as HTMLElement;
+			const lastElement = focusableElements[
+				focusableElements.length - 1
+			] as HTMLElement;
+
+			if (e.shiftKey) {
+				if (document.activeElement === firstElement) {
+					e.preventDefault();
+					lastElement?.focus();
+				}
+			} else {
+				if (document.activeElement === lastElement) {
+					e.preventDefault();
+					firstElement?.focus();
+				}
+			}
+		};
+
+		document.addEventListener("keydown", handleTabKey);
+		return () => document.removeEventListener("keydown", handleTabKey);
+	}, [open]);
+
 	return (
 		<div className="md:hidden">
 			<button
@@ -46,7 +91,7 @@ export default function MobileMenu({
 				aria-expanded={open}
 				aria-controls={menuPanelId}
 				onClick={() => setOpen((v) => !v)}
-				className="inline-flex items-center justify-center rounded-md p-2 text-gray-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--accent)]"
+				className="inline-flex items-center justify-center rounded-md p-2 min-h-[44px] min-w-[44px] text-gray-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--accent)]"
 			>
 				{open ? (
 					<svg
@@ -90,7 +135,10 @@ export default function MobileMenu({
 						aria-hidden="true"
 						onClick={() => setOpen(false)}
 					/>
-					<div className="relative ml-auto h-full w-64 sm:w-72 max-w-[75%] theme-panel p-5 shadow-xl overflow-y-auto">
+					<div
+						ref={menuRef}
+						className="relative ml-auto h-full w-64 sm:w-72 max-w-[75%] theme-panel p-5 shadow-xl overflow-y-auto"
+					>
 						<nav className="space-y-1 flex flex-col items-end text-right">
 							{!hideAbout &&
 								(isHome ? (

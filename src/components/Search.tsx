@@ -28,6 +28,7 @@ export default function Search({ enableHotkey = true }: SearchProps) {
 	const [activeIndex, setActiveIndex] = useState(0);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const resultsRef = useRef<HTMLDivElement>(null);
+	const modalRef = useRef<HTMLDivElement>(null);
 
 	// Generate unique IDs for accessibility
 	const searchIconTitleId = useId();
@@ -109,6 +110,34 @@ export default function Search({ enableHotkey = true }: SearchProps) {
 		setActiveIndex(0);
 		// Force fresh fetch when opening search
 		setQ("");
+
+		// Focus trap implementation
+		const handleTabKey = (e: KeyboardEvent) => {
+			if (e.key !== "Tab" || !modalRef.current) return;
+
+			const focusableElements = modalRef.current.querySelectorAll(
+				'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+			);
+			const firstElement = focusableElements[0] as HTMLElement;
+			const lastElement = focusableElements[
+				focusableElements.length - 1
+			] as HTMLElement;
+
+			if (e.shiftKey) {
+				if (document.activeElement === firstElement) {
+					e.preventDefault();
+					lastElement?.focus();
+				}
+			} else {
+				if (document.activeElement === lastElement) {
+					e.preventDefault();
+					firstElement?.focus();
+				}
+			}
+		};
+
+		document.addEventListener("keydown", handleTabKey);
+		return () => document.removeEventListener("keydown", handleTabKey);
 	}, [open]);
 
 	// Scroll active item into view
@@ -175,7 +204,7 @@ export default function Search({ enableHotkey = true }: SearchProps) {
 				<span>{t("button_text")}</span>
 				{enableHotkey && (
 					<span className="ml-1 rounded bg-gray-700/60 px-1.5 py-0.5 text-[10px]">
-						⌘K
+						⌘&nbsp;K
 					</span>
 				)}
 			</button>
@@ -193,7 +222,10 @@ export default function Search({ enableHotkey = true }: SearchProps) {
 						}}
 						aria-label="Close search modal"
 					/>
-					<div className="relative mx-auto mt-20 w-[92%] max-w-xl theme-panel p-4 shadow-xl">
+					<div
+						ref={modalRef}
+						className="relative mx-auto mt-20 w-[92%] max-w-xl theme-panel p-4 shadow-xl"
+					>
 						<div className="flex items-center gap-2">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -215,7 +247,7 @@ export default function Search({ enableHotkey = true }: SearchProps) {
 								value={q}
 								onChange={(e) => setQ(e.target.value)}
 								placeholder={t("placeholder")}
-								className="w-full bg-transparent text-foreground placeholder:text-foreground/70 focus:outline-none"
+								className="w-full bg-transparent text-foreground placeholder:text-foreground/70 focus:outline-none text-base"
 								aria-label="Search site"
 							/>
 							<button

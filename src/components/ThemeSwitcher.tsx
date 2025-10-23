@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type ThemeKey = "ocean" | "sunset" | "forest" | "purple" | "rose" | "aurora";
 const THEMES: ThemeKey[] = [
@@ -32,6 +32,7 @@ export default function ThemeSwitcher({
 }: ThemeSwitcherProps) {
 	const [theme, setTheme] = useState<ThemeKey>("ocean");
 	const [open, setOpen] = useState<boolean>(false);
+	const containerRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		const stored = (typeof window !== "undefined" &&
@@ -41,6 +42,34 @@ export default function ThemeSwitcher({
 			document.documentElement.setAttribute("data-theme", stored);
 		}
 	}, []);
+
+	// Close dropdown when clicking outside
+	useEffect(() => {
+		if (!open) return;
+
+		const handleClickOutside = (event: MouseEvent) => {
+			if (
+				containerRef.current &&
+				!containerRef.current.contains(event.target as Node)
+			) {
+				setOpen(false);
+			}
+		};
+
+		const handleEscapeKey = (event: KeyboardEvent) => {
+			if (event.key === "Escape") {
+				setOpen(false);
+			}
+		};
+
+		document.addEventListener("mousedown", handleClickOutside);
+		document.addEventListener("keydown", handleEscapeKey);
+
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+			document.removeEventListener("keydown", handleEscapeKey);
+		};
+	}, [open]);
 
 	const onChange = (value: ThemeKey) => {
 		setTheme(value);
@@ -52,18 +81,18 @@ export default function ThemeSwitcher({
 
 	const isMobile = variant === "mobile";
 	const buttonClasses = isMobile
-		? "inline-flex items-center gap-1 rounded-md border border-gray-700 bg-gray-900/60 px-2 py-1 text-xs text-gray-200 hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
-		: "inline-flex items-center gap-2 rounded-md border border-gray-700 bg-gray-900/60 px-3 py-1 text-sm text-gray-200 hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]";
+		? "inline-flex items-center gap-1 rounded-md border border-gray-700 bg-gray-900/60 px-2 py-1 min-h-[44px] text-xs text-gray-200 hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+		: "inline-flex items-center gap-2 rounded-md border border-gray-700 bg-gray-900/60 px-3 py-1 min-h-[44px] text-sm text-gray-200 hover:bg-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]";
 
 	const panelClasses = isMobile
 		? "absolute right-0 mt-1 flex items-center gap-1 rounded-lg border border-gray-700 bg-gray-900/80 p-1 shadow-lg backdrop-blur-md z-50"
 		: "absolute right-0 mt-2 flex items-center gap-2 rounded-lg border border-gray-700 bg-gray-900/80 p-2 shadow-xl backdrop-blur-md z-50";
 
-	const swatchSize = isMobile ? "h-6 w-6" : "h-8 w-8";
+	const swatchSize = isMobile ? "h-8 w-8" : "h-8 w-8";
 	const checkmarkSize = isMobile ? "h-2 w-2 text-[8px]" : "h-3 w-3 text-[10px]";
 
 	return (
-		<div className="relative">
+		<div ref={containerRef} className="relative">
 			<button
 				type="button"
 				aria-haspopup="true"
