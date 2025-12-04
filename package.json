@@ -7,7 +7,7 @@
 		"dev": "bun format && bun fix && bun run --bun next dev",
 		"build": "bun format && bun fix && bun run --bun next build",
 		"start": "bun --bun next start",
-		"lint": "oxlint --type-aware",
+		"lint": "oxlint",
 		"fix": "oxlint --fix --fix-suggestions",
 		"format": "oxfmt"
 	},
