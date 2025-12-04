@@ -4,77 +4,64 @@ import { Resend } from "resend";
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const CONTACT_EMAIL = process.env.CONTACT_EMAIL;
 const FROM_EMAIL =
-	process.env.FROM_EMAIL ??
-	`no-reply@${process.env.NEXT_PUBLIC_SITE_DOMAIN ?? "localhost"}`;
+  process.env.FROM_EMAIL ?? `no-reply@${process.env.NEXT_PUBLIC_SITE_DOMAIN ?? "localhost"}`;
 
 export async function POST(request: NextRequest) {
-	// Fail early if server-side email configuration is missing
-	if (!RESEND_API_KEY) {
-		console.error("Missing RESEND_API_KEY environment variable.");
-		return NextResponse.json(
-			{ error: "Server email service not configured." },
-			{ status: 500 },
-		);
-	}
+  // Fail early if server-side email configuration is missing
+  if (!RESEND_API_KEY) {
+    console.error("Missing RESEND_API_KEY environment variable.");
+    return NextResponse.json({ error: "Server email service not configured." }, { status: 500 });
+  }
 
-	if (!CONTACT_EMAIL) {
-		console.error("Missing CONTACT_EMAIL environment variable.");
-		return NextResponse.json(
-			{ error: "Recipient email not configured." },
-			{ status: 500 },
-		);
-	}
+  if (!CONTACT_EMAIL) {
+    console.error("Missing CONTACT_EMAIL environment variable.");
+    return NextResponse.json({ error: "Recipient email not configured." }, { status: 500 });
+  }
 
-	// Instantiate the Resend client now that we know the API key exists
-	const resend = new Resend(RESEND_API_KEY);
+  // Instantiate the Resend client now that we know the API key exists
+  const resend = new Resend(RESEND_API_KEY);
 
-	try {
-		const body = await request.json();
-		const { name, email, subject, message, website } = body;
+  try {
+    const body = await request.json();
+    const { name, email, subject, message, website } = body;
 
-		// Honeypot check - if website field is filled, it's likely spam
-		if (website && website.trim() !== "") {
-			console.log("Honeypot triggered - potential spam detected:", {
-				website,
-				userAgent: request.headers.get("user-agent"),
-				timestamp: new Date().toISOString(),
-			});
-			return NextResponse.json({ error: "Spam detected" }, { status: 400 });
-		}
+    // Honeypot check - if website field is filled, it's likely spam
+    if (website && website.trim() !== "") {
+      console.log("Honeypot triggered - potential spam detected:", {
+        website,
+        userAgent: request.headers.get("user-agent"),
+        timestamp: new Date().toISOString(),
+      });
+      return NextResponse.json({ error: "Spam detected" }, { status: 400 });
+    }
 
-		// Validate required fields
-		if (!name || !email || !subject || !message) {
-			return NextResponse.json(
-				{ error: "All fields are required" },
-				{ status: 400 },
-			);
-		}
+    // Validate required fields
+    if (!name || !email || !subject || !message) {
+      return NextResponse.json({ error: "All fields are required" }, { status: 400 });
+    }
 
-		// Validate email format
-		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		if (!emailRegex.test(email)) {
-			return NextResponse.json(
-				{ error: "Invalid email format" },
-				{ status: 400 },
-			);
-		}
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json({ error: "Invalid email format" }, { status: 400 });
+    }
 
-		// Log the contact form submission
-		console.log("Contact form submission:", {
-			name,
-			email,
-			subject,
-			message,
-			timestamp: new Date().toISOString(),
-		});
+    // Log the contact form submission
+    console.log("Contact form submission:", {
+      name,
+      email,
+      subject,
+      message,
+      timestamp: new Date().toISOString(),
+    });
 
-		// Send email using Resend
-		try {
-			const emailData = await resend.emails.send({
-				from: FROM_EMAIL,
-				to: CONTACT_EMAIL,
-				subject: `Portfolio Contact: ${subject}`,
-				html: `
+    // Send email using Resend
+    try {
+      const emailData = await resend.emails.send({
+        from: FROM_EMAIL,
+        to: CONTACT_EMAIL,
+        subject: `Portfolio Contact: ${subject}`,
+        html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
             <h2 style="color: #6b46c1; border-bottom: 2px solid #6b46c1; padding-bottom: 10px;">
               New Contact Form Submission
@@ -99,8 +86,8 @@ export async function POST(request: NextRequest) {
             </div>
           </div>
         `,
-				// Also send a plain text version
-				text: `
+        // Also send a plain text version
+        text: `
 New Contact Form Submission
 
 Name: ${name}
@@ -113,32 +100,31 @@ ${message}
 Sent from your portfolio contact form
 Timestamp: ${new Date().toLocaleString()}
         `,
-			});
+      });
 
-			console.log("Email sent successfully. id=", emailData?.data?.id);
+      console.log("Email sent successfully. id=", emailData?.data?.id);
 
-			return NextResponse.json({
-				success: true,
-				message: "Thank you for your message! I will get back to you soon.",
-				emailId: emailData.data?.id,
-			});
-		} catch (emailError) {
-			console.error("Email sending failed:", emailError);
+      return NextResponse.json({
+        success: true,
+        message: "Thank you for your message! I will get back to you soon.",
+        emailId: emailData.data?.id,
+      });
+    } catch (emailError) {
+      console.error("Email sending failed:", emailError);
 
-			// Return a user-friendly error message
-			return NextResponse.json(
-				{
-					error:
-						"Failed to send email. Please try again or contact me directly.",
-				},
-				{ status: 500 },
-			);
-		}
-	} catch (error) {
-		console.error("Contact form error:", error);
-		return NextResponse.json(
-			{ error: "Failed to process your message. Please try again." },
-			{ status: 500 },
-		);
-	}
+      // Return a user-friendly error message
+      return NextResponse.json(
+        {
+          error: "Failed to send email. Please try again or contact me directly.",
+        },
+        { status: 500 },
+      );
+    }
+  } catch (error) {
+    console.error("Contact form error:", error);
+    return NextResponse.json(
+      { error: "Failed to process your message. Please try again." },
+      { status: 500 },
+    );
+  }
 }

@@ -64,28 +64,28 @@ This repository contains a production‑ready personal portfolio and technical b
 
 | Category | Technology | Version |
 |----------|------------|---------|
-| Framework | Next.js | 16+ |
-| Language | TypeScript | 5+ |
-| Runtime | Bun (required) | 1.3+ |
-| UI | React | 19+ |
-| Styling | Tailwind CSS | 4.1.14+ |
-| Animations | Framer Motion | 12+ |
-| Content | MDX (`@mdx-js/react`, `@next/mdx`, `next-mdx-remote`) | 3.1.1 / 15.5.6 / 5.0.0 |
-| i18n | next-intl | 4+ |
-| Parsing | gray-matter | 4+ |
-| Reading Time | reading-time | 1+ |
-| Email | resend | 6+ |
-| Syntax Highlighting | shiki + rehype-pretty-code | 3.13.0 / 0.14.1 |
-| Markdown Extensions | remark-gfm | 4+ |
-| Analytics | @vercel/analytics | 1+ |
-| Speed Insights | @vercel/speed-insights | 1+ |
-| A11y (dev) | @axe-core/react | 4+ |
-| Linting & Formatting | oxlint & oxlint-tsgolint | 1.23.0+ / 0.2.0+ |
-| Package Manager | Bun | 1.3.0 (required) |
-| Build Tool | Turbopack | Built into Next.js 15 |
-| Bundle Analysis | @next/bundle-analyzer | 15.5.6+ |
+| Framework | Next.js | 16.0.7 |
+| Language | TypeScript | 5.9.3 |
+| Runtime | Bun (required) | 1.3.3 |
+| UI | React | 19.2.1 |
+| Styling | Tailwind CSS | 4.1.17 |
+| Animations | Framer Motion | 12.23.25 |
+| Content | MDX (`@mdx-js/react`, `@next/mdx`, `next-mdx-remote`) | 3.1.1 / 16.0.7 / 5.0.0 |
+| i18n | next-intl | 4.5.8 |
+| Parsing | gray-matter | 4.0.3 |
+| Reading Time | reading-time | 1.5.0 |
+| Email | resend | 6.5.2 |
+| Syntax Highlighting | shiki + rehype-pretty-code | 3.19.0 / 0.14.1 |
+| Markdown Extensions | remark-gfm | 4.0.1 |
+| Analytics | @vercel/analytics | 1.6.1 |
+| Speed Insights | @vercel/speed-insights | 1.3.1 |
+| A11y (dev) | @axe-core/react | 4.11.0 |
+| Linting & Formatting | oxlint + oxfmt | 1.31.0 / 0.16.0 |
+| Package Manager | Bun | 1.3.3 (required) |
+| Build Tool | Turbopack | Built into Next.js 16 |
+| Bundle Analysis | @next/bundle-analyzer | 16.0.7 |
 
-Additional build tooling: PostCSS 8.5.6, Autoprefixer 10.4.21, @tailwindcss/postcss 4.1.14, Bundle Analyzer 15.5.6.
+Additional build tooling: PostCSS 8.5.6, Autoprefixer 10.4.22, @tailwindcss/postcss 4.1.17, Bundle Analyzer 16.0.7.
 
 ## 4. Directory Structure (Excerpt)
 
@@ -102,7 +102,7 @@ src/
 ## 5. Getting Started
 
 ### Prerequisites
-- Bun 1.3+ (required as package manager)
+- Bun 1.3.3+ (required as package manager)
 
 ### Clone & Install
 ```bash
@@ -128,31 +128,27 @@ Never commit real secrets. Server‑only variables must not use the `NEXT_PUBLIC
 ```bash
 bun run dev
 ```
-This uses Turbopack for faster development builds. Visit http://localhost:3000.
+The `dev` script formats & lints the repo (`bun format && bun fix`) before launching `next dev` via Bun/Turbopack at http://localhost:3000.
 
 ### Lint & Format
 ```bash
-# Lint only
+# Lint only (oxlint --type-aware)
 bun run lint
 
-# Auto-fix issues
+# Auto-fix issues (oxlint --fix --fix-suggestions)
 bun run fix
 
-# Format only
+# Format only (oxfmt)
 bun run format
 ```
 
-### Type Check (if separate)
-```bash
-bunx tsc --noEmit
-```
 
 ### Build & Start Production
 ```bash
 bun run build
 bun run start
 ```
-The build command also uses Turbopack for optimized production builds.
+Both `build` and `start` scripts run through Bun; `build` formats + lints before calling `next build`, and `start` launches `next start` for the production server.
 
 ## 6. Deployment
 

@@ -8,227 +8,225 @@ import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { Link } from "@/i18n/routing";
 
 interface MobileMenuProps {
-	isHome?: boolean;
-	hideAbout?: boolean;
-	hideProjects?: boolean;
-	hideBlog?: boolean;
-	locale?: string;
+  isHome?: boolean;
+  hideAbout?: boolean;
+  hideProjects?: boolean;
+  hideBlog?: boolean;
+  locale?: string;
 }
 
 export default function MobileMenu({
-	isHome = false,
-	hideAbout = false,
-	hideProjects = false,
-	hideBlog = false,
+  isHome = false,
+  hideAbout = false,
+  hideProjects = false,
+  hideBlog = false,
 }: MobileMenuProps) {
-	const [open, setOpen] = useState(false);
-	const t = useTranslations("navigation");
-	const tFooter = useTranslations("footer");
-	const menuRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+  const t = useTranslations("navigation");
+  const tFooter = useTranslations("footer");
+  const menuRef = useRef<HTMLDivElement>(null);
 
-	// Generate unique IDs for accessibility
-	const menuPanelId = useId();
-	const closeIconTitleId = useId();
-	const menuIconTitleId = useId();
+  // Generate unique IDs for accessibility
+  const menuPanelId = useId();
+  const closeIconTitleId = useId();
+  const menuIconTitleId = useId();
 
-	useEffect(() => {
-		const onKeyDown = (e: KeyboardEvent) => {
-			if (e.key === "Escape") setOpen(false);
-		};
-		if (open) document.addEventListener("keydown", onKeyDown);
-		return () => document.removeEventListener("keydown", onKeyDown);
-	}, [open]);
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    if (open) document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [open]);
 
-	// Prevent body scroll when menu is open
-	useEffect(() => {
-		if (open) {
-			document.body.style.overflow = "hidden";
-		} else {
-			document.body.style.overflow = "";
-		}
-		return () => {
-			document.body.style.overflow = "";
-		};
-	}, [open]);
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
-	// Focus trap for mobile menu
-	useEffect(() => {
-		if (!open || !menuRef.current) return;
+  // Focus trap for mobile menu
+  useEffect(() => {
+    if (!open || !menuRef.current) return;
 
-		const handleTabKey = (e: KeyboardEvent) => {
-			if (e.key !== "Tab") return;
+    const handleTabKey = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
 
-			const focusableElements = menuRef.current!.querySelectorAll(
-				'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-			);
-			const firstElement = focusableElements[0] as HTMLElement;
-			const lastElement = focusableElements[
-				focusableElements.length - 1
-			] as HTMLElement;
+      const focusableElements = menuRef.current!.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+      );
+      const firstElement = focusableElements[0] as HTMLElement;
+      const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
 
-			if (e.shiftKey) {
-				if (document.activeElement === firstElement) {
-					e.preventDefault();
-					lastElement?.focus();
-				}
-			} else {
-				if (document.activeElement === lastElement) {
-					e.preventDefault();
-					firstElement?.focus();
-				}
-			}
-		};
+      if (e.shiftKey) {
+        if (document.activeElement === firstElement) {
+          e.preventDefault();
+          lastElement?.focus();
+        }
+      } else {
+        if (document.activeElement === lastElement) {
+          e.preventDefault();
+          firstElement?.focus();
+        }
+      }
+    };
 
-		document.addEventListener("keydown", handleTabKey);
-		return () => document.removeEventListener("keydown", handleTabKey);
-	}, [open]);
+    document.addEventListener("keydown", handleTabKey);
+    return () => document.removeEventListener("keydown", handleTabKey);
+  }, [open]);
 
-	return (
-		<div className="md:hidden">
-			<button
-				type="button"
-				aria-label={open ? "Close menu" : "Open menu"}
-				aria-expanded={open}
-				aria-controls={menuPanelId}
-				onClick={() => setOpen((v) => !v)}
-				className="inline-flex items-center justify-center rounded-md p-2 min-h-[44px] min-w-[44px] text-gray-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--accent)]"
-			>
-				{open ? (
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						fill="currentColor"
-						className="h-6 w-6"
-						role="img"
-						aria-labelledby={closeIconTitleId}
-					>
-						<title id={closeIconTitleId}>Close menu</title>
-						<path
-							fillRule="evenodd"
-							d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z"
-							clipRule="evenodd"
-						/>
-					</svg>
-				) : (
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 24 24"
-						fill="currentColor"
-						className="h-6 w-6"
-						role="img"
-						aria-labelledby={menuIconTitleId}
-					>
-						<title id={menuIconTitleId}>Open menu</title>
-						<path
-							fillRule="evenodd"
-							d="M3.75 6.75A.75.75 0 0 1 4.5 6h15a.75.75 0 0 1 0 1.5h-15a.75.75 0 0 1-.75-.75Zm0 5.25a.75.75 0 0 1 .75-.75h15a.75.75 0 0 1 0 1.5h-15a.75.75 0 0 1-.75-.75Zm.75 4.5a.75.75 0 0 0 0 1.5h15a.75.75 0 0 0 0-1.5h-15Z"
-							clipRule="evenodd"
-						/>
-					</svg>
-				)}
-			</button>
+  return (
+    <div className="md:hidden">
+      <button
+        type="button"
+        aria-label={open ? "Close menu" : "Open menu"}
+        aria-expanded={open}
+        aria-controls={menuPanelId}
+        onClick={() => setOpen((v) => !v)}
+        className="inline-flex items-center justify-center rounded-md p-2 min-h-[44px] min-w-[44px] text-gray-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--accent)]"
+      >
+        {open ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="h-6 w-6"
+            role="img"
+            aria-labelledby={closeIconTitleId}
+          >
+            <title id={closeIconTitleId}>Close menu</title>
+            <path
+              fillRule="evenodd"
+              d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z"
+              clipRule="evenodd"
+            />
+          </svg>
+        ) : (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="h-6 w-6"
+            role="img"
+            aria-labelledby={menuIconTitleId}
+          >
+            <title id={menuIconTitleId}>Open menu</title>
+            <path
+              fillRule="evenodd"
+              d="M3.75 6.75A.75.75 0 0 1 4.5 6h15a.75.75 0 0 1 0 1.5h-15a.75.75 0 0 1-.75-.75Zm0 5.25a.75.75 0 0 1 .75-.75h15a.75.75 0 0 1 0 1.5h-15a.75.75 0 0 1-.75-.75Zm.75 4.5a.75.75 0 0 0 0 1.5h15a.75.75 0 0 0 0-1.5h-15Z"
+              clipRule="evenodd"
+            />
+          </svg>
+        )}
+      </button>
 
-			{open && (
-				<div id={menuPanelId} className="fixed inset-0 z-50">
-					<div
-						className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-						aria-hidden="true"
-						onClick={() => setOpen(false)}
-					/>
-					<div
-						ref={menuRef}
-						className="relative ml-auto h-full w-64 sm:w-72 max-w-[75%] theme-panel p-5 shadow-xl overflow-y-auto"
-					>
-						<nav className="space-y-1 flex flex-col items-end text-right">
-							{!hideAbout &&
-								(isHome ? (
-									<button
-										type="button"
-										onClick={() => {
-											const element = document.getElementById("about");
-											element?.scrollIntoView({ behavior: "smooth" });
-											setOpen(false);
-										}}
-										className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
-									>
-										{t("about")}
-									</button>
-								) : (
-									<Link
-										href={{ pathname: "/", hash: "about" }}
-										onClick={() => setOpen(false)}
-										className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
-									>
-										{t("about")}
-									</Link>
-								))}
-							{!hideProjects &&
-								(isHome ? (
-									<button
-										type="button"
-										onClick={() => {
-											const element = document.getElementById("projects");
-											element?.scrollIntoView({ behavior: "smooth" });
-											setOpen(false);
-										}}
-										className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
-									>
-										{t("projects")}
-									</button>
-								) : (
-									<Link
-										href={{ pathname: "/", hash: "projects" }}
-										onClick={() => setOpen(false)}
-										className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
-									>
-										{t("projects")}
-									</Link>
-								))}
-							{!hideBlog && (
-								<Link
-									href="/blog"
-									onClick={() => setOpen(false)}
-									className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
-								>
-									{t("blog")}
-								</Link>
-							)}
-							<Link
-								href="/contact"
-								onClick={() => setOpen(false)}
-								className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
-							>
-								{t("contact")}
-							</Link>
-							<div className="h-px my-2 w-full bg-[var(--panel-border)]" />
-							<div className="w-full flex justify-end mb-2">
-								<Search enableHotkey={false} />
-							</div>
-							<div className="w-full flex justify-end mb-2">
-								<LanguageSwitcher />
-							</div>
-							<div className="w-full flex justify-end mb-2">
-								<ThemeSwitcher variant="mobile" />
-							</div>
-							<div className="h-px my-2 w-full bg-[var(--panel-border)]" />
-							<Link
-								href="/terms"
-								onClick={() => setOpen(false)}
-								className="block rounded px-2 py-2 text-sm text-foreground/80 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
-							>
-								{tFooter("terms")}
-							</Link>
-							<Link
-								href="/privacy"
-								onClick={() => setOpen(false)}
-								className="block rounded px-2 py-2 text-sm text-foreground/80 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
-							>
-								{tFooter("privacy")}
-							</Link>
-						</nav>
-					</div>
-				</div>
-			)}
-		</div>
-	);
+      {open && (
+        <div id={menuPanelId} className="fixed inset-0 z-50">
+          <div
+            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+            aria-hidden="true"
+            onClick={() => setOpen(false)}
+          />
+          <div
+            ref={menuRef}
+            className="relative ml-auto h-full w-64 sm:w-72 max-w-[75%] theme-panel p-5 shadow-xl overflow-y-auto"
+          >
+            <nav className="space-y-1 flex flex-col items-end text-right">
+              {!hideAbout &&
+                (isHome ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const element = document.getElementById("about");
+                      element?.scrollIntoView({ behavior: "smooth" });
+                      setOpen(false);
+                    }}
+                    className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+                  >
+                    {t("about")}
+                  </button>
+                ) : (
+                  <Link
+                    href={{ pathname: "/", hash: "about" }}
+                    onClick={() => setOpen(false)}
+                    className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+                  >
+                    {t("about")}
+                  </Link>
+                ))}
+              {!hideProjects &&
+                (isHome ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const element = document.getElementById("projects");
+                      element?.scrollIntoView({ behavior: "smooth" });
+                      setOpen(false);
+                    }}
+                    className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+                  >
+                    {t("projects")}
+                  </button>
+                ) : (
+                  <Link
+                    href={{ pathname: "/", hash: "projects" }}
+                    onClick={() => setOpen(false)}
+                    className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+                  >
+                    {t("projects")}
+                  </Link>
+                ))}
+              {!hideBlog && (
+                <Link
+                  href="/blog"
+                  onClick={() => setOpen(false)}
+                  className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+                >
+                  {t("blog")}
+                </Link>
+              )}
+              <Link
+                href="/contact"
+                onClick={() => setOpen(false)}
+                className="block rounded px-2 py-2 text-base text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+              >
+                {t("contact")}
+              </Link>
+              <div className="h-px my-2 w-full bg-[var(--panel-border)]" />
+              <div className="w-full flex justify-end mb-2">
+                <Search enableHotkey={false} />
+              </div>
+              <div className="w-full flex justify-end mb-2">
+                <LanguageSwitcher />
+              </div>
+              <div className="w-full flex justify-end mb-2">
+                <ThemeSwitcher variant="mobile" />
+              </div>
+              <div className="h-px my-2 w-full bg-[var(--panel-border)]" />
+              <Link
+                href="/terms"
+                onClick={() => setOpen(false)}
+                className="block rounded px-2 py-2 text-sm text-foreground/80 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+              >
+                {tFooter("terms")}
+              </Link>
+              <Link
+                href="/privacy"
+                onClick={() => setOpen(false)}
+                className="block rounded px-2 py-2 text-sm text-foreground/80 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+              >
+                {tFooter("privacy")}
+              </Link>
+            </nav>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
