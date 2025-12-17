@@ -5,9 +5,9 @@
 	"private": true,
 	"packageManager": "bun@1.3.4",
 	"scripts": {
-		"dev": "bun format && bun fix && bun run --bun next dev",
-		"build": "bun format && bun fix && bun run --bun next build",
-		"start": "bun --bun next start",
+		"dev": "bun format && bun fix && bun run next dev",
+		"build": "bun format && bun fix && bun run next build",
+		"start": "bun next start",
 		"lint": "oxlint",
 		"fix": "oxlint --fix --fix-suggestions",
 		"format": "oxfmt"
