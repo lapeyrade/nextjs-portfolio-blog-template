@@ -64,7 +64,7 @@ export default async function Home({ params }: Props) {
         </section>
 
         {/* About Section */}
-        <section id={aboutId} className="px-6 py-20">
+        <section id={aboutId} className="overflow-x-clip px-6 py-20">
           <div className="max-w-6xl mx-auto">
             <ScrollReveal>
               <h2 className="text-4xl font-bold text-white text-center mb-12">

@@ -31,5 +31,8 @@ jobs:
       - name: Lint
         run: bun run lint
 
+      - name: Audit dependencies
+        run: bun audit --audit-level=high
+
       - name: Build
-        run: bun run build
+        run: bun next build
