@@ -32,7 +32,10 @@ jobs:
         run: bun run lint
 
       - name: Audit dependencies
-        run: bun audit --audit-level=high
+        run: bun audit
+
+      - name: Test article parsing
+        run: bun run test
 
       - name: Build
         run: bun next build

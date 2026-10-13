@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import matter from "gray-matter";
 import readingTime from "reading-time";
+import { parseFrontmatter } from "./frontmatter";
 
 export interface BlogPost {
   slug: string;
@@ -152,7 +152,7 @@ export async function getAllBlogPosts(locale: string = "en"): Promise<BlogPost[]
 
 async function parsePostFile(fullPath: string, slug: string): Promise<BlogPost> {
   const fileContents = await fs.readFile(fullPath, "utf8");
-  const matterResult = matter(fileContents);
+  const matterResult = parseFrontmatter(fileContents);
   const stats = await fs.stat(fullPath);
   const fm = matterResult.data as BlogFrontmatter;
   const updatedFromFm =
@@ -215,7 +215,7 @@ export async function getBlogPost(slug: string, locale: string = "en"): Promise<
     }
 
     const fileContents = await fs.readFile(fullPath, "utf8");
-    const matterResult = matter(fileContents);
+    const matterResult = parseFrontmatter(fileContents);
     const stats = await fs.stat(fullPath);
     const fm = matterResult.data as BlogFrontmatter;
     const updatedFromFm =
