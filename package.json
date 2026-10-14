@@ -10,7 +10,7 @@
 		"check:all": "bun run format && bun run fix && bun run build",
 		"start": "bun next start",
 		"lint": "oxlint",
-		"test": "bun test tests",
+		"test": "bun run typecheck && bun test tests",
 		"fix": "oxlint --fix --fix-suggestions",
 		"format": "oxfmt"
 	},
@@ -47,8 +47,5 @@
 		"remark-gfm": "^4.0.1",
 		"tailwindcss": "^4.3.3",
 		"typescript": "^7.0.2"
-	},
-	"engines": {
-		"bun": ">=1.4.3"
 	}
 }

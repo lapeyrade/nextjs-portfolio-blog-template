@@ -154,6 +154,7 @@ Vercel; the duplicate Next.js type check is disabled, so use the build script ra
 than calling `next build` directly. `bun run check:all` formats, auto-fixes and builds.
 TypeScript stays installed for framework and editor support. `bun run start`
 launches `next start` for the production server.
+`bun run test` also checks types before running the unit tests.
 
 ## 6. Deployment
 
