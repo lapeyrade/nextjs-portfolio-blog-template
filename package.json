@@ -5,7 +5,9 @@
 	"private": true,
 	"scripts": {
 		"dev": "bun format && bun fix && bun run next dev",
-		"build": "bun format && bun fix && bun run next build",
+		"build": "bun run typecheck && next build",
+		"typecheck": "next typegen && bun check",
+		"check:all": "bun run format && bun run fix && bun run build",
 		"start": "bun next start",
 		"lint": "oxlint",
 		"test": "bun test tests",
@@ -45,5 +47,8 @@
 		"remark-gfm": "^4.0.1",
 		"tailwindcss": "^4.3.3",
 		"typescript": "^7.0.2"
+	},
+	"engines": {
+		"bun": ">=1.4.3"
 	}
 }

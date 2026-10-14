@@ -11,6 +11,10 @@ const withBundleAnalyzer = bundleAnalyzer({
 });
 
 const nextConfig: NextConfig = {
+  typescript: {
+    // The build script checks generated route types with Bun before compiling.
+    ignoreBuildErrors: true,
+  },
   // Turbopack config (kept minimal; defaults are sufficient for most apps)
   turbopack: {},
   experimental: {

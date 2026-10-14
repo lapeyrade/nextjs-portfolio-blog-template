@@ -148,7 +148,12 @@ bun run format
 bun run build
 bun run start
 ```
-Both `build` and `start` scripts run through Bun; `build` formats + lints before calling `next build`, and `start` launches `next start` for the production server.
+Use Bun 1.4.3 or newer. `bun run typecheck` generates Next.js route types and runs
+native `bun check`. `bun run build` runs this check before compilation in CI and
+Vercel; the duplicate Next.js type check is disabled, so use the build script rather
+than calling `next build` directly. `bun run check:all` formats, auto-fixes and builds.
+TypeScript stays installed for framework and editor support. `bun run start`
+launches `next start` for the production server.
 
 ## 6. Deployment
 
