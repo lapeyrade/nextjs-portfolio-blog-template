@@ -33,7 +33,12 @@ export default function SiteHeader({
         </Link>
 
         <div className="flex items-center gap-4 md:gap-6">
-          <SiteNavLinks isHome={isHome} variant={variant} activeBlog={activeBlog} locale={locale} />
+          <SiteNavLinks
+            isHome={isHome}
+            variant={variant}
+            activeBlog={activeBlog}
+            locale={locale}
+          />
           <div className="hidden md:block">
             <Search />
           </div>
@@ -43,7 +48,12 @@ export default function SiteHeader({
           <div className="hidden md:block">
             <ThemeSwitcher />
           </div>
-          <MobileMenu isHome={isHome} hideBlog={activeBlog} hideAbout={isHome} locale={locale} />
+          <MobileMenu
+            isHome={isHome}
+            hideBlog={activeBlog}
+            hideAbout={isHome}
+            locale={locale}
+          />
         </div>
       </div>
     </nav>

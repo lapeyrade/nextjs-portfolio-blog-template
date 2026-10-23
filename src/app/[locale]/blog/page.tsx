@@ -58,7 +58,9 @@ export default async function BlogPage({ params }: BlogPageProps) {
             <FadeInUp delay={0.2}>
               <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
                 {t("hero.title")}{" "}
-                <span className="text-accent-gradient">{t("hero.titleHighlight")}</span>
+                <span className="text-accent-gradient">
+                  {t("hero.titleHighlight")}
+                </span>
               </h1>
             </FadeInUp>
             <FadeInUp delay={0.4}>
@@ -135,8 +137,12 @@ export default async function BlogPage({ params }: BlogPageProps) {
             {posts.length === 0 ? (
               <ScrollReveal>
                 <div className="text-center py-16">
-                  <h2 className="text-2xl font-bold text-white mb-4">{t("comingSoon.title")}</h2>
-                  <p className="text-gray-300 mb-8">{t("comingSoon.description")}</p>
+                  <h2 className="text-2xl font-bold text-white mb-4">
+                    {t("comingSoon.title")}
+                  </h2>
+                  <p className="text-gray-300 mb-8">
+                    {t("comingSoon.description")}
+                  </p>
                   <Link
                     href="/"
                     className="inline-block btn-accent text-white px-6 py-3 rounded-lg font-semibold"
@@ -163,16 +169,22 @@ export default async function BlogPage({ params }: BlogPageProps) {
                         </time>
                         <span>
                           {post.readingTime} •{" "}
-                          {post.wordCount.toLocaleString(locale === "fr" ? "fr-FR" : "en-US")}{" "}
+                          {post.wordCount.toLocaleString(
+                            locale === "fr" ? "fr-FR" : "en-US",
+                          )}{" "}
                           {t("post.words")}
                         </span>
                       </div>
 
                       <h2 className="text-xl font-bold text-white mb-3 group-hover:text-accent transition-colors">
-                        <Link href={`/${locale}/blog/${post.slug}`}>{post.title}</Link>
+                        <Link href={`/${locale}/blog/${post.slug}`}>
+                          {post.title}
+                        </Link>
                       </h2>
 
-                      <p className="text-gray-300 mb-4 line-clamp-3">{post.description}</p>
+                      <p className="text-gray-300 mb-4 line-clamp-3">
+                        {post.description}
+                      </p>
 
                       {post.tags.length > 0 && (
                         <div className="flex flex-wrap gap-2 mb-4">

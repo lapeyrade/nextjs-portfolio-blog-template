@@ -13,7 +13,8 @@ export default function OpenGraphImage() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "linear-gradient(135deg, #0f172a 0%, #6d28d9 50%, #0f172a 100%)",
+        background:
+          "linear-gradient(135deg, #0f172a 0%, #6d28d9 50%, #0f172a 100%)",
         color: "white",
         fontSize: 64,
         fontWeight: 800,

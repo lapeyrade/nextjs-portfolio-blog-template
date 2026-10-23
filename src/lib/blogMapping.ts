@@ -32,7 +32,10 @@ export const blogSlugMapping: Record<string, Record<string, string>> = {
 /**
  * Get the equivalent slug for a blog post in a different language
  */
-export function getEquivalentSlug(currentSlug: string, targetLocale: string): string | null {
+export function getEquivalentSlug(
+  currentSlug: string,
+  targetLocale: string,
+): string | null {
   const mapping = blogSlugMapping[currentSlug];
   if (!mapping) return null;
 
@@ -42,6 +45,9 @@ export function getEquivalentSlug(currentSlug: string, targetLocale: string): st
 /**
  * Check if a blog post has a translation in the target language
  */
-export function hasTranslation(currentSlug: string, targetLocale: string): boolean {
+export function hasTranslation(
+  currentSlug: string,
+  targetLocale: string,
+): boolean {
   return getEquivalentSlug(currentSlug, targetLocale) !== null;
 }

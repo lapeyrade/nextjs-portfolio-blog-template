@@ -69,15 +69,22 @@ export default function GlobalError({
   // Use default English during SSR and before hydration
   const t = translations[mounted ? locale : "en"];
   const homeLink = mounted && locale === "fr" ? "/fr" : "/en";
-  const contactLink = mounted && locale === "fr" ? "/fr/contact" : "/en/contact";
+  const contactLink =
+    mounted && locale === "fr" ? "/fr/contact" : "/en/contact";
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center">
       <main className="w-full px-6 py-20">
         <div className="max-w-3xl mx-auto text-center">
-          <p className="text-purple-300 font-semibold tracking-widest mb-3">{t.label}</p>
-          <h1 className="text-3xl md:text-5xl font-extrabold text-white mb-6">{t.title}</h1>
-          <p className="text-gray-300 mb-10 max-w-xl mx-auto">{t.description}</p>
+          <p className="text-purple-300 font-semibold tracking-widest mb-3">
+            {t.label}
+          </p>
+          <h1 className="text-3xl md:text-5xl font-extrabold text-white mb-6">
+            {t.title}
+          </h1>
+          <p className="text-gray-300 mb-10 max-w-xl mx-auto">
+            {t.description}
+          </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button

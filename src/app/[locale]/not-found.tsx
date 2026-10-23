@@ -17,13 +17,19 @@ export default async function LocalizedNotFound({ params }: NotFoundProps) {
         <main className="w-full px-6 py-20">
           <div className="max-w-3xl mx-auto text-center">
             <FadeInUp delay={0.1}>
-              <p className="text-purple-300 font-semibold tracking-widest mb-3">{t("code")}</p>
+              <p className="text-purple-300 font-semibold tracking-widest mb-3">
+                {t("code")}
+              </p>
             </FadeInUp>
             <FadeInUp delay={0.2}>
-              <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6">{t("title")}</h1>
+              <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6">
+                {t("title")}
+              </h1>
             </FadeInUp>
             <FadeInUp delay={0.3}>
-              <p className="text-gray-300 mb-10 max-w-xl mx-auto">{t("description")}</p>
+              <p className="text-gray-300 mb-10 max-w-xl mx-auto">
+                {t("description")}
+              </p>
             </FadeInUp>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -48,7 +54,10 @@ export default async function LocalizedNotFound({ params }: NotFoundProps) {
             </div>
 
             <div className="mt-10 text-sm text-gray-400">
-              <Link href="/" className="underline hover:text-gray-200 transition-colors">
+              <Link
+                href="/"
+                className="underline hover:text-gray-200 transition-colors"
+              >
                 {t("returnHome")}
               </Link>
             </div>

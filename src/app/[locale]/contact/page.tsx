@@ -25,7 +25,9 @@ export default async function ContactPage({ params }: Props) {
           <div className="max-w-2xl mx-auto">
             <FadeInUp>
               <div className="text-center mb-12">
-                <h1 className="text-4xl font-bold text-foreground mb-4">{t("title")}</h1>
+                <h1 className="text-4xl font-bold text-foreground mb-4">
+                  {t("title")}
+                </h1>
                 <p className="text-lg text-foreground/80">{t("subtitle")}</p>
               </div>
             </FadeInUp>

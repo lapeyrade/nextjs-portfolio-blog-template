@@ -1,6 +1,6 @@
 {
-    "$schema": "https://openapi.vercel.sh/vercel.json",
-    "bunVersion": "1.x",
-    "buildCommand": "bunx bun@latest run build",
-    "installCommand": "bunx bun@latest install --frozen-lockfile"
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "bunVersion": "1.4.x",
+  "buildCommand": "bun run scripts/verify-bun.mjs && bun run build",
+  "installCommand": "bun run scripts/verify-bun.mjs && bun install --frozen-lockfile"
 }

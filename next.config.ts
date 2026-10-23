@@ -49,12 +49,14 @@ const nextConfig: NextConfig = {
       // Don't treat shiki as external
       config.externals = config.externals || [];
       if (Array.isArray(config.externals)) {
-        config.externals = config.externals.filter((external: string | Record<string, unknown>) => {
-          if (typeof external === "string") {
-            return !external.includes("shiki");
-          }
-          return true;
-        });
+        config.externals = config.externals.filter(
+          (external: string | Record<string, unknown>) => {
+            if (typeof external === "string") {
+              return !external.includes("shiki");
+            }
+            return true;
+          },
+        );
       }
     }
 
@@ -72,7 +74,10 @@ const nextConfig: NextConfig = {
   },
   pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
   compiler: {
-    removeConsole: process.env.NODE_ENV === "production" ? { exclude: ["error", "warn"] } : false,
+    removeConsole:
+      process.env.NODE_ENV === "production"
+        ? { exclude: ["error", "warn"] }
+        : false,
   },
   // Optimize for i18n performance
   poweredByHeader: false,
@@ -87,7 +92,8 @@ const nextConfig: NextConfig = {
       },
       {
         // Cache static assets more aggressively
-        source: "/(.*)\\.(ico|png|jpg|jpeg|gif|webp|avif|svg|woff|woff2|ttf|eot)$",
+        source:
+          "/(.*)\\.(ico|png|jpg|jpeg|gif|webp|avif|svg|woff|woff2|ttf|eot)$",
         headers: [
           {
             key: "Cache-Control",

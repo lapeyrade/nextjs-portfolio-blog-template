@@ -8,7 +8,8 @@ const translations = {
   en: {
     code: "404",
     title: "Page not found",
-    description: "The page you are looking for doesn't exist or has been moved.",
+    description:
+      "The page you are looking for doesn't exist or has been moved.",
     goHome: "Go to Homepage",
     visitBlog: "Visit the Blog",
     contactMe: "Contact Me",
@@ -60,15 +61,22 @@ export default function NotFound() {
   const t = translations[mounted ? locale : "en"];
   const homeLink = mounted && locale === "fr" ? "/fr" : "/en";
   const blogLink = mounted && locale === "fr" ? "/fr/blog" : "/en/blog";
-  const contactLink = mounted && locale === "fr" ? "/fr/contact" : "/en/contact";
+  const contactLink =
+    mounted && locale === "fr" ? "/fr/contact" : "/en/contact";
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center">
       <main className="w-full px-6 py-20">
         <div className="max-w-3xl mx-auto text-center">
-          <p className="text-purple-300 font-semibold tracking-widest mb-3">{t.code}</p>
-          <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6">{t.title}</h1>
-          <p className="text-gray-300 mb-10 max-w-xl mx-auto">{t.description}</p>
+          <p className="text-purple-300 font-semibold tracking-widest mb-3">
+            {t.code}
+          </p>
+          <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6">
+            {t.title}
+          </h1>
+          <p className="text-gray-300 mb-10 max-w-xl mx-auto">
+            {t.description}
+          </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link

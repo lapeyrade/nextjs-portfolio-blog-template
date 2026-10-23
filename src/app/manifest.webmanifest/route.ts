@@ -4,7 +4,8 @@ export async function GET() {
   const manifest = {
     name: "Portfolio",
     short_name: "Portfolio",
-    description: "Personal portfolio showcasing projects, blog posts, and contact information.",
+    description:
+      "Personal portfolio showcasing projects, blog posts, and contact information.",
     start_url: "/",
     scope: "/",
     display: "standalone",

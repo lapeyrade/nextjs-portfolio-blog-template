@@ -2,7 +2,11 @@
 
 import { useTranslations } from "next-intl";
 import { type FormEvent, useEffect, useId, useState } from "react";
-import { AnimatedButton, StaggerContainer, StaggerItem } from "@/components/animations";
+import {
+  AnimatedButton,
+  StaggerContainer,
+  StaggerItem,
+} from "@/components/animations";
 
 interface FormData {
   name: string;
@@ -43,7 +47,9 @@ export default function ContactForm() {
 
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(null);
+  const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(
+    null,
+  );
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
   // Warn on unsaved changes before navigation
@@ -181,7 +187,10 @@ export default function ContactForm() {
           {/* Name Field */}
           <StaggerItem>
             <div>
-              <label htmlFor={nameId} className="block text-sm font-medium text-gray-300 mb-2">
+              <label
+                htmlFor={nameId}
+                className="block text-sm font-medium text-gray-300 mb-2"
+              >
                 {t("name_label")}
               </label>
               <input
@@ -211,7 +220,10 @@ export default function ContactForm() {
           {/* Email Field */}
           <StaggerItem>
             <div>
-              <label htmlFor={emailId} className="block text-sm font-medium text-gray-300 mb-2">
+              <label
+                htmlFor={emailId}
+                className="block text-sm font-medium text-gray-300 mb-2"
+              >
                 {t("email_label")}
               </label>
               <input
@@ -233,7 +245,10 @@ export default function ContactForm() {
                 placeholder={t("email_placeholder")}
               />
               {errors.email && (
-                <p id={`${emailId}-error`} className="mt-2 text-sm text-red-400">
+                <p
+                  id={`${emailId}-error`}
+                  className="mt-2 text-sm text-red-400"
+                >
                   {errors.email}
                 </p>
               )}
@@ -243,7 +258,10 @@ export default function ContactForm() {
           {/* Subject Field */}
           <StaggerItem>
             <div>
-              <label htmlFor={subjectId} className="block text-sm font-medium text-gray-300 mb-2">
+              <label
+                htmlFor={subjectId}
+                className="block text-sm font-medium text-gray-300 mb-2"
+              >
                 {t("subject_label")}
               </label>
               <input
@@ -254,7 +272,9 @@ export default function ContactForm() {
                 onChange={(e) => handleChange("subject", e.target.value)}
                 autoComplete="off"
                 aria-invalid={!!errors.subject}
-                aria-describedby={errors.subject ? `${subjectId}-error` : undefined}
+                aria-describedby={
+                  errors.subject ? `${subjectId}-error` : undefined
+                }
                 className={`w-full px-4 py-3 bg-gray-800/50 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-colors text-base ${
                   errors.subject
                     ? "border-red-500 focus:ring-red-500"
@@ -263,7 +283,10 @@ export default function ContactForm() {
                 placeholder={t("subject_placeholder")}
               />
               {errors.subject && (
-                <p id={`${subjectId}-error`} className="mt-2 text-sm text-red-400">
+                <p
+                  id={`${subjectId}-error`}
+                  className="mt-2 text-sm text-red-400"
+                >
                   {errors.subject}
                 </p>
               )}
@@ -273,7 +296,10 @@ export default function ContactForm() {
           {/* Message Field */}
           <StaggerItem>
             <div>
-              <label htmlFor={messageId} className="block text-sm font-medium text-gray-300 mb-2">
+              <label
+                htmlFor={messageId}
+                className="block text-sm font-medium text-gray-300 mb-2"
+              >
                 {t("message_label")}
               </label>
               <textarea
@@ -284,7 +310,9 @@ export default function ContactForm() {
                 onChange={(e) => handleChange("message", e.target.value)}
                 autoComplete="off"
                 aria-invalid={!!errors.message}
-                aria-describedby={errors.message ? `${messageId}-error` : undefined}
+                aria-describedby={
+                  errors.message ? `${messageId}-error` : undefined
+                }
                 className={`w-full px-4 py-3 bg-gray-800/50 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 transition-colors resize-none text-base ${
                   errors.message
                     ? "border-red-500 focus:ring-red-500"
@@ -293,7 +321,10 @@ export default function ContactForm() {
                 placeholder={t("message_placeholder")}
               />
               {errors.message && (
-                <p id={`${messageId}-error`} className="mt-2 text-sm text-red-400">
+                <p
+                  id={`${messageId}-error`}
+                  className="mt-2 text-sm text-red-400"
+                >
                   {errors.message}
                 </p>
               )}

@@ -27,22 +27,22 @@ Use interfaces for object shapes that might be extended:
 
 ```typescript
 interface User {
-  id: string
-  name: string
-  email: string
+  id: string;
+  name: string;
+  email: string;
 }
 
 interface AdminUser extends User {
-  permissions: string[]
+  permissions: string[];
 }
 ```
 
 Use type aliases for unions, primitives, and computed types:
 
 ```typescript
-type Status = 'loading' | 'success' | 'error'
-type EventHandler<T> = (event: T) => void
-type UserKeys = keyof User // 'id' | 'name' | 'email'
+type Status = "loading" | "success" | "error";
+type EventHandler<T> = (event: T) => void;
+type UserKeys = keyof User; // 'id' | 'name' | 'email'
 ```
 
 ### Generic Types
@@ -51,17 +51,17 @@ Create reusable, type-safe functions and components:
 
 ```typescript
 function identity<T>(arg: T): T {
-  return arg
+  return arg;
 }
 
 interface ApiResponse<T> {
-  data: T
-  status: number
-  message: string
+  data: T;
+  status: number;
+  message: string;
 }
 
 // Usage
-const userResponse: ApiResponse<User> = await fetchUser(id)
+const userResponse: ApiResponse<User> = await fetchUser(id);
 ```
 
 ### Utility Types
@@ -70,16 +70,16 @@ Leverage TypeScript's built-in utility types:
 
 ```typescript
 // Pick specific properties
-type UserPreview = Pick<User, 'id' | 'name'>
+type UserPreview = Pick<User, "id" | "name">;
 
 // Make all properties optional
-type PartialUser = Partial<User>
+type PartialUser = Partial<User>;
 
 // Make all properties required
-type RequiredUser = Required<User>
+type RequiredUser = Required<User>;
 
 // Exclude certain properties
-type UserWithoutId = Omit<User, 'id'>
+type UserWithoutId = Omit<User, "id">;
 ```
 
 ## Advanced Patterns
@@ -123,16 +123,16 @@ function handleState(state: AppState) {
 Create types that depend on other types:
 
 ```typescript
-type NonNullable<T> = T extends null | undefined ? never : T
+type NonNullable<T> = T extends null | undefined ? never : T;
 
-type ApiEndpoint<T> = T extends 'users' 
-  ? '/api/users'
-  : T extends 'posts'
-  ? '/api/posts'
-  : never
+type ApiEndpoint<T> = T extends "users"
+  ? "/api/users"
+  : T extends "posts"
+    ? "/api/posts"
+    : never;
 
 // Usage
-type UsersEndpoint = ApiEndpoint<'users'> // '/api/users'
+type UsersEndpoint = ApiEndpoint<"users">; // '/api/users'
 ```
 
 ### Template Literal Types
@@ -140,12 +140,12 @@ type UsersEndpoint = ApiEndpoint<'users'> // '/api/users'
 Build string types programmatically:
 
 ```typescript
-type EventName<T extends string> = `on${Capitalize<T>}`
-type ButtonEvents = EventName<'click' | 'hover'> // 'onClick' | 'onHover'
+type EventName<T extends string> = `on${Capitalize<T>}`;
+type ButtonEvents = EventName<"click" | "hover">; // 'onClick' | 'onHover'
 
-type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
-type Endpoint = `/api/${string}`
-type ApiCall = `${HttpMethod} ${Endpoint}`
+type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
+type Endpoint = `/api/${string}`;
+type ApiCall = `${HttpMethod} ${Endpoint}`;
 ```
 
 ## Best Practices
@@ -169,23 +169,23 @@ type ApiCall = `${HttpMethod} ${Endpoint}`
 
 ```typescript
 // Good: Type assertion
-const userInput = document.getElementById('user-input') as HTMLInputElement
+const userInput = document.getElementById("user-input") as HTMLInputElement;
 
 // Avoid: Type casting
-const userInput = <HTMLInputElement>document.getElementById('user-input')
+const userInput = <HTMLInputElement>document.getElementById("user-input");
 ```
 
 ### 3. Use Type Guards for Runtime Safety
 
 ```typescript
 function isUser(obj: unknown): obj is User {
-  return typeof obj === 'object' && obj !== null && 'id' in obj
+  return typeof obj === "object" && obj !== null && "id" in obj;
 }
 
 function processData(data: unknown) {
   if (isUser(data)) {
     // TypeScript knows data is User here
-    console.log(data.name)
+    console.log(data.name);
   }
 }
 ```
@@ -194,14 +194,14 @@ function processData(data: unknown) {
 
 ```typescript
 // Creates a readonly tuple type
-const colors = ['red', 'green', 'blue'] as const
-type Color = typeof colors[number] // 'red' | 'green' | 'blue'
+const colors = ["red", "green", "blue"] as const;
+type Color = (typeof colors)[number]; // 'red' | 'green' | 'blue'
 
 // Creates exact object type
 const config = {
-  apiUrl: 'https://api.example.com',
-  timeout: 5000
-} as const
+  apiUrl: "https://api.example.com",
+  timeout: 5000,
+} as const;
 ```
 
 ## Common Pitfalls to Avoid

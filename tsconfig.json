@@ -2,11 +2,7 @@
   "compilerOptions": {
     // --- Core Environment Options ---
     "target": "ESNext",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "jsx": "react-jsx",
     // --- Module Resolution & Bundling ---
     "module": "esnext",
@@ -19,21 +15,11 @@
     "allowSyntheticDefaultImports": true,
     // --- Path Aliases ---
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@/components/*": [
-        "./src/components/*"
-      ],
-      "@/lib/*": [
-        "./src/lib/*"
-      ],
-      "@/app/*": [
-        "./src/app/*"
-      ],
-      "@/content/*": [
-        "./src/content/*"
-      ]
+      "@/*": ["./src/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/lib/*": ["./src/lib/*"],
+      "@/app/*": ["./src/app/*"],
+      "@/content/*": ["./src/content/*"]
     },
     // --- Strictness & Code Quality Checks ---
     "strict": true,
@@ -65,9 +51,5 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules",
-    "out",
-    "dist"
-  ]
+  "exclude": ["node_modules", "out", "dist"]
 }

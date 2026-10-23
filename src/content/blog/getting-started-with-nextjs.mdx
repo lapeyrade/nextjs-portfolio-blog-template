@@ -15,6 +15,7 @@ Next.js 15 represents a significant leap forward in React development, introduci
 The latest version of Next.js brings several exciting improvements:
 
 ### App Router (Stable)
+
 The App Router is now stable and provides a more intuitive way to organize your application. It's built on React Server Components and supports:
 
 - **Layouts**: Shared UI that maintains state across navigation
@@ -22,19 +23,20 @@ The App Router is now stable and provides a more intuitive way to organize your 
 - **Streaming**: Progressive rendering for better performance
 
 ### React Server Components
+
 Server Components allow you to render components on the server, reducing the JavaScript bundle size sent to the client:
 
 ```jsx
 // This component runs on the server
 async function BlogPost({ slug }) {
-  const post = await getPost(slug)
-  
+  const post = await getPost(slug);
+
   return (
     <article>
       <h1>{post.title}</h1>
       <p>{post.content}</p>
     </article>
-  )
+  );
 }
 ```
 
@@ -43,12 +45,14 @@ async function BlogPost({ slug }) {
 Let's create a simple Next.js 15 application:
 
 1. **Create a new project**:
+
    ```bash
    npx create-next-app@latest my-app
    cd my-app
    ```
 
 2. **Start the development server**:
+
    ```bash
    npm run dev
    ```
@@ -61,7 +65,7 @@ Let's create a simple Next.js 15 application:
          <h1>Welcome to Next.js 15!</h1>
          <p>This is your first page.</p>
        </main>
-     )
+     );
    }
    ```
 

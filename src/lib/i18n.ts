@@ -18,7 +18,9 @@ export async function getLocalizedMDXContent(locale: string, section: string) {
     return content;
   } catch {
     // Fallback to English if translation doesn't exist
-    console.warn(`Translation not found for ${locale}/${section}, falling back to English`);
+    console.warn(
+      `Translation not found for ${locale}/${section}, falling back to English`,
+    );
     const fallbackContent = await import(`@/content/i18n/en/${section}.mdx`);
     return fallbackContent;
   }

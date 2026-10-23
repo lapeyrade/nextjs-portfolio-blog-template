@@ -43,7 +43,9 @@ export default getRequestConfig(async ({ requestLocale }) => {
       `Failed to load messages for locale ${locale}, falling back to ${routing.defaultLocale}`,
     );
 
-    const defaultMessages = (await import(`../messages/${routing.defaultLocale}.json`)).default;
+    const defaultMessages = (
+      await import(`../messages/${routing.defaultLocale}.json`)
+    ).default;
     messagesCache.set(routing.defaultLocale, defaultMessages);
 
     return {

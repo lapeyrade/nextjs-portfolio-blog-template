@@ -18,7 +18,9 @@ export default function FadeInUp({
 }: FadeInUpProps) {
   const prefersReducedMotion = useReducedMotion();
 
-  const initialState = prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 60 };
+  const initialState = prefersReducedMotion
+    ? { opacity: 1 }
+    : { opacity: 0, y: 60 };
 
   const animateState = { opacity: 1, y: 0 };
 

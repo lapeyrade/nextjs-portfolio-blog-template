@@ -8,7 +8,10 @@ interface StaggerItemProps {
   className?: string;
 }
 
-export default function StaggerItem({ children, className = "" }: StaggerItemProps) {
+export default function StaggerItem({
+  children,
+  className = "",
+}: StaggerItemProps) {
   const prefersReducedMotion = useReducedMotion();
   const itemVariants = {
     hidden: prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 20 },

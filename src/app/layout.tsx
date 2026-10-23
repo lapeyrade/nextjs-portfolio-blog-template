@@ -19,9 +19,17 @@ export const metadata = {
     default: "Portfolio | Full-Stack Developer",
     template: "%s | Portfolio",
   },
-  description: "Personal portfolio showcasing projects, blog posts, and contact information.",
+  description:
+    "Personal portfolio showcasing projects, blog posts, and contact information.",
   applicationName: "Portfolio",
-  keywords: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Portfolio", "Web Developer"],
+  keywords: [
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "Portfolio",
+    "Web Developer",
+  ],
   authors: [{ name: "Your Name" }],
   creator: "Your Name",
   openGraph: {
@@ -29,13 +37,15 @@ export const metadata = {
     locale: "en_US",
     url: siteUrl,
     title: "Portfolio | Full-Stack Developer",
-    description: "Personal portfolio showcasing projects, blog posts, and contact information.",
+    description:
+      "Personal portfolio showcasing projects, blog posts, and contact information.",
     siteName: "Portfolio",
   },
   twitter: {
     card: "summary_large_image",
     title: "Portfolio | Full-Stack Developer",
-    description: "Personal portfolio showcasing projects, blog posts, and contact information.",
+    description:
+      "Personal portfolio showcasing projects, blog posts, and contact information.",
     creator: "@your_handle",
   },
   alternates: {
@@ -51,14 +61,22 @@ export const viewport = {
   themeColor: "#8b5cf6",
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   // Generate unique ID for main content
   const _mainContentId = "main-content";
   return (
     <html lang="en" data-theme="ocean">
       <head>
         {/* Preconnect to likely external origins used by analytics, fonts and speed insights to reduce TLS/setup time */}
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin=""
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://vercel.com" crossOrigin="" />
 

@@ -27,22 +27,22 @@ Utilisez les interfaces pour les formes d'objets qui pourraient être étendues 
 
 ```typescript
 interface User {
-  id: string
-  name: string
-  email: string
+  id: string;
+  name: string;
+  email: string;
 }
 
 interface AdminUser extends User {
-  permissions: string[]
+  permissions: string[];
 }
 ```
 
 Utilisez les aliases de type pour les unions, primitives et types calculés :
 
 ```typescript
-type Status = 'loading' | 'success' | 'error'
-type EventHandler<T> = (event: T) => void
-type UserKeys = keyof User // 'id' | 'name' | 'email'
+type Status = "loading" | "success" | "error";
+type EventHandler<T> = (event: T) => void;
+type UserKeys = keyof User; // 'id' | 'name' | 'email'
 ```
 
 ### Types Génériques
@@ -51,17 +51,17 @@ Créez des fonctions et composants réutilisables et type-safe :
 
 ```typescript
 function identity<T>(arg: T): T {
-  return arg
+  return arg;
 }
 
 interface ApiResponse<T> {
-  data: T
-  status: number
-  message: string
+  data: T;
+  status: number;
+  message: string;
 }
 
 // Utilisation
-const userResponse: ApiResponse<User> = await fetchUser(id)
+const userResponse: ApiResponse<User> = await fetchUser(id);
 ```
 
 ### Types Utilitaires
@@ -70,16 +70,16 @@ Tirez parti des types utilitaires intégrés de TypeScript :
 
 ```typescript
 // Sélectionner des propriétés spécifiques
-type UserPreview = Pick<User, 'id' | 'name'>
+type UserPreview = Pick<User, "id" | "name">;
 
 // Rendre toutes les propriétés optionnelles
-type PartialUser = Partial<User>
+type PartialUser = Partial<User>;
 
 // Rendre toutes les propriétés obligatoires
-type RequiredUser = Required<User>
+type RequiredUser = Required<User>;
 
 // Exclure certaines propriétés
-type UserWithoutId = Omit<User, 'id'>
+type UserWithoutId = Omit<User, "id">;
 ```
 
 ## Patterns Avancés
@@ -123,16 +123,16 @@ function handleState(state: AppState) {
 Créez des types qui dépendent d'autres types :
 
 ```typescript
-type NonNullable<T> = T extends null | undefined ? never : T
+type NonNullable<T> = T extends null | undefined ? never : T;
 
-type ApiEndpoint<T> = T extends 'users' 
-  ? '/api/users'
-  : T extends 'posts'
-  ? '/api/posts'
-  : never
+type ApiEndpoint<T> = T extends "users"
+  ? "/api/users"
+  : T extends "posts"
+    ? "/api/posts"
+    : never;
 
 // Utilisation
-type UsersEndpoint = ApiEndpoint<'users'> // '/api/users'
+type UsersEndpoint = ApiEndpoint<"users">; // '/api/users'
 ```
 
 ### Types Littéraux Template
@@ -140,12 +140,12 @@ type UsersEndpoint = ApiEndpoint<'users'> // '/api/users'
 Construisez des types de chaînes de façon programmatique :
 
 ```typescript
-type EventName<T extends string> = `on${Capitalize<T>}`
-type ButtonEvents = EventName<'click' | 'hover'> // 'onClick' | 'onHover'
+type EventName<T extends string> = `on${Capitalize<T>}`;
+type ButtonEvents = EventName<"click" | "hover">; // 'onClick' | 'onHover'
 
-type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
-type Endpoint = `/api/${string}`
-type ApiCall = `${HttpMethod} ${Endpoint}`
+type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
+type Endpoint = `/api/${string}`;
+type ApiCall = `${HttpMethod} ${Endpoint}`;
 ```
 
 ## Meilleures Pratiques
@@ -169,23 +169,23 @@ type ApiCall = `${HttpMethod} ${Endpoint}`
 
 ```typescript
 // Bon : Assertion de type
-const userInput = document.getElementById('user-input') as HTMLInputElement
+const userInput = document.getElementById("user-input") as HTMLInputElement;
 
 // À éviter : Casting de type
-const userInput = <HTMLInputElement>document.getElementById('user-input')
+const userInput = <HTMLInputElement>document.getElementById("user-input");
 ```
 
 ### 3. Utilisez les Guards de Type pour la Sécurité à l'Exécution
 
 ```typescript
 function isUser(obj: unknown): obj is User {
-  return typeof obj === 'object' && obj !== null && 'id' in obj
+  return typeof obj === "object" && obj !== null && "id" in obj;
 }
 
 function processData(data: unknown) {
   if (isUser(data)) {
     // TypeScript sait que data est User ici
-    console.log(data.name)
+    console.log(data.name);
   }
 }
 ```
@@ -194,14 +194,14 @@ function processData(data: unknown) {
 
 ```typescript
 // Crée un type tuple readonly
-const colors = ['red', 'green', 'blue'] as const
-type Color = typeof colors[number] // 'red' | 'green' | 'blue'
+const colors = ["red", "green", "blue"] as const;
+type Color = (typeof colors)[number]; // 'red' | 'green' | 'blue'
 
 // Crée un type d'objet exact
 const config = {
-  apiUrl: 'https://api.example.com',
-  timeout: 5000
-} as const
+  apiUrl: "https://api.example.com",
+  timeout: 5000,
+} as const;
 ```
 
 ## Pièges Courants à Éviter

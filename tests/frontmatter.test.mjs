@@ -25,12 +25,21 @@ ${content}`);
 });
 
 test("supports BOM, Windows line endings and empty or absent metadata", () => {
-  assert.deepEqual(parseFrontmatter("\uFEFF---\r\ntitle: Test\r\n---\r\nBody\r\n"), {
-    data: { title: "Test" },
-    content: "Body\r\n",
+  assert.deepEqual(
+    parseFrontmatter("\uFEFF---\r\ntitle: Test\r\n---\r\nBody\r\n"),
+    {
+      data: { title: "Test" },
+      content: "Body\r\n",
+    },
+  );
+  assert.deepEqual(parseFrontmatter("---\n---\nBody"), {
+    data: {},
+    content: "Body",
   });
-  assert.deepEqual(parseFrontmatter("---\n---\nBody"), { data: {}, content: "Body" });
-  assert.deepEqual(parseFrontmatter("# Body\n\n---\n"), { data: {}, content: "# Body\n\n---\n" });
+  assert.deepEqual(parseFrontmatter("# Body\n\n---\n"), {
+    data: {},
+    content: "# Body\n\n---\n",
+  });
 });
 
 test("rejects invalid YAML and non-mapping metadata", () => {

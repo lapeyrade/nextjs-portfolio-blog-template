@@ -32,7 +32,10 @@ async function flushBatch(): Promise<void> {
   const batch = metricBatch.splice(0, metricBatch.length);
   try {
     const body = JSON.stringify({ items: batch });
-    if (typeof navigator !== "undefined" && typeof navigator.sendBeacon === "function") {
+    if (
+      typeof navigator !== "undefined" &&
+      typeof navigator.sendBeacon === "function"
+    ) {
       const blob = new Blob([body], { type: "application/json" });
       navigator.sendBeacon("/api/web-vitals", blob);
     } else {
@@ -43,9 +46,11 @@ async function flushBatch(): Promise<void> {
         keepalive: true,
       });
     }
-    if (process.env.NODE_ENV === "development") console.log("[WebVitals] flushed", batch);
+    if (process.env.NODE_ENV === "development")
+      console.log("[WebVitals] flushed", batch);
   } catch (err) {
-    if (process.env.NODE_ENV === "development") console.error("[WebVitals] flush failed", err);
+    if (process.env.NODE_ENV === "development")
+      console.error("[WebVitals] flush failed", err);
   }
 }
 
@@ -64,7 +69,8 @@ function sendToAnalytics(metric: MinimalMetric): void {
         ? String(metric.navigationType).slice(0, 32)
         : undefined,
       ts: Date.now(),
-      path: typeof window !== "undefined" ? window.location.pathname : undefined,
+      path:
+        typeof window !== "undefined" ? window.location.pathname : undefined,
       ua_snippet:
         typeof navigator !== "undefined" && navigator.userAgent
           ? String(navigator.userAgent).slice(0, 128)
@@ -106,8 +112,10 @@ export default function WebVitals(): null {
         if (typeof metric.id === "string") minimal.id = metric.id;
         const maybeRating = (metric as unknown as { rating?: unknown }).rating;
         if (typeof maybeRating === "string") minimal.rating = maybeRating;
-        const maybeNavType = (metric as unknown as { navigationType?: unknown }).navigationType;
-        if (typeof maybeNavType === "string") minimal.navigationType = maybeNavType;
+        const maybeNavType = (metric as unknown as { navigationType?: unknown })
+          .navigationType;
+        if (typeof maybeNavType === "string")
+          minimal.navigationType = maybeNavType;
 
         sendToAnalytics(minimal);
       } else if (process.env.NODE_ENV === "development") {
@@ -115,7 +123,8 @@ export default function WebVitals(): null {
         console.debug("[WebVitals] sampled out", metric);
       }
     } catch (e) {
-      if (process.env.NODE_ENV === "development") console.error("[WebVitals] sampling error", e);
+      if (process.env.NODE_ENV === "development")
+        console.error("[WebVitals] sampling error", e);
     }
   };
 

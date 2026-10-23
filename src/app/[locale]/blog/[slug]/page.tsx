@@ -3,7 +3,11 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import rehypePrettyCode from "rehype-pretty-code";
 import remarkGfm from "remark-gfm";
-import { FadeInUp, PageTransition, ScrollReveal } from "@/components/animations";
+import {
+  FadeInUp,
+  PageTransition,
+  ScrollReveal,
+} from "@/components/animations";
 import Footer from "@/components/Footer";
 import MdxImage from "@/components/mdx/MdxImage";
 import SiteHeader from "@/components/SiteHeader";
@@ -81,7 +85,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       <PageTransition>
         <div className="min-h-screen theme-surface flex items-center justify-center">
           <div className="text-center">
-            <h1 className="text-4xl font-bold text-white mb-4">Post Not Found</h1>
+            <h1 className="text-4xl font-bold text-white mb-4">
+              Post Not Found
+            </h1>
             <p className="text-gray-300 mb-8">
               The blog post you&apos;re looking for doesn&apos;t exist.
             </p>
@@ -138,19 +144,22 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <FadeInUp delay={0.2}>
               <div className="flex items-center gap-4 text-sm text-gray-400 mb-6">
                 <time dateTime={post.date}>
-                  {new Intl.DateTimeFormat(locale === "fr" ? "fr-FR" : "en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  }).format(new Date(post.date))}
+                  {new Intl.DateTimeFormat(
+                    locale === "fr" ? "fr-FR" : "en-US",
+                    {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    },
+                  ).format(new Date(post.date))}
                 </time>
                 <span>•</span>
                 <span>{post.readingTime}</span>
                 <span>•</span>
                 <span>
-                  {new Intl.NumberFormat(locale === "fr" ? "fr-FR" : "en-US").format(
-                    post.wordCount,
-                  )}{" "}
+                  {new Intl.NumberFormat(
+                    locale === "fr" ? "fr-FR" : "en-US",
+                  ).format(post.wordCount)}{" "}
                   {t("post.words")}
                 </span>
                 <span>•</span>
@@ -165,7 +174,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </FadeInUp>
 
             <FadeInUp delay={0.4}>
-              <p className="text-xl text-gray-300 mb-8 max-w-3xl">{post.description}</p>
+              <p className="text-xl text-gray-300 mb-8 max-w-3xl">
+                {post.description}
+              </p>
             </FadeInUp>
 
             {post.tags.length > 0 && (
@@ -197,7 +208,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   options={{
                     mdxOptions: {
                       remarkPlugins: [remarkGfm],
-                      rehypePlugins: [[rehypePrettyCode, rehypePrettyCodeOptions]],
+                      rehypePlugins: [
+                        [rehypePrettyCode, rehypePrettyCodeOptions],
+                      ],
                     },
                   }}
                 />
@@ -211,7 +224,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <section className="px-6 py-16 border-t border-gray-700">
             <div className="max-w-4xl mx-auto text-center">
               <FadeInUp delay={0.1}>
-                <h3 className="text-2xl font-bold text-white mb-4">{t("post.engagement.title")}</h3>
+                <h3 className="text-2xl font-bold text-white mb-4">
+                  {t("post.engagement.title")}
+                </h3>
                 <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
                   {t("post.engagement.description")}
                 </p>

@@ -25,7 +25,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         alternates: {
           languages: routing.locales.reduce(
             (acc, lang) => {
-              const langPrefix = lang === routing.defaultLocale ? "" : `/${lang}`;
+              const langPrefix =
+                lang === routing.defaultLocale ? "" : `/${lang}`;
               acc[lang] = `${siteUrl}${langPrefix}${path}`;
               return acc;
             },
@@ -49,7 +50,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         alternates: {
           languages: routing.locales.reduce(
             (acc, lang) => {
-              const langPrefix = lang === routing.defaultLocale ? "" : `/${lang}`;
+              const langPrefix =
+                lang === routing.defaultLocale ? "" : `/${lang}`;
               acc[lang] = `${siteUrl}${langPrefix}/blog/${post.slug}`;
               return acc;
             },

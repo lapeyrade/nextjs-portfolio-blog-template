@@ -14,7 +14,10 @@ export function obfuscateEmailForDisplay(email: string): string {
  * Creates an obfuscated mailto link that's harder for bots to detect
  * Uses base64 encoding and JavaScript to construct the link
  */
-export function createObfuscatedMailtoLink(email: string, subject?: string): string {
+export function createObfuscatedMailtoLink(
+  email: string,
+  subject?: string,
+): string {
   // Create the mailto URL
   let mailtoUrl = `mailto:${email}`;
   if (subject) {

@@ -17,7 +17,9 @@ Tailwind CSS a révolutionné la façon dont nous approchons le styling en CSS. 
 Au lieu d'écrire du CSS personnalisé, vous composez des designs en appliquant des classes utilitaires pré-existantes directement dans votre HTML.
 
 ```html
-<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+<button
+  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+>
   Bouton
 </button>
 ```
@@ -31,12 +33,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'brand-blue': '#1fb6ff',
-        'brand-purple': '#7e5bef',
-      }
-    }
-  }
-}
+        "brand-blue": "#1fb6ff",
+        "brand-purple": "#7e5bef",
+      },
+    },
+  },
+};
 ```
 
 ## Setup et Configuration
@@ -54,14 +56,12 @@ Configurez votre `tailwind.config.js` :
 
 ```javascript
 module.exports = {
-  content: [
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {},
   },
   plugins: [],
-}
+};
 ```
 
 ## Techniques Avancées
@@ -83,9 +83,7 @@ Créez des composants avec des styles cohérents :
 Tailwind facilite le design responsive :
 
 ```html
-<div class="text-base lg:text-xl xl:text-2xl">
-  Texte responsive
-</div>
+<div class="text-base lg:text-xl xl:text-2xl">Texte responsive</div>
 ```
 
 ## Bonnes Pratiques

@@ -18,10 +18,12 @@ interface WebVitalsPayload {
 // For horizontally scaled deployments, prefer an external shared store (Redis).
 const RATE_LIMIT_WINDOW_MS = 60_000; // 1 minute
 const RATE_LIMIT_MAX = 60; // max requests per IP per window
-const rateLimits: Map<string, { count: number; windowStart: number }> = new Map();
+const rateLimits: Map<string, { count: number; windowStart: number }> =
+  new Map();
 
 function getClientIp(request: Request): string {
-  const forwarded = request.headers.get("x-forwarded-for") ?? request.headers.get("x-real-ip");
+  const forwarded =
+    request.headers.get("x-forwarded-for") ?? request.headers.get("x-real-ip");
   if (forwarded != null && forwarded.length > 0) {
     const first = forwarded.split(",")[0] ?? "";
     return first.trim() || "unknown";
@@ -34,13 +36,17 @@ function validatePayload(data: unknown): {
   payload?: WebVitalsPayload;
   error?: string;
 } {
-  if (!data || typeof data !== "object") return { ok: false, error: "Invalid JSON" };
+  if (!data || typeof data !== "object")
+    return { ok: false, error: "Invalid JSON" };
   const d = data as Record<string, unknown>;
   const name = typeof d.name === "string" ? d.name.trim() : undefined;
   if (!name) return { ok: false, error: "Missing metric name" };
   if (name.length > 64) return { ok: false, error: "Metric name too long" };
 
-  const value = typeof d.value === "number" && Number.isFinite(d.value) ? d.value : undefined;
+  const value =
+    typeof d.value === "number" && Number.isFinite(d.value)
+      ? d.value
+      : undefined;
   if (value !== undefined && (value < -1e6 || value > 1e8))
     return { ok: false, error: "Metric value out of range" };
 
@@ -73,11 +79,17 @@ function validatePayload(data: unknown): {
         : undefined;
 
   const id = typeof d.id === "string" ? String(d.id).slice(0, 256) : undefined;
-  const label = typeof d.label === "string" ? String(d.label).slice(0, 64) : undefined;
-  const delta = typeof d.delta === "number" && Number.isFinite(d.delta) ? d.delta : undefined;
+  const label =
+    typeof d.label === "string" ? String(d.label).slice(0, 64) : undefined;
+  const delta =
+    typeof d.delta === "number" && Number.isFinite(d.delta)
+      ? d.delta
+      : undefined;
   const maybeExtra = d as { rating?: unknown; navigationType?: unknown };
   const rating =
-    typeof maybeExtra.rating === "string" ? String(maybeExtra.rating).slice(0, 16) : undefined;
+    typeof maybeExtra.rating === "string"
+      ? String(maybeExtra.rating).slice(0, 16)
+      : undefined;
   const navigationType =
     typeof maybeExtra.navigationType === "string"
       ? String(maybeExtra.navigationType).slice(0, 32)
@@ -104,7 +116,10 @@ export async function POST(request: Request) {
     if (requiredKey) {
       const header = request.headers.get("x-api-key");
       if (!header || header !== requiredKey) {
-        return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+        return NextResponse.json(
+          { ok: false, error: "Unauthorized" },
+          { status: 401 },
+        );
       }
     }
 
@@ -116,7 +131,10 @@ export async function POST(request: Request) {
     } else {
       entry.count += 1;
       if (entry.count > RATE_LIMIT_MAX) {
-        return NextResponse.json({ ok: false, error: "Rate limit exceeded" }, { status: 429 });
+        return NextResponse.json(
+          { ok: false, error: "Rate limit exceeded" },
+          { status: 429 },
+        );
       }
       rateLimits.set(ip, entry);
     }
@@ -128,7 +146,12 @@ export async function POST(request: Request) {
     if (Array.isArray(raw)) {
       // Direct array of metrics
       metrics = raw;
-    } else if (raw && typeof raw === "object" && "items" in raw && Array.isArray(raw.items)) {
+    } else if (
+      raw &&
+      typeof raw === "object" &&
+      "items" in raw &&
+      Array.isArray(raw.items)
+    ) {
       // Batched format: { items: [...] }
       metrics = raw.items;
     } else {
@@ -141,7 +164,10 @@ export async function POST(request: Request) {
     for (const metric of metrics) {
       const { ok, payload, error } = validatePayload(metric);
       if (!ok) {
-        return NextResponse.json({ ok: false, error: `Invalid metric: ${error}` }, { status: 400 });
+        return NextResponse.json(
+          { ok: false, error: `Invalid metric: ${error}` },
+          { status: 400 },
+        );
       }
       if (payload) {
         validatedMetrics.push(payload);
@@ -158,7 +184,9 @@ export async function POST(request: Request) {
         rating: payload.rating,
         navigationType: payload.navigationType,
         url: payload.url,
-        ua_snippet: payload.userAgent ? payload.userAgent.slice(0, 128) : undefined,
+        ua_snippet: payload.userAgent
+          ? payload.userAgent.slice(0, 128)
+          : undefined,
         ts: payload.timestamp,
         ip: ip === "unknown" ? undefined : ip,
       });
@@ -172,7 +200,10 @@ export async function POST(request: Request) {
     if (process.env.NODE_ENV === "development") {
       console.error("[WebVitals API] Error processing request:", error);
     }
-    return NextResponse.json({ ok: false, error: "Malformed JSON" }, { status: 400 });
+    return NextResponse.json(
+      { ok: false, error: "Malformed JSON" },
+      { status: 400 },
+    );
   }
 }
 

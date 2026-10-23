@@ -9,7 +9,8 @@ export default function RootPage() {
 
   useEffect(() => {
     // Simple language detection - check if French is preferred
-    const acceptLanguage = navigator.language || navigator.languages?.[0] || "en";
+    const acceptLanguage =
+      navigator.language || navigator.languages?.[0] || "en";
     const prefersFrench =
       acceptLanguage.includes("fr-") ||
       acceptLanguage.startsWith("fr") ||

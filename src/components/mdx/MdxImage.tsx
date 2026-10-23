@@ -8,13 +8,21 @@ type MdxImageProps = {
   className?: string;
 };
 
-export default function MdxImage({ src, alt = "", width, height, className }: MdxImageProps) {
+export default function MdxImage({
+  src,
+  alt = "",
+  width,
+  height,
+  className,
+}: MdxImageProps) {
   if (!src) return null;
 
   const numericWidth = typeof width === "string" ? parseInt(width, 10) : width;
-  const numericHeight = typeof height === "string" ? parseInt(height, 10) : height;
+  const numericHeight =
+    typeof height === "string" ? parseInt(height, 10) : height;
 
-  const hasSize = Number.isFinite(numericWidth) && Number.isFinite(numericHeight);
+  const hasSize =
+    Number.isFinite(numericWidth) && Number.isFinite(numericHeight);
 
   return (
     <span className={className} style={{ display: "block" }}>

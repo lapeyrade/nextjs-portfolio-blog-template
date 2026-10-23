@@ -4,14 +4,27 @@ import Footer from "@/components/Footer";
 import SiteHeader from "@/components/SiteHeader";
 
 // Lazy load animation components to reduce initial bundle size
-const PageTransition = dynamic(() => import("@/components/animations/PageTransition"), {
-  loading: () => <div className="min-h-screen theme-surface" />,
-});
-const ScrollReveal = dynamic(() => import("@/components/animations/ScrollReveal"));
-const StaggerContainer = dynamic(() => import("@/components/animations/StaggerContainer"));
-const StaggerItem = dynamic(() => import("@/components/animations/StaggerItem"));
-const AnimatedButton = dynamic(() => import("@/components/animations/AnimatedButton"));
-const HeroSection = dynamic(() => import("@/components/animations/HeroSection"));
+const PageTransition = dynamic(
+  () => import("@/components/animations/PageTransition"),
+  {
+    loading: () => <div className="min-h-screen theme-surface" />,
+  },
+);
+const ScrollReveal = dynamic(
+  () => import("@/components/animations/ScrollReveal"),
+);
+const StaggerContainer = dynamic(
+  () => import("@/components/animations/StaggerContainer"),
+);
+const StaggerItem = dynamic(
+  () => import("@/components/animations/StaggerItem"),
+);
+const AnimatedButton = dynamic(
+  () => import("@/components/animations/AnimatedButton"),
+);
+const HeroSection = dynamic(
+  () => import("@/components/animations/HeroSection"),
+);
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -40,7 +53,8 @@ export default async function Home({ params }: Props) {
           <div className="max-w-6xl mx-auto text-center">
             <HeroSection className="hero-content">
               <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 hero-title">
-                {t("hero.greeting")} <span className="text-accent-gradient">{t("hero.name")}</span>
+                {t("hero.greeting")}{" "}
+                <span className="text-accent-gradient">{t("hero.name")}</span>
               </h1>
               <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto hero-subtitle">
                 {t("hero.subtitle")}
@@ -110,7 +124,9 @@ export default async function Home({ params }: Props) {
                     <h3 className="text-xl font-semibold text-white mb-2">
                       {t(`projects.${projectKey}.title`)}
                     </h3>
-                    <p className="text-gray-400 mb-4">{t(`projects.${projectKey}.description`)}</p>
+                    <p className="text-gray-400 mb-4">
+                      {t(`projects.${projectKey}.description`)}
+                    </p>
                     <div className="flex gap-2">
                       <AnimatedButton className="text-accent hover:text-white transition-colors">
                         {t("projects.live_demo")}
@@ -130,7 +146,9 @@ export default async function Home({ params }: Props) {
         <section id={contactId} className="px-6 py-20">
           <div className="max-w-4xl mx-auto text-center">
             <ScrollReveal>
-              <h2 className="text-4xl font-bold text-white mb-8">{t("contact.title")}</h2>
+              <h2 className="text-4xl font-bold text-white mb-8">
+                {t("contact.title")}
+              </h2>
             </ScrollReveal>
             <ScrollReveal delay={0.2}>
               <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">

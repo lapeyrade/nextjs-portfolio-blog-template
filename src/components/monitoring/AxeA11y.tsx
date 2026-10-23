@@ -9,7 +9,8 @@ export default function AxeA11y() {
 
     // Only enable when explicitly requested to avoid console noise
     const params = new URLSearchParams(window.location.search);
-    const enabled = params.get("a11y") === "1" || process.env.NEXT_PUBLIC_AXE === "1";
+    const enabled =
+      params.get("a11y") === "1" || process.env.NEXT_PUBLIC_AXE === "1";
     if (!enabled) return;
 
     let cancelled = false;

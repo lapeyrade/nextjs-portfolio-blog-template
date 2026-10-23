@@ -3,8 +3,18 @@
 import { useEffect, useRef, useState } from "react";
 
 type ThemeKey = "ocean" | "sunset" | "forest" | "purple" | "rose" | "aurora";
-const THEMES: ThemeKey[] = ["ocean", "sunset", "forest", "purple", "rose", "aurora"];
-const THEME_PREVIEW: Record<ThemeKey, { from: string; to: string; label: string }> = {
+const THEMES: ThemeKey[] = [
+  "ocean",
+  "sunset",
+  "forest",
+  "purple",
+  "rose",
+  "aurora",
+];
+const THEME_PREVIEW: Record<
+  ThemeKey,
+  { from: string; to: string; label: string }
+> = {
   ocean: { from: "#22d3ee", to: "#3b82f6", label: "Ocean" },
   sunset: { from: "#fb923c", to: "#ef4444", label: "Sunset" },
   forest: { from: "#34d399", to: "#22c55e", label: "Forest" },
@@ -17,7 +27,9 @@ interface ThemeSwitcherProps {
   variant?: "desktop" | "mobile";
 }
 
-export default function ThemeSwitcher({ variant = "desktop" }: ThemeSwitcherProps) {
+export default function ThemeSwitcher({
+  variant = "desktop",
+}: ThemeSwitcherProps) {
   const [theme, setTheme] = useState<ThemeKey>("ocean");
   const [open, setOpen] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -36,7 +48,10 @@ export default function ThemeSwitcher({ variant = "desktop" }: ThemeSwitcherProp
     if (!open) return;
 
     const handleClickOutside = (event: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
         setOpen(false);
       }
     };
@@ -103,7 +118,9 @@ export default function ThemeSwitcher({ variant = "desktop" }: ThemeSwitcherProp
                 aria-pressed={active}
                 aria-label={`Switch to ${colors.label} theme`}
                 className={`relative ${swatchSize} rounded-full border transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] ${
-                  active ? "scale-110 border-white" : "border-gray-600 hover:scale-105"
+                  active
+                    ? "scale-110 border-white"
+                    : "border-gray-600 hover:scale-105"
                 }`}
                 style={{
                   backgroundImage: `linear-gradient(135deg, ${colors.from}, ${colors.to})`,

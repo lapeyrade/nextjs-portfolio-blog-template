@@ -25,9 +25,14 @@ const pageVariants = {
 
 const defaultPageTransition = { duration: 0.5 };
 
-export default function PageTransition({ children, className = "" }: PageTransitionProps) {
+export default function PageTransition({
+  children,
+  className = "",
+}: PageTransitionProps) {
   const prefersReducedMotion = useReducedMotion();
-  const pageTransition = prefersReducedMotion ? { duration: 0.01 } : defaultPageTransition;
+  const pageTransition = prefersReducedMotion
+    ? { duration: 0.01 }
+    : defaultPageTransition;
 
   return (
     <motion.div

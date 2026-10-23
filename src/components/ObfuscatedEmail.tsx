@@ -62,7 +62,11 @@ export default function ObfuscatedEmail({
         className={className}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        title={isRevealed ? `Click to send email to ${email}` : "Click to reveal email"}
+        title={
+          isRevealed
+            ? `Click to send email to ${email}`
+            : "Click to reveal email"
+        }
       >
         {children}
       </button>
@@ -80,7 +84,11 @@ export default function ObfuscatedEmail({
         className={`${className} transition-colors duration-200 ${
           isHovered ? "text-purple-400" : ""
         }`}
-        title={isRevealed ? `Click to send email to ${email}` : "Click to reveal email"}
+        title={
+          isRevealed
+            ? `Click to send email to ${email}`
+            : "Click to reveal email"
+        }
       >
         {isRevealed ? email : obfuscatedDisplay}
       </button>

@@ -71,7 +71,8 @@ export default function Search({ enableHotkey = true }: SearchProps) {
             setOpen(false);
 
             // All URLs now include locale prefix, so we can use Link for all navigation
-            const isBlogPost = target.url.includes("/blog/") && !target.url.endsWith("/blog");
+            const isBlogPost =
+              target.url.includes("/blog/") && !target.url.endsWith("/blog");
 
             if (isBlogPost) {
               // For blog posts, use window.location for reliable navigation to dynamic routes
@@ -80,9 +81,15 @@ export default function Search({ enableHotkey = true }: SearchProps) {
               // For static pages, use router navigation with proper locale handling
               if (target.url === `/${locale}` || target.url === "/") {
                 router.push("/");
-              } else if (target.url === `/${locale}/blog` || target.url === "/blog") {
+              } else if (
+                target.url === `/${locale}/blog` ||
+                target.url === "/blog"
+              ) {
                 router.push("/blog");
-              } else if (target.url === `/${locale}/contact` || target.url === "/contact") {
+              } else if (
+                target.url === `/${locale}/contact` ||
+                target.url === "/contact"
+              ) {
                 router.push("/contact");
               } else {
                 // Fallback for other static pages
@@ -112,7 +119,9 @@ export default function Search({ enableHotkey = true }: SearchProps) {
         'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
       );
       const firstElement = focusableElements[0] as HTMLElement;
-      const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
+      const lastElement = focusableElements[
+        focusableElements.length - 1
+      ] as HTMLElement;
 
       if (e.shiftKey) {
         if (document.activeElement === firstElement) {
@@ -135,7 +144,9 @@ export default function Search({ enableHotkey = true }: SearchProps) {
   useEffect(() => {
     if (!resultsRef.current || results.length === 0) return;
 
-    const activeElement = resultsRef.current.children[activeIndex] as HTMLElement;
+    const activeElement = resultsRef.current.children[
+      activeIndex
+    ] as HTMLElement;
     if (activeElement) {
       activeElement.scrollIntoView({
         behavior: "smooth",
@@ -192,7 +203,9 @@ export default function Search({ enableHotkey = true }: SearchProps) {
         </svg>
         <span>{t("button_text")}</span>
         {enableHotkey && (
-          <span className="ml-1 rounded bg-gray-700/60 px-1.5 py-0.5 text-[10px]">⌘&nbsp;K</span>
+          <span className="ml-1 rounded bg-gray-700/60 px-1.5 py-0.5 text-[10px]">
+            ⌘&nbsp;K
+          </span>
         )}
       </button>
 
@@ -254,7 +267,8 @@ export default function Search({ enableHotkey = true }: SearchProps) {
                 <div className="p-3 text-foreground/70">{t("no_results")}</div>
               ) : (
                 results.map((r, idx) => {
-                  const isDynamic = r.url.includes("/blog/") && !r.url.endsWith("/blog");
+                  const isDynamic =
+                    r.url.includes("/blog/") && !r.url.endsWith("/blog");
 
                   if (isDynamic) {
                     return (
@@ -266,11 +280,17 @@ export default function Search({ enableHotkey = true }: SearchProps) {
                         onClick={() => setOpen(false)}
                       >
                         <div className="flex items-center justify-between">
-                          <h4 className="font-medium text-foreground">{r.title}</h4>
-                          <span className="text-xs text-foreground/60">{r.type}</span>
+                          <h4 className="font-medium text-foreground">
+                            {r.title}
+                          </h4>
+                          <span className="text-xs text-foreground/60">
+                            {r.type}
+                          </span>
                         </div>
                         {r.description && (
-                          <p className="text-sm text-foreground/80">{r.description}</p>
+                          <p className="text-sm text-foreground/80">
+                            {r.description}
+                          </p>
                         )}
                       </NextLink>
                     );
@@ -290,18 +310,25 @@ export default function Search({ enableHotkey = true }: SearchProps) {
                     <Link
                       key={r.url}
                       href={
-                        staticHref as Route as "/" | "/blog" | "/contact" | "/terms" | "/privacy"
+                        staticHref as Route as
+                          "/" | "/blog" | "/contact" | "/terms" | "/privacy"
                       }
                       className={`block p-3 rounded ${idx === activeIndex ? "bg-gray-800/60" : "hover:bg-gray-800/50"}`}
                       onMouseEnter={() => setActiveIndex(idx)}
                       onClick={() => setOpen(false)}
                     >
                       <div className="flex items-center justify-between">
-                        <h4 className="font-medium text-foreground">{r.title}</h4>
-                        <span className="text-xs text-foreground/60">{r.type}</span>
+                        <h4 className="font-medium text-foreground">
+                          {r.title}
+                        </h4>
+                        <span className="text-xs text-foreground/60">
+                          {r.type}
+                        </span>
                       </div>
                       {r.description && (
-                        <p className="text-sm text-foreground/80">{r.description}</p>
+                        <p className="text-sm text-foreground/80">
+                          {r.description}
+                        </p>
                       )}
                     </Link>
                   );

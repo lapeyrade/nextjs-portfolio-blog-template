@@ -24,13 +24,15 @@ function getStaticPages(locale: string = "en"): SearchItem[] {
     {
       url: "/",
       title: locale === "fr" ? "Accueil" : "Home",
-      description: locale === "fr" ? "Page d'accueil du portfolio" : "Portfolio home page",
+      description:
+        locale === "fr" ? "Page d'accueil du portfolio" : "Portfolio home page",
       type: "page" as const,
     },
     {
       url: "/blog",
       title: "Blog",
-      description: locale === "fr" ? "Articles et tutoriels" : "Articles and tutorials",
+      description:
+        locale === "fr" ? "Articles et tutoriels" : "Articles and tutorials",
       type: "page" as const,
     },
     {
@@ -42,13 +44,17 @@ function getStaticPages(locale: string = "en"): SearchItem[] {
     {
       url: "/terms",
       title: locale === "fr" ? "Conditions Générales" : "Terms",
-      description: locale === "fr" ? "Conditions Générales d'Utilisation" : "Terms and Conditions",
+      description:
+        locale === "fr"
+          ? "Conditions Générales d'Utilisation"
+          : "Terms and Conditions",
       type: "page" as const,
     },
     {
       url: "/privacy",
       title: locale === "fr" ? "Confidentialité" : "Privacy",
-      description: locale === "fr" ? "Politique de Confidentialité" : "Privacy Policy",
+      description:
+        locale === "fr" ? "Politique de Confidentialité" : "Privacy Policy",
       type: "page" as const,
     },
   ];

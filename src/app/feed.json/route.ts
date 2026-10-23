@@ -24,7 +24,8 @@ export async function GET() {
 
   return Response.json(feed, {
     headers: {
-      "Cache-Control": "public, max-age=0, s-maxage=3600, stale-while-revalidate=600",
+      "Cache-Control":
+        "public, max-age=0, s-maxage=3600, stale-while-revalidate=600",
     },
   });
 }

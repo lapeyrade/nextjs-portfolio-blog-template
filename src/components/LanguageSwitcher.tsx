@@ -16,14 +16,17 @@ export default function LanguageSwitcher() {
   // Generate unique ID for loading spinner
   const loadingTitleId = useId();
 
-  const getTargetPath = useCallback((/* targetLocale: string */) => {
-    // Return a locale-less path so the navigation helper can add the correct prefix.
-    // Strip any leading /en or /fr segment to avoid double-prefixing (e.g. /fr/en).
-    const stripped = pathname.replace(/^\/(en|fr)(?=\/|$)/, "");
+  const getTargetPath = useCallback(
+    (/* targetLocale: string */) => {
+      // Return a locale-less path so the navigation helper can add the correct prefix.
+      // Strip any leading /en or /fr segment to avoid double-prefixing (e.g. /fr/en).
+      const stripped = pathname.replace(/^\/(en|fr)(?=\/|$)/, "");
 
-    // Ensure we return a valid path starting with '/'
-    return stripped === "" ? "/" : stripped;
-  }, [pathname]);
+      // Ensure we return a valid path starting with '/'
+      return stripped === "" ? "/" : stripped;
+    },
+    [pathname],
+  );
 
   const handleLanguageChange = useCallback(
     (newLocale: string) => {
@@ -59,11 +62,13 @@ export default function LanguageSwitcher() {
             }
           }
 
-          const absolute = `/${newLocale}${finalPath === "/" ? "" : finalPath}` as Route;
+          const absolute =
+            `/${newLocale}${finalPath === "/" ? "" : finalPath}` as Route;
           router.replace(absolute);
         } catch {
           // Fallback to simple replace
-          const absolute = `/${newLocale}${targetPath === "/" ? "" : targetPath}` as Route;
+          const absolute =
+            `/${newLocale}${targetPath === "/" ? "" : targetPath}` as Route;
           router.replace(absolute);
         }
       });

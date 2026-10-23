@@ -16,7 +16,8 @@ export default async function PrivacyRedirect() {
   // Check if French is preferred
   const prefersFrench =
     acceptLanguage.includes("fr") &&
-    (acceptLanguage.indexOf("fr") < acceptLanguage.indexOf("en") || !acceptLanguage.includes("en"));
+    (acceptLanguage.indexOf("fr") < acceptLanguage.indexOf("en") ||
+      !acceptLanguage.includes("en"));
 
   if (prefersFrench) {
     redirect("/fr/privacy");

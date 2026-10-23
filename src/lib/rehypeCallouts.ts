@@ -45,12 +45,17 @@ export default function rehypeCallouts() {
           (first?.children?.length ?? 0) > 0
         ) {
           const firstChild = first.children?.[0];
-          if (firstChild && firstChild.type === "text" && typeof firstChild.value === "string") {
+          if (
+            firstChild &&
+            firstChild.type === "text" &&
+            typeof firstChild.value === "string"
+          ) {
             const match = firstChild.value.match(
               /^\s*\[!(NOTE|TIP|WARNING|IMPORTANT|CAUTION|INFO)\]\s*/,
             );
             if (match) {
-              const kind = TYPE_MAP[match[1] as keyof typeof TYPE_MAP] || "note";
+              const kind =
+                TYPE_MAP[match[1] as keyof typeof TYPE_MAP] || "note";
               // Remove the marker from the text
               firstChild.value = firstChild.value.replace(match[0], "");
               node.properties = node.properties || {};

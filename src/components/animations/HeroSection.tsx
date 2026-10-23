@@ -9,7 +9,10 @@ interface HeroSectionProps {
 }
 
 // Optimized hero animation that doesn't delay LCP
-export default function HeroSection({ children, className = "" }: HeroSectionProps) {
+export default function HeroSection({
+  children,
+  className = "",
+}: HeroSectionProps) {
   const prefersReducedMotion = useReducedMotion();
 
   // For LCP optimization, content is visible immediately

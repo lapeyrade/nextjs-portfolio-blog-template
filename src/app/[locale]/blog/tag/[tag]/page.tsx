@@ -114,7 +114,8 @@ export default async function TagPage({ params }: TagPageProps) {
 
             <FadeInUp delay={0.2}>
               <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-                {t("tags_title")}: <span className="text-accent">#{decodedTag}</span>
+                {t("tags_title")}:{" "}
+                <span className="text-accent">#{decodedTag}</span>
               </h1>
             </FadeInUp>
 
@@ -132,7 +133,9 @@ export default async function TagPage({ params }: TagPageProps) {
             {posts.length === 0 ? (
               <ScrollReveal>
                 <div className="text-center py-16">
-                  <h2 className="text-2xl font-bold text-white mb-4">No posts found</h2>
+                  <h2 className="text-2xl font-bold text-white mb-4">
+                    No posts found
+                  </h2>
                   <p className="text-gray-300 mb-8">
                     No posts were found with the tag &quot;{decodedTag}&quot;.
                   </p>
@@ -162,15 +165,22 @@ export default async function TagPage({ params }: TagPageProps) {
                         </time>
                         <span>
                           {post.readingTime} •{" "}
-                          {post.wordCount.toLocaleString(locale === "fr" ? "fr-FR" : "en-US")} words
+                          {post.wordCount.toLocaleString(
+                            locale === "fr" ? "fr-FR" : "en-US",
+                          )}{" "}
+                          words
                         </span>
                       </div>
 
                       <h2 className="text-xl font-bold text-white mb-3 group-hover:text-accent transition-colors">
-                        <NextLink href={`/${locale}/blog/${post.slug}`}>{post.title}</NextLink>
+                        <NextLink href={`/${locale}/blog/${post.slug}`}>
+                          {post.title}
+                        </NextLink>
                       </h2>
 
-                      <p className="text-gray-300 mb-4 line-clamp-3">{post.description}</p>
+                      <p className="text-gray-300 mb-4 line-clamp-3">
+                        {post.description}
+                      </p>
 
                       {post.tags.length > 0 && (
                         <div className="flex flex-wrap gap-2 mb-4">

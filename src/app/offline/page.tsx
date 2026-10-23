@@ -10,8 +10,8 @@ export default function OfflinePage() {
       <div className="max-w-md text-center text-gray-200">
         <h1 className="text-3xl font-bold mb-4">You are offline</h1>
         <p className="mb-6">
-          It looks like you&apos;re not connected to the internet. You can continue browsing cached
-          pages and try again later.
+          It looks like you&apos;re not connected to the internet. You can
+          continue browsing cached pages and try again later.
         </p>
         <Link
           href="/"

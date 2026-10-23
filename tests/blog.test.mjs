@@ -1,7 +1,11 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { test } from "node:test";
-import { getAllBlogPosts, getBlogPost, getPostsByTag } from "../src/lib/blog.ts";
+import {
+  getAllBlogPosts,
+  getBlogPost,
+  getPostsByTag,
+} from "../src/lib/blog.ts";
 
 for (const locale of ["en", "fr"]) {
   test(`all ${locale} articles retain metadata, body, ordering and tag lookup`, async () => {

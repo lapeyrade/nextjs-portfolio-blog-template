@@ -1,6 +1,11 @@
 "use client";
 
-import { type ComponentType, type ReactElement, useEffect, useState } from "react";
+import {
+  type ComponentType,
+  type ReactElement,
+  useEffect,
+  useState,
+} from "react";
 
 type Mods = {
   Analytics?: ComponentType<unknown>;
@@ -37,7 +42,10 @@ export default function LazyThirdParty(): ReactElement | null {
     // Defer loading to after first paint for LCP safety
     if ("requestIdleCallback" in window) {
       const w = window as unknown as {
-        requestIdleCallback?: (cb: () => void, opts?: { timeout?: number }) => number;
+        requestIdleCallback?: (
+          cb: () => void,
+          opts?: { timeout?: number },
+        ) => number;
       };
       w.requestIdleCallback?.(init, { timeout: 2000 });
     } else {

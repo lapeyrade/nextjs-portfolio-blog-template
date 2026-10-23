@@ -29,7 +29,9 @@ interface BlogFrontmatter {
   updateDate?: string | number | Date;
 }
 
-function normalizeToIsoString(input: string | number | Date | undefined): string | null {
+function normalizeToIsoString(
+  input: string | number | Date | undefined,
+): string | null {
   if (input === undefined) return null;
   const date = input instanceof Date ? input : new Date(input);
   return Number.isNaN(date.getTime()) ? null : date.toISOString();
@@ -67,7 +69,9 @@ export function clearBlogCache(locale?: string) {
   }
 }
 
-export async function getAllBlogPosts(locale: string = "en"): Promise<BlogPost[]> {
+export async function getAllBlogPosts(
+  locale: string = "en",
+): Promise<BlogPost[]> {
   // Check if we have cached posts for this locale
   const cached = postsCacheByLocale.get(locale);
   if (cached) {
@@ -87,7 +91,9 @@ export async function getAllBlogPosts(locale: string = "en"): Promise<BlogPost[]
   if (locale === "en") {
     try {
       const fileNames = await fs.readdir(blogDirectory);
-      const mdxFiles = fileNames.filter((fileName) => fileName.endsWith(".mdx"));
+      const mdxFiles = fileNames.filter((fileName) =>
+        fileName.endsWith(".mdx"),
+      );
 
       // Process files in parallel for better performance
       const posts = await Promise.allSettled(
@@ -113,7 +119,9 @@ export async function getAllBlogPosts(locale: string = "en"): Promise<BlogPost[]
     try {
       await fs.stat(localeDir);
       const fileNames = await fs.readdir(localeDir);
-      const mdxFiles = fileNames.filter((fileName) => fileName.endsWith(".mdx"));
+      const mdxFiles = fileNames.filter((fileName) =>
+        fileName.endsWith(".mdx"),
+      );
 
       // Process files in parallel for better performance
       const posts = await Promise.allSettled(
@@ -132,10 +140,15 @@ export async function getAllBlogPosts(locale: string = "en"): Promise<BlogPost[]
         }
       });
     } catch (error) {
-      console.warn(`[BLOG] Locale directory not found or error reading: ${localeDir}`, error);
+      console.warn(
+        `[BLOG] Locale directory not found or error reading: ${localeDir}`,
+        error,
+      );
       // Fallback to English posts if locale directory doesn't exist
       if (locale !== "en") {
-        console.info(`[BLOG] Falling back to English posts for locale: ${locale}`);
+        console.info(
+          `[BLOG] Falling back to English posts for locale: ${locale}`,
+        );
         return await getAllBlogPosts("en");
       }
     }
@@ -146,11 +159,16 @@ export async function getAllBlogPosts(locale: string = "en"): Promise<BlogPost[]
 
   // Cache the results for this locale
   postsCacheByLocale.set(locale, allPostsData);
-  console.info(`[BLOG] Cached ${allPostsData.length} posts for locale: ${locale}`);
+  console.info(
+    `[BLOG] Cached ${allPostsData.length} posts for locale: ${locale}`,
+  );
   return allPostsData;
 }
 
-async function parsePostFile(fullPath: string, slug: string): Promise<BlogPost> {
+async function parsePostFile(
+  fullPath: string,
+  slug: string,
+): Promise<BlogPost> {
   const fileContents = await fs.readFile(fullPath, "utf8");
   const matterResult = parseFrontmatter(fileContents);
   const stats = await fs.stat(fullPath);
@@ -163,9 +181,8 @@ async function parsePostFile(fullPath: string, slug: string): Promise<BlogPost> 
   const lastModified: string = updatedFromFm ?? stats.mtime.toISOString();
 
   // Calculate reading metrics
-  const { readingTimeText, readingTimeMinutes, wordCount } = computeReadingMetrics(
-    matterResult.content,
-  );
+  const { readingTimeText, readingTimeMinutes, wordCount } =
+    computeReadingMetrics(matterResult.content);
 
   return {
     slug,
@@ -182,7 +199,10 @@ async function parsePostFile(fullPath: string, slug: string): Promise<BlogPost> 
   } as BlogPost;
 }
 
-export async function getBlogPost(slug: string, locale: string = "en"): Promise<BlogPost | null> {
+export async function getBlogPost(
+  slug: string,
+  locale: string = "en",
+): Promise<BlogPost | null> {
   try {
     const localeDir = path.join(blogDirectory, locale);
     const localePath = path.join(localeDir, `${slug}.mdx`);
@@ -224,9 +244,8 @@ export async function getBlogPost(slug: string, locale: string = "en"): Promise<
       normalizeToIsoString(fm.modified) ||
       normalizeToIsoString(fm.updateDate);
     const lastModified: string = updatedFromFm ?? stats.mtime.toISOString();
-    const { readingTimeText, readingTimeMinutes, wordCount } = computeReadingMetrics(
-      matterResult.content,
-    );
+    const { readingTimeText, readingTimeMinutes, wordCount } =
+      computeReadingMetrics(matterResult.content);
 
     return {
       slug,
@@ -260,11 +279,16 @@ export async function getBlogPostSlugs(): Promise<string[]> {
     .map((fileName) => fileName.replace(/\.mdx$/, ""));
 }
 
-export async function getPostsByTag(tag: string, locale: string = "en"): Promise<BlogPost[]> {
+export async function getPostsByTag(
+  tag: string,
+  locale: string = "en",
+): Promise<BlogPost[]> {
   const normalized = tag.trim().toLowerCase();
   const posts = await getAllBlogPosts(locale);
   return posts.filter((post) =>
-    (post.tags || []).some((t) => String(t).trim().toLowerCase() === normalized),
+    (post.tags || []).some(
+      (t) => String(t).trim().toLowerCase() === normalized,
+    ),
   );
 }
 
