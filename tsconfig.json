@@ -3,6 +3,7 @@
     // --- Core Environment Options ---
     "target": "ESNext",
     "lib": ["dom", "dom.iterable", "esnext"],
+    "types": ["bun"],
     "jsx": "react-jsx",
     // --- Module Resolution & Bundling ---
     "module": "esnext",

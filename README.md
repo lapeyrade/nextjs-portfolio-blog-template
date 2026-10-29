@@ -6,6 +6,12 @@ Modern, fast, accessible, internationalized portfolio & blog built with Next.js 
 
 </div>
 
+## Continuous Integration
+
+Vercel CI runs formatting, Oxlint, all dependency-audit levels, article/runtime regression tests, native `bun check`, and the guarded production build on source changes. `turbo.json` declares one uncached Ubuntu task with OIDC disabled; no application or GitHub write credentials enter the test process. Dependencies use the frozen Bun lockfile and the existing minimum-version guard.
+
+`bun run ci:quality` reproduces the pipeline in an isolated checkout without local `.env` files. Routine local checks remain available through `bun run test`, `bun run lint`, and `bun run build`. The previous Actions definition is retained under `.github/retired-workflows/` for reference, not execution. Dependabot still opens updates on GitHub.
+
 ## 1. Overview
 
 This repository contains a production‑ready personal portfolio and technical blog. It showcases projects, writings, and contact options while demonstrating current best practices in performance, accessibility, SEO, i18n, PWA capabilities, and modern Frontend tooling. It is intended as both a starter and a reference implementation.
@@ -62,7 +68,7 @@ This repository contains a production‑ready personal portfolio and technical b
 - TypeScript strict mode
 - Oxlint for linting and native `bun fmt` for formatting
 - Centralized SEO and blog utility modules
-- CI/CD ready (GitHub Actions placeholder friendly)
+- Vercel CI with isolated source validation
 
 ### Progressive Web App
 
