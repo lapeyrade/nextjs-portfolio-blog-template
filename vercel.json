@@ -2,13 +2,5 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "bunVersion": "1.4.x",
   "buildCommand": "bun run scripts/verify-bun.mjs && bun run build",
-  "installCommand": "bun run scripts/verify-bun.mjs && bun install --frozen-lockfile",
-  "ci": {
-    "jobs": [],
-    "bootstrapping": {
-      "installCommand": "bun run scripts/verify-bun.mjs && bun install --frozen-lockfile",
-      "installEnv": {},
-      "resources": { "vcpus": 1 }
-    }
-  }
+  "installCommand": "bun run scripts/verify-bun.mjs && bun install --frozen-lockfile"
 }

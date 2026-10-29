@@ -3,7 +3,6 @@
   "type": "module",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "bun@1.4.4",
   "scripts": {
     "ci:quality": "bun --no-env-file scripts/ci/quality.ts",
     "dev": "bun format && bun fix && bun run --bun next dev",
@@ -13,7 +12,7 @@
     "start": "bun run --bun next start",
     "lint": "oxlint",
     "test": "bun run typecheck && bun run test:unit",
-    "test:unit": "bun test tests scripts/qa/runtime-policy.test.mjs scripts/qa/vercel-ci.test.ts",
+    "test:unit": "bun test tests scripts/qa/runtime-policy.test.mjs scripts/qa/ci-policy.test.ts",
     "fix": "oxlint --fix --fix-suggestions",
     "format": "bun fmt",
     "format:check": "bun fmt --check"
@@ -50,7 +49,6 @@
     "rehype-pretty-code": "^0.14.5",
     "remark-gfm": "^4.0.1",
     "tailwindcss": "^4.3.3",
-    "turbo": "2.11.10",
     "typescript": "^7.0.2"
   }
 }

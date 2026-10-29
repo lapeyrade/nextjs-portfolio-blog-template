@@ -8,9 +8,9 @@ Modern, fast, accessible, internationalized portfolio & blog built with Next.js 
 
 ## Continuous Integration
 
-Vercel CI runs formatting, Oxlint, all dependency-audit levels, article/runtime regression tests, native `bun check`, and the guarded production build on source changes. `turbo.json` declares one uncached Ubuntu task with OIDC disabled; no application or GitHub write credentials enter the test process. Dependencies use the frozen Bun lockfile and the existing minimum-version guard.
+GitHub Actions runs formatting, Oxlint, all dependency-audit levels, article/runtime regression tests, native `bun check`, and the guarded production build on source changes. Standard Ubuntu runners are free for this public repository. Vercel CI's current beta does not accept public repositories, so the source checks deliberately stay on GitHub while Vercel continues deployment.
 
-`bun run ci:quality` reproduces the pipeline in an isolated checkout without local `.env` files. Routine local checks remain available through `bun run test`, `bun run lint`, and `bun run build`. The previous Actions definition is retained under `.github/retired-workflows/` for reference, not execution. Dependabot still opens updates on GitHub.
+`bun run ci:quality` reproduces the pipeline in an isolated checkout without local `.env` files. No application or GitHub write credentials enter tests, checkout credentials are not retained, and actions use immutable SHAs. Dependencies use the frozen Bun lockfile and existing minimum-version guard; superseded runs are cancelled. Routine checks remain available through `bun run test`, `bun run lint`, and `bun run build`. The old Actions definition is retained under `.github/retired-workflows/` for reference. Dependabot still opens updates on GitHub.
 
 ## 1. Overview
 
@@ -68,7 +68,7 @@ This repository contains a production‑ready personal portfolio and technical b
 - TypeScript strict mode
 - Oxlint for linting and native `bun fmt` for formatting
 - Centralized SEO and blog utility modules
-- Vercel CI with isolated source validation
+- Free public GitHub CI with isolated source validation
 
 ### Progressive Web App
 
