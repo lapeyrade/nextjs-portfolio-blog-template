@@ -1,0 +1,51 @@
+name: Dependabot Auto-Merge
+
+on:
+  pull_request_target:
+    branches: [main]
+    types: [opened, reopened, synchronize, ready_for_review]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dependabot-auto-merge-${{ github.event.pull_request.number || 'recovery' }}
+  cancel-in-progress: false
+
+jobs:
+  auto-merge:
+    if: >-
+      github.repository == 'lapeyrade/nextjs-portfolio-blog-template' &&
+      (
+        github.event_name == 'workflow_dispatch' ||
+        (
+          github.event.pull_request.user.id == 49699333 &&
+          github.event.pull_request.user.login == 'dependabot[bot]' &&
+          github.event.pull_request.user.type == 'Bot' &&
+          github.event.pull_request.base.ref == 'main' &&
+          !github.event.pull_request.draft
+        )
+      )
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout only trusted main without retained credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: refs/heads/main
+          persist-credentials: false
+      - name: Queue verified Dependabot PRs behind required checks
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+        with:
+          script: |
+            const { run } = require(`${process.env.GITHUB_WORKSPACE}/.github/scripts/dependabot-automerge.cjs`);
+            try {
+              const result = await run({ github, context });
+              core.info(JSON.stringify(result));
+            } catch {
+              core.setFailed('Dependabot auto-merge could not be queued; inspect repository settings and permissions.');
+            }

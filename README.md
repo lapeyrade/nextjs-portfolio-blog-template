@@ -12,6 +12,16 @@ GitHub Actions runs formatting, Oxlint, all dependency-audit levels, article/run
 
 `bun run ci:quality` reproduces the pipeline in an isolated checkout without local `.env` files. No application or GitHub write credentials enter tests, checkout credentials are not retained, and actions use immutable SHAs. Dependencies use the frozen Bun lockfile and existing minimum-version guard; superseded runs are cancelled. Routine checks remain available through `bun run test`, `bun run lint`, and `bun run build`. The old Actions definition is retained under `.github/retired-workflows/` for reference. Dependabot still opens updates on GitHub.
 
+Dependabot PRs automatically queue for squash auto-merge. Protected `main` requires both
+`ci` from GitHub Actions and `Vercel` from the Vercel app, with the branch up to date.
+The small `Dependabot Auto-Merge` workflow uses only GitHub's temporary repository token,
+never an application secret or a permanent personal token. It checks out trusted `main`
+without retained credentials, installs nothing, and rechecks the official bot, repository,
+branch and exact commit through GitHub before queuing. It never merges directly or bypasses
+checks. Manual recovery is available via that workflow's `Run workflow` button; it only
+inspects eligible Dependabot PRs. Public standard runners and the existing GitHub CI remain
+unchanged. No real PR merge is simulated by fabricating a bot author in tests.
+
 ## 1. Overview
 
 This repository contains a production‑ready personal portfolio and technical blog. It showcases projects, writings, and contact options while demonstrating current best practices in performance, accessibility, SEO, i18n, PWA capabilities, and modern Frontend tooling. It is intended as both a starter and a reference implementation.
