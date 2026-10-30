@@ -1,10 +1,9 @@
 "use client";
 
-import type { Route } from "next";
 import NextLink from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useId, useRef, useState } from "react";
-import { Link, useRouter } from "@/i18n/routing";
+import { useRouter } from "@/i18n/routing";
 
 type Result = {
   url: string;
@@ -16,6 +15,36 @@ type Result = {
 
 interface SearchProps {
   enableHotkey?: boolean;
+}
+
+export function SearchResultLink({
+  result,
+  active,
+  onMouseEnter,
+  onClick,
+}: {
+  result: Result;
+  active: boolean;
+  onMouseEnter: () => void;
+  onClick: () => void;
+}) {
+  // Search results already contain their locale prefix.
+  return (
+    <NextLink
+      href={{ pathname: result.url }}
+      className={`block p-3 rounded ${active ? "bg-gray-800/60" : "hover:bg-gray-800/50"}`}
+      onMouseEnter={onMouseEnter}
+      onClick={onClick}
+    >
+      <div className="flex items-center justify-between">
+        <h4 className="font-medium text-foreground">{result.title}</h4>
+        <span className="text-xs text-foreground/60">{result.type}</span>
+      </div>
+      {result.description && (
+        <p className="text-sm text-foreground/80">{result.description}</p>
+      )}
+    </NextLink>
+  );
 }
 
 export default function Search({ enableHotkey = true }: SearchProps) {
@@ -266,73 +295,15 @@ export default function Search({ enableHotkey = true }: SearchProps) {
               {results.length === 0 ? (
                 <div className="p-3 text-foreground/70">{t("no_results")}</div>
               ) : (
-                results.map((r, idx) => {
-                  const isDynamic =
-                    r.url.includes("/blog/") && !r.url.endsWith("/blog");
-
-                  if (isDynamic) {
-                    return (
-                      <NextLink
-                        key={r.url}
-                        href={{ pathname: r.url }}
-                        className={`block p-3 rounded ${idx === activeIndex ? "bg-gray-800/60" : "hover:bg-gray-800/50"}`}
-                        onMouseEnter={() => setActiveIndex(idx)}
-                        onClick={() => setOpen(false)}
-                      >
-                        <div className="flex items-center justify-between">
-                          <h4 className="font-medium text-foreground">
-                            {r.title}
-                          </h4>
-                          <span className="text-xs text-foreground/60">
-                            {r.type}
-                          </span>
-                        </div>
-                        {r.description && (
-                          <p className="text-sm text-foreground/80">
-                            {r.description}
-                          </p>
-                        )}
-                      </NextLink>
-                    );
-                  }
-
-                  // For static pages, use i18n Link with known routes
-                  const staticHref =
-                    r.url === "/"
-                      ? "/"
-                      : r.url === "/blog"
-                        ? "/blog"
-                        : r.url === "/contact"
-                          ? "/contact"
-                          : r.url;
-
-                  return (
-                    <Link
-                      key={r.url}
-                      href={
-                        staticHref as Route as
-                          "/" | "/blog" | "/contact" | "/terms" | "/privacy"
-                      }
-                      className={`block p-3 rounded ${idx === activeIndex ? "bg-gray-800/60" : "hover:bg-gray-800/50"}`}
-                      onMouseEnter={() => setActiveIndex(idx)}
-                      onClick={() => setOpen(false)}
-                    >
-                      <div className="flex items-center justify-between">
-                        <h4 className="font-medium text-foreground">
-                          {r.title}
-                        </h4>
-                        <span className="text-xs text-foreground/60">
-                          {r.type}
-                        </span>
-                      </div>
-                      {r.description && (
-                        <p className="text-sm text-foreground/80">
-                          {r.description}
-                        </p>
-                      )}
-                    </Link>
-                  );
-                })
+                results.map((result, idx) => (
+                  <SearchResultLink
+                    key={result.url}
+                    result={result}
+                    active={idx === activeIndex}
+                    onMouseEnter={() => setActiveIndex(idx)}
+                    onClick={() => setOpen(false)}
+                  />
+                ))
               )}
             </div>
           </div>
